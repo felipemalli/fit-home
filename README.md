@@ -1,11 +1,11 @@
-## Clean Schedule Project
+## Fit Home Project
 
-Project for plan your own schedule, with a clean view of the calendar.
+Project for plan your own physical exercise schedule at home and help you to perform the exercises at the correct time.
 
 <br>
 
 ### Technologies
 
-Developed with Clean Arquitecture, DDD, SOLID and following the Test Driven Development (TDD).
+Developing with Clean Arquitecture, DDD, SOLID and following the Test Driven Development (TDD).
 
-Dependencies: Express, MongoDB, BCrypt, Validator
+Dependencies: Express, MongoDB, GraphQL, Jest, BCrypt, Validator
