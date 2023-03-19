@@ -4,7 +4,14 @@
     "module": "commonjs",
     "target": "es2022",
     "esModuleInterop": true,
-    "allowJs": true,
-    "strictNullChecks": true
-  }
+    "strictNullChecks": true,
+    "sourceMap": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }
