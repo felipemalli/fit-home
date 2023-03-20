@@ -1,4 +1,5 @@
 version: '3.9'
+
 services:
   mongo:
     container_name: mongo-container
@@ -13,10 +14,10 @@ services:
     image: node:19
     working_dir: /usr/src/fit-home-api
     restart: always
-    command: bash -c "npm install --only=prod && npm run debug"
+    command: bash -c "npm install --only=prod && npm install nodemon -D && npm run debug"
     volumes:
-      - ./dist:/usr/src/fit-home-api/dist/
-      - ./package.json:/usr/src/fit-home-api/package.json/
+      - ./dist/:/usr/src/fit-home-api/dist/
+      - ./package.json:/usr/src/fit-home-api/package.json
     ports:
       - "5050:5050"
       - "9222:9222"
