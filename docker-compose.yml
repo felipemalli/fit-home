@@ -1,5 +1,4 @@
 version: '3.9'
-
 services:
   mongo:
     container_name: mongo-container
@@ -14,10 +13,12 @@ services:
     build: .
     image: fit-home-api
     restart: always
-    command: "npm start"
+    command: npm run debug
     volumes:
       - ./dist:/usr/src/fit-home-api/dist/
+      - ./package.json:/usr/src/fit-home-api/package.json/
     ports:
       - "5050:5050"
+      - "9222:9222"
     links:
       - mongo
