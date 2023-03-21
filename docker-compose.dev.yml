@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  mongo:
+    container_name: mongo-container
+    image: mongo:5
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  api:
+    container_name: api-container
+    image: node:19
+    working_dir: /usr/src/fit-home-api
+    restart: always
+    command: bash -c "npm install && npm run debug"
+    volumes:
+      - ./dist/:/usr/src/fit-home-api/dist/
+      - ./package.json:/usr/src/fit-home-api/package.json/
+      - ./jest.config.js/:/usr/src/fit-home-api/jest.config.js/
+      - ./jest-integration-config.js/:/usr/src/fit-home-api/jest-integration-config.js/
+      - ./jest-unit-config.js/:/usr/src/fit-home-api/jest-unit-config.js/
+      - ./jest-mongodb-config/:/usr/src/fit-home-api/jest-mongodb-config.js/
+    ports:
+      - "5050:5050"
+      - "9222:9222"
+    links:
+      - mongo
