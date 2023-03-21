@@ -9,6 +9,8 @@
     "build:watch": "tsc -p ./tsconfig.production.json -w",
     "build:dev": "rimraf dist && tsc -p tsconfig.development.json",
     "build:dev:watch": "tsc -p ./tsconfig.development.json -w",
+    "api:terminal": "docker exec -it api-container /bin/bash",
+    "mongo:terminal": "docker exec -it mongo-container /bin/bash",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "up": "npm run build && docker-compose up -d",
     "down": "docker-compose down --remove-orphans",
