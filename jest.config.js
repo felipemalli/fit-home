@@ -3,7 +3,8 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/dist/**/*.js',
     '!<rootDir>/dist/**/*-protocols.js',
-    '!**/protocols/**'
+    '!**/protocols/**',
+    '!<rootDir>/dist/main/**'
   ],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
