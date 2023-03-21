@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "commonjs",
+    "target": "es2021",
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "rootDir": "src"
+  },
+}
