@@ -13,14 +13,9 @@ services:
     image: node:19
     working_dir: /usr/src/fit-home-api
     restart: always
-    command: bash -c "npm install && npm run debug"
+    command: bash -c "npm install && npm run dev"
     volumes:
-      - ./dist/:/usr/src/fit-home-api/dist/
-      - ./package.json:/usr/src/fit-home-api/package.json/
-      - ./jest.config.js/:/usr/src/fit-home-api/jest.config.js/
-      - ./jest-integration-config.js/:/usr/src/fit-home-api/jest-integration-config.js/
-      - ./jest-unit-config.js/:/usr/src/fit-home-api/jest-unit-config.js/
-      - ./jest-mongodb-config/:/usr/src/fit-home-api/jest-mongodb-config.js/
+      - ./:/usr/src/fit-home-api/
     ports:
       - "5050:5050"
       - "9222:9222"
