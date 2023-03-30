@@ -7,7 +7,14 @@ export const adaptRoute = (controller: Controller): RequestHandler => {
       body: req.body
     }
     void controller.handle(httpRequest).then((httpResponse) => {
-      res.status(httpResponse.statusCode).json(httpResponse.body)
+      const stringStatus = httpResponse.statusCode.toString()
+      if (stringStatus.startsWith('4') || stringStatus.startsWith('5')) {
+        res.status(httpResponse.statusCode).json({
+          error: httpResponse.body.message
+        })
+      } else {
+        res.status(httpResponse.statusCode).json(httpResponse.body)
+      }
     })
   }
 }
