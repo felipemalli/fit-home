@@ -77,9 +77,9 @@ describe('Login Controller', () => {
   it('Should call EmailValidator with correct email', async () => {
     const { sut, emailValidatorStub } = makeSut()
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
-    const fakeRequest = makeFakeRequest()
-    await sut.handle(fakeRequest)
-    expect(isValidSpy).toHaveBeenCalledWith(fakeRequest.body.email)
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(isValidSpy).toHaveBeenCalledWith(httpRequest.body.email)
   })
 
   it('Should return 500 if EmailValidator throws', async () => {
@@ -94,9 +94,9 @@ describe('Login Controller', () => {
   it('Should call Authentication with correct values', async () => {
     const { sut, authenticationStub } = makeSut()
     const authSpy = jest.spyOn(authenticationStub, 'auth')
-    const fakeRequest = makeFakeRequest()
-    await sut.handle(fakeRequest)
-    expect(authSpy).toHaveBeenCalledWith(fakeRequest.body.email, fakeRequest.body.password)
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(authSpy).toHaveBeenCalledWith(httpRequest.body.email, httpRequest.body.password)
   })
 
   it('Should return 401 if invalid credentials are provided', async () => {
