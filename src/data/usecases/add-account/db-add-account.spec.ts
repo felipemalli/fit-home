@@ -53,8 +53,9 @@ describe('DbAddAccount Usecase', () => {
   it('Should call Encrypter with correct password', async () => {
     const { sut, encrypterStub } = makeSut()
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
-    await sut.add(makeFakeAccountData())
-    expect(encryptSpy).toHaveBeenCalledWith('valid_password')
+    const fakeAccountData = makeFakeAccountData()
+    await sut.add(fakeAccountData)
+    expect(encryptSpy).toHaveBeenCalledWith(fakeAccountData.password)
   })
 
   it('Should throw if Encrypter throws', async () => {
@@ -67,10 +68,11 @@ describe('DbAddAccount Usecase', () => {
   it('Should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addAccountRepositoryStub, 'add')
-    await sut.add(makeFakeAccountData())
+    const fakeAccountData = makeFakeAccountData()
+    await sut.add(fakeAccountData)
     expect(addSpy).toHaveBeenCalledWith({
-      name: 'valid_name',
-      email: 'valid_email@mail.com',
+      name: fakeAccountData.name,
+      email: fakeAccountData.email,
       password: 'hashed_password'
     })
   })

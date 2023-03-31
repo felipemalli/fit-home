@@ -131,8 +131,9 @@ describe('SignUp Controller', () => {
   it('Should call EmailValidator with correct email', async () => {
     const { sut, emailValidatorStub } = makeSut()
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
-    await sut.handle(makeFakeRequest())
-    expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
+    const fakeRequest = makeFakeRequest()
+    await sut.handle(fakeRequest)
+    expect(isValidSpy).toHaveBeenCalledWith(fakeRequest.body.email)
   })
 
   it('Should return 500 if EmailValidator throws', async () => {
@@ -156,11 +157,12 @@ describe('SignUp Controller', () => {
   it('Should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut()
     const addSpy = jest.spyOn(addAccountStub, 'add')
-    await sut.handle(makeFakeRequest())
+    const fakeRequest = makeFakeRequest()
+    await sut.handle(fakeRequest)
     expect(addSpy).toHaveBeenCalledWith({
-      name: 'any_name',
-      email: 'any_email@mail.com',
-      password: 'any_password'
+      name: fakeRequest.body.name,
+      email: fakeRequest.body.email,
+      password: fakeRequest.body.password
     })
   })
 
