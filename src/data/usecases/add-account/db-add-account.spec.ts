@@ -49,7 +49,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('DbAddAccount Usecase', () => {
+describe('DbAddAccount UseCase', () => {
   it('Should call Encrypter with correct password', async () => {
     const { sut, encrypterStub } = makeSut()
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
