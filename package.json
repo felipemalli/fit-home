@@ -17,7 +17,7 @@
     "api:terminal": "docker exec -it api-container /bin/bash",
     "mongo:terminal": "docker exec -it mongo-container /bin/bash",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
-    "test:verbose": "docker exec -t api-container npx jest --passWithNoTests --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm run test -- --watch -c jest-unit-config.js",
     "test:integration": "npm run test -- --watch -c jest-integration-config.js",
     "test:staged": "npm run test --findRelatedTests",
