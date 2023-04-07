@@ -1,4 +1,4 @@
-import { badRequest } from '../../../helpers/http/http-helper'
+import { badRequest, serverError } from '../../../helpers/http/http-helper'
 import { AddExerciseController } from './add-exercise-controller'
 import { AddExercise, AddExerciseModel, ExerciseModel, HttpRequest, Validation } from './add-exercise-controller-protocols'
 
@@ -78,5 +78,12 @@ describe('AddExercise Controller', () => {
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
     expect(addSpy).toHaveBeenCalledWith(httpRequest.body)
+  })
+
+  it('Should return 500 if AddExercise throws', async () => {
+    const { sut, addExerciseStub } = makeSut()
+    jest.spyOn(addExerciseStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
