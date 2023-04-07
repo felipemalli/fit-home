@@ -50,4 +50,11 @@ describe('DbAddExercise UseCase', () => {
     await sut.add(exerciseData)
     expect(addSpy).toHaveBeenCalledWith(exerciseData)
   })
+
+  it('Should throw if AddExerciseRepository throws', async () => {
+    const { sut, addExerciseRepositoryStub } = makeSut()
+    jest.spyOn(addExerciseRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.add(makeFakeExerciseData())
+    await expect(promise).rejects.toThrow()
+  })
 })
