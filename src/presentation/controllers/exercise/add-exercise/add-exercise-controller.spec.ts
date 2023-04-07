@@ -1,4 +1,4 @@
-import { badRequest, serverError } from '../../../helpers/http/http-helper'
+import { badRequest, created, serverError } from '../../../helpers/http/http-helper'
 import { AddExerciseController } from './add-exercise-controller'
 import { AddExercise, AddExerciseModel, ExerciseModel, HttpRequest, Validation } from './add-exercise-controller-protocols'
 
@@ -21,8 +21,8 @@ const makeAddExercise = (): AddExercise => {
 }
 
 const makeFakeExercise = (): ExerciseModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
+  id: 'any_id',
+  name: 'any_name',
   series: 1,
   betweenSeriesTime: 120,
   repetitions: 12,
@@ -85,5 +85,12 @@ describe('AddExercise Controller', () => {
     jest.spyOn(addExerciseStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  it('Should return 201 on success', async () => {
+    const { sut } = makeSut()
+    const httpRequest = makeFakeRequest()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(created({ id: makeFakeExercise().id, ...httpRequest.body }))
   })
 })
