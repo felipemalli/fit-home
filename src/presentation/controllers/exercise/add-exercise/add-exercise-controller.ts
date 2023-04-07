@@ -1,4 +1,4 @@
-import { badRequest } from '../../../helpers/http/http-helper'
+import { badRequest, serverError } from '../../../helpers/http/http-helper'
 import { AddExercise, Controller, HttpRequest, HttpResponse, Validation } from './add-exercise-controller-protocols'
 
 export class AddExerciseController implements Controller {
@@ -8,21 +8,25 @@ export class AddExerciseController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const error = this.validation.validate(httpRequest.body)
-    if (error) {
-      return badRequest(error)
+    try {
+      const error = this.validation.validate(httpRequest.body)
+      if (error) {
+        return badRequest(error)
+      }
+      const { name, series, betweenSeriesTime, repetitions, repetitionTime } = httpRequest.body
+      await this.addExercise.add({
+        name,
+        series,
+        betweenSeriesTime,
+        repetitions,
+        repetitionTime
+      })
+      return await new Promise(resolve => resolve({
+        statusCode: 404,
+        body: 'Not implemented'
+      }))
+    } catch (error) {
+      return serverError(error)
     }
-    const { name, series, betweenSeriesTime, repetitions, repetitionTime } = httpRequest.body
-    await this.addExercise.add({
-      name,
-      series,
-      betweenSeriesTime,
-      repetitions,
-      repetitionTime
-    })
-    return await new Promise(resolve => resolve({
-      statusCode: 404,
-      body: 'Not implemented'
-    }))
   }
 }
