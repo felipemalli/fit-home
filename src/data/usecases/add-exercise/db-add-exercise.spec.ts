@@ -57,4 +57,10 @@ describe('DbAddExercise UseCase', () => {
     const promise = sut.add(makeFakeExerciseData())
     await expect(promise).rejects.toThrow()
   })
+
+  it('Should return an exercise on success', async () => {
+    const { sut } = makeSut()
+    const account = await sut.add(makeFakeExerciseData())
+    expect(account).toEqual(makeFakeExercise())
+  })
 })
