@@ -2,7 +2,7 @@ import { Authentication, AuthenticationModel, Encrypter, HashComparer, LoadAccou
 
 export class DbAuthentication implements Authentication {
   constructor (
-    private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository, 
+    private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository,
     private readonly hashComparer: HashComparer,
     private readonly encrypter: Encrypter,
     private readonly updateAccessTokenRepository: UpdateAccessTokenRepository

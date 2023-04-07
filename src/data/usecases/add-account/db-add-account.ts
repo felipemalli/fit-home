@@ -2,7 +2,7 @@ import { AccountModel, AddAccount, AddAccountModel, AddAccountRepository, Hasher
 
 export class DbAddAccount implements AddAccount {
   constructor (
-    private readonly hasher: Hasher, 
+    private readonly hasher: Hasher,
     private readonly addAccountRepositoy: AddAccountRepository
   ) {}
 
