@@ -7,13 +7,12 @@ export const adaptRoute = (controller: Controller): RequestHandler => {
       body: req.body
     }
     void controller.handle(httpRequest).then((httpResponse) => {
-      const stringStatus = httpResponse.statusCode.toString()
-      if (stringStatus.startsWith('4') || stringStatus.startsWith('5')) {
+      if (httpResponse.statusCode >= 200 || httpResponse.statusCode <= 299) {
+        res.status(httpResponse.statusCode).json(httpResponse.body)
+      } else {
         res.status(httpResponse.statusCode).json({
           error: httpResponse.body.message
         })
-      } else {
-        res.status(httpResponse.statusCode).json(httpResponse.body)
       }
     })
   }
