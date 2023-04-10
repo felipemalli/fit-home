@@ -20,7 +20,7 @@ describe('Exercise Routes', () => {
   })
 
   describe('POST /exercises', () => {
-    it('Should return 200 on add exercise success', async () => {
+    it('Should return 403 on add exercise without accessToken', async () => {
       await request(app)
         .post('/api/exercises')
         .send({
@@ -30,7 +30,7 @@ describe('Exercise Routes', () => {
           repetitions: 10,
           repetitionTime: 2.35
         })
-        .expect(201)
+        .expect(403)
     })
   })
 })
