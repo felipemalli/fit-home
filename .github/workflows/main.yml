@@ -27,11 +27,6 @@ jobs:
         node-version: '16.x'
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install
     - name: Run tests
-      run: npm run test:coveralls
-
-    - name: Coveralls
-      uses: coverallsapp/github-action@v1
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      run: npm run test:ci
