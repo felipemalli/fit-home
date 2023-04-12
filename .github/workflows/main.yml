@@ -13,6 +13,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install eslint
+        run: npm install eslint
       - name: Execute eslint
         run: eslint src/**
   tests:
@@ -31,6 +33,4 @@ jobs:
       run: npm run test:coveralls
 
     - name: Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      uses: coverallsapp/github-action@v1
