@@ -5,6 +5,8 @@ import { AddExerciseModel, AddExerciseRepository, ExerciseModel } from './db-add
 const makeFakeExercise = (): ExerciseModel => ({
   id: 'any_id',
   name: 'any_name',
+  description: 'any_description',
+  url: 'https://www.any_url.com/',
   series: 1,
   betweenSeriesTime: 120,
   repetitions: 12,
@@ -13,6 +15,8 @@ const makeFakeExercise = (): ExerciseModel => ({
 
 const makeFakeExerciseData = (): AddExerciseModel => ({
   name: 'any_name',
+  description: 'any_description',
+  url: 'https://www.any_url.com/',
   series: 1,
   betweenSeriesTime: 120,
   repetitions: 12,

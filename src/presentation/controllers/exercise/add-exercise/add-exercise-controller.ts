@@ -13,9 +13,11 @@ export class AddExerciseController implements Controller {
       if (error) {
         return badRequest(error)
       }
-      const { name, series, betweenSeriesTime, repetitions, repetitionTime } = httpRequest.body
+      const { name, description, url, series, betweenSeriesTime, repetitions, repetitionTime } = httpRequest.body
       const exercise = await this.addExercise.add({
         name,
+        description,
+        url,
         series,
         betweenSeriesTime,
         repetitions,

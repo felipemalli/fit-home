@@ -26,6 +26,8 @@ describe('Exercise Mongo Repository', () => {
     const sut = makeSut()
     const account = await sut.add({
       name: 'any_name',
+      description: 'any_description',
+      url: 'https://www.any_url.com/',
       series: 1,
       betweenSeriesTime: 120,
       repetitions: 12,
@@ -34,6 +36,8 @@ describe('Exercise Mongo Repository', () => {
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
     expect(account.name).toBe('any_name')
+    expect(account.description).toBe('any_description')
+    expect(account.url).toBe('https://www.any_url.com/')
     expect(account.series).toBe(1)
     expect(account.betweenSeriesTime).toBe(120)
     expect(account.repetitions).toBe(12)

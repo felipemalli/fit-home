@@ -29,7 +29,9 @@ describe('Exercise Routes', () => {
       await request(app)
         .post('/api/exercises')
         .send({
-          name: 'Arm Flexion',
+          name: 'Push-up',
+          description: 'Do half classic and half triangle push-up.',
+          url: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
           series: 3,
           betweenSeriesTime: 80,
           repetitions: 10,
@@ -60,6 +62,8 @@ describe('Exercise Routes', () => {
         .set('x-access-token', accessToken)
         .send({
           name: 'Arm Flexion',
+          description: 'Do half classic and half triangle push-up.',
+          url: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
           series: 3,
           betweenSeriesTime: 80,
           repetitions: 10,
