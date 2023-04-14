@@ -1,4 +1,4 @@
-import { ExerciseModel } from '../models/exercise'
+import { ExerciseModel } from '../models/exercises/exercise'
 
 export interface AddExerciseModel {
   name: string
@@ -8,6 +8,7 @@ export interface AddExerciseModel {
   betweenSeriesTime: number
   repetitions: number
   repetitionTime: number
+  workoutId?: string
 }
 
 export interface AddExercise {

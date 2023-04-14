@@ -1,4 +1,4 @@
-import { ExerciseModel } from '../../../../domain/models/exercise'
+import { ExerciseModel } from '../../../../domain/models/exercises/exercise'
 import { AddExerciseModel } from '../../../../domain/usecases/add-exercise'
 
 export interface AddExerciseRepository {

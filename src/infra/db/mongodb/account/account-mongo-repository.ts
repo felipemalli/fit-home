@@ -2,7 +2,7 @@ import { AddAccountRepository } from '../../../../data/protocols/db/account/add-
 import { LoadAccountByEmailRepository } from '../../../../data/protocols/db/account/load-account-by-email-repository'
 import { LoadAccountByTokenRepository } from '../../../../data/protocols/db/account/load-account-by-token-repository'
 import { UpdateAccessTokenRepository } from '../../../../data/protocols/db/account/update-access-token-repository'
-import { AccountModel } from '../../../../domain/models/account'
+import { AccountModel } from '../../../../domain/models/accounts/account'
 import { AddAccountModel } from '../../../../domain/usecases/add-account'
 import { MongoHelper } from '../helpers/mongo-helper'
 

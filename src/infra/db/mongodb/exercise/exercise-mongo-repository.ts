@@ -1,5 +1,5 @@
 import { AddExerciseRepository } from '../../../../data/protocols/db/exercise/add-exercise-repository'
-import { ExerciseModel } from '../../../../domain/models/exercise'
+import { ExerciseModel } from '../../../../domain/models/exercises/exercise'
 import { AddExerciseModel } from '../../../../domain/usecases/add-exercise'
 import { MongoHelper } from '../helpers/mongo-helper'
 
