@@ -4,11 +4,14 @@ export interface AddExerciseModel {
   name: string
   description?: string
   url?: string
-  series: number
-  betweenSeriesTime: number
-  repetitions: number
-  repetitionTime: number
+  accountId: string
   workoutId?: string
+  configuration: {
+    series: number
+    betweenSeriesTime: number
+    repetitions: number
+    repetitionTime: number
+  }
 }
 
 export interface AddExercise {
