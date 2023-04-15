@@ -2,9 +2,9 @@
 
 > ## Caso de sucesso
 
-1. ⛔ Recebe uma requisição do tipo **POST** na rota **/api/exercises**
-2. ⛔ Valida dados obrigatórios **name**, **totalTime**, **series**, **restBetweenSeriesTime**, **repetitions** e **repetitionTime**
-3. ⛔ **Cria** um exercício com os dados fornecidos
+1. ✅ Recebe uma requisição do tipo **POST** na rota **/api/exercises**
+2. ✅ Valida dados obrigatórios **name**, **accountId**, **series**, **betweenSeriesTime**, **repetitions** e **repetitionTime**
+3. ✅ **Cria** um exercício com os dados fornecidos
 4. ✅ Retorna **201**, com os dados do exercício
 
 
