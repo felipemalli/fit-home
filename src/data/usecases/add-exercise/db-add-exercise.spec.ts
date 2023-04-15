@@ -7,20 +7,29 @@ const makeFakeExercise = (): ExerciseModel => ({
   name: 'any_name',
   description: 'any_description',
   url: 'https://www.any_url.com/',
-  series: 1,
-  betweenSeriesTime: 120,
-  repetitions: 12,
-  repetitionTime: 4.5
+  accountId: 'any_account_id',
+  workoutId: 'any_workout_id',
+  isFavorite: false,
+  configurations: [{
+    series: 1,
+    betweenSeriesTime: 120,
+    repetitions: 12,
+    repetitionTime: 4.5
+  }]
 })
 
 const makeFakeExerciseData = (): AddExerciseModel => ({
   name: 'any_name',
   description: 'any_description',
   url: 'https://www.any_url.com/',
-  series: 1,
-  betweenSeriesTime: 120,
-  repetitions: 12,
-  repetitionTime: 4.5
+  accountId: 'any_account_id',
+  workoutId: 'any_workout_id',
+  configuration: {
+    series: 1,
+    betweenSeriesTime: 120,
+    repetitions: 12,
+    repetitionTime: 4.5
+  }
 })
 
 const makeAddExerciseRepository = (): AddExerciseRepository => {
