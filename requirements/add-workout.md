@@ -11,5 +11,5 @@
 > ## Exceções
 
 1. ⛔ Retorna erro **404** se a API não existir
-2. ⛔ Retorna erro **400** se **accountId**, **name**, **betweenExercisesTime** não forem fornecidos pelo client
+2. ⛔ Retorna erro **400** se **accountId**, **name** ou **betweenExercisesTime** não forem fornecidos pelo client
 3. ⛔ Retorna erro **500** se der erro ao tentar criar a série
