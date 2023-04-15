@@ -25,10 +25,15 @@ const makeFakeExercise = (): ExerciseModel => ({
   name: 'any_name',
   description: 'any_description',
   url: 'https://www.any_url.com/',
-  series: 1,
-  betweenSeriesTime: 120,
-  repetitions: 12,
-  repetitionTime: 4.5
+  accountId: 'any_account_id',
+  workoutId: 'any_workout_id',
+  isFavorite: false,
+  configurations: [{
+    series: 1,
+    betweenSeriesTime: 120,
+    repetitions: 12,
+    repetitionTime: 4.5
+  }]
 })
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -36,6 +41,8 @@ const makeFakeRequest = (): HttpRequest => ({
     name: 'any_name',
     description: 'any_description',
     url: 'https://www.any_url.com/',
+    accountId: 'any_account_id',
+    workoutId: 'any_workout_id',
     series: 1,
     betweenSeriesTime: 120,
     repetitions: 12,
@@ -93,8 +100,7 @@ describe('AddExercise Controller', () => {
 
   it('Should return 201 on success', async () => {
     const { sut } = makeSut()
-    const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(created({ id: makeFakeExercise().id, ...httpRequest.body }))
+    expect(httpResponse).toEqual(created(makeFakeExercise()))
   })
 })

@@ -24,12 +24,10 @@ const makeFakeExerciseData = (): AddExerciseModel => ({
   url: 'https://www.any_url.com/',
   accountId: 'any_account_id',
   workoutId: 'any_workout_id',
-  configuration: {
-    series: 1,
-    betweenSeriesTime: 120,
-    repetitions: 12,
-    repetitionTime: 4.5
-  }
+  series: 1,
+  betweenSeriesTime: 120,
+  repetitions: 12,
+  repetitionTime: 4.5
 })
 
 const makeAddExerciseRepository = (): AddExerciseRepository => {

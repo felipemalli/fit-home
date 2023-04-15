@@ -6,12 +6,10 @@ import { MongoHelper } from '../helpers/mongo-helper'
 export class ExerciseMongoRepository implements AddExerciseRepository {
   async add (exerciseData: AddExerciseModel): Promise<ExerciseModel> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
-    const { configuration, ...data } = exerciseData
+    const { series, betweenSeriesTime, repetitions, repetitionTime, ...data } = exerciseData
     const exerciseModel: Omit<ExerciseModel, 'id'> = {
       ...data,
-      description: data.description ?? '',
-      url: data.url ?? '',
-      configurations: [configuration],
+      configurations: [{ series, betweenSeriesTime, repetitions, repetitionTime }],
       isFavorite: false
     }
     const { insertedId } = await exerciseCollection.insertOne(exerciseModel)

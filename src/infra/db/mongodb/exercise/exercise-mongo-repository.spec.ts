@@ -28,6 +28,8 @@ describe('Exercise Mongo Repository', () => {
       name: 'any_name',
       description: 'any_description',
       url: 'https://www.any_url.com/',
+      accountId: 'any_account_id',
+      workoutId: 'any_workout_id',
       series: 1,
       betweenSeriesTime: 120,
       repetitions: 12,
@@ -38,9 +40,9 @@ describe('Exercise Mongo Repository', () => {
     expect(account.name).toBe('any_name')
     expect(account.description).toBe('any_description')
     expect(account.url).toBe('https://www.any_url.com/')
-    expect(account.series).toBe(1)
-    expect(account.betweenSeriesTime).toBe(120)
-    expect(account.repetitions).toBe(12)
-    expect(account.repetitionTime).toBe(4.5)
+    expect(account.configurations[0].series).toBe(1)
+    expect(account.configurations[0].betweenSeriesTime).toBe(120)
+    expect(account.configurations[0].repetitions).toBe(12)
+    expect(account.configurations[0].repetitionTime).toBe(4.5)
   })
 })

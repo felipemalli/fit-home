@@ -6,12 +6,10 @@ export interface AddExerciseModel {
   url?: string
   accountId: string
   workoutId?: string
-  configuration: {
-    series: number
-    betweenSeriesTime: number
-    repetitions: number
-    repetitionTime: number
-  }
+  series: number
+  betweenSeriesTime: number
+  repetitions: number
+  repetitionTime: number
 }
 
 export interface AddExercise {
