@@ -3,4 +3,5 @@ export interface ExerciseConfiguration {
   betweenSeriesTime: number
   repetitions: number
   repetitionTime: number
+  warmupTime: number
 }

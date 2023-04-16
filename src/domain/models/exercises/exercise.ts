@@ -4,4 +4,5 @@ export interface ExerciseModel extends ExerciseCommon {
   id: string
   workoutId?: string
   isFavorite: boolean
+  templateId?: string
 }
