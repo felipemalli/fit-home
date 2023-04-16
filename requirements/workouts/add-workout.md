@@ -7,7 +7,6 @@
 3. ⛔ **Cria** uma série com os dados fornecidos
 4. ⛔ Retorna **201**, com os dados da série
 
-
 > ## Exceções
 
 1. ⛔ Retorna erro **404** se a API não existir
