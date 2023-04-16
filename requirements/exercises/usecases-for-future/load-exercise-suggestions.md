@@ -1,6 +1,5 @@
 # Listar exercícios sugeridos
 
-
 > ## Caso de sucesso
 
 1. ⛔ Recebe uma requisição do tipo **GET** na rota **/api/exercises/suggestions**
