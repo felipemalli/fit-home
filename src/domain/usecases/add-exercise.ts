@@ -6,6 +6,8 @@ export interface AddExerciseModel {
   url?: string
   accountId: string
   workoutId?: string
+  isFavorite?: boolean
+  templateId?: string
   series: number
   betweenSeriesTime: number
   repetitions: number

@@ -5,5 +5,4 @@ export interface WorkoutModel {
   description?: string
   weekdays?: string[]
   betweenExercisesTime: number
-  isFavorite: boolean
 }
