@@ -22,31 +22,44 @@ const makeAddExercise = (): AddExercise => {
 
 const makeFakeExercise = (): ExerciseModel => ({
   id: 'any_id',
+  workoutId: 'any_workout_id',
+  templateId: 'any_template_id',
   name: 'any_name',
   description: 'any_description',
-  url: 'https://www.any_url.com/',
   accountId: 'any_account_id',
-  workoutId: 'any_workout_id',
-  isFavorite: false,
-  configurations: [{
-    series: 1,
-    betweenSeriesTime: 120,
-    repetitions: 12,
-    repetitionTime: 4.5
+  selectedVariationId: 'any_variation_id',
+  variations: [{
+    id: 'any_variation_id',
+    name: 'any_variation_name',
+    description: 'any_variation_description',
+    url: 'https://www.any_variation_url.com/',
+    configuration: {
+      series: 1,
+      betweenSeriesTime: 120,
+      repetitions: 12,
+      repetitionTime: 4.5,
+      warmupTime: 0,
+      weight: 10
+    }
   }]
 })
 
-const makeFakeRequest = (): HttpRequest => ({
+const makeFakeRequest = (): HttpRequest<AddExerciseModel> => ({
   body: {
+    workoutId: 'any_workout_id',
+    templateId: 'any_template_id',
     name: 'any_name',
     description: 'any_description',
-    url: 'https://www.any_url.com/',
     accountId: 'any_account_id',
-    workoutId: 'any_workout_id',
+    variationName: 'any_variation_name',
+    variationDescription: 'any_variation_description',
+    variationUrl: 'https://www.any_variation_url.com/',
     series: 1,
     betweenSeriesTime: 120,
     repetitions: 12,
-    repetitionTime: 4.5
+    repetitionTime: 4.5,
+    warmupTime: 0,
+    weight: 10
   }
 })
 
