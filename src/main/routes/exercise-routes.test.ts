@@ -29,13 +29,20 @@ describe('Exercise Routes', () => {
       await request(app)
         .post('/api/exercises')
         .send({
-          name: 'Push-up',
-          description: 'Do half classic and half triangle push-up.',
-          url: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
+          name: 'Bench Press',
+          description: 'Lying on the training chair',
+          workoutId: '65334ikt04k03e45t4',
+          templateId: 'ds3a76434plds334alpsd02',
+          accountId: '2399eiwd0933jk02r1',
+          variationName: 'Standard',
+          variationDescription: 'Do half weight in the last 2 repetitions',
+          variationUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
           series: 3,
           betweenSeriesTime: 80,
           repetitions: 10,
-          repetitionTime: 2.35
+          repetitionTime: 4.35,
+          warmupTime: 30,
+          weight: 12
         })
         .expect(403)
     })
@@ -61,13 +68,20 @@ describe('Exercise Routes', () => {
         .post('/api/exercises')
         .set('x-access-token', accessToken)
         .send({
-          name: 'Arm Flexion',
-          description: 'Do half classic and half triangle push-up.',
-          url: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
+          name: 'Bench Press',
+          description: 'Lying on the training chair',
+          workoutId: '65334ikt04k03e45t4',
+          templateId: 'ds3a76434plds334alpsd02',
+          accountId: '2399eiwd0933jk02r1',
+          variationName: 'Standard',
+          variationDescription: 'Do half weight in the last 2 repetitions',
+          variationUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
           series: 3,
           betweenSeriesTime: 80,
           repetitions: 10,
-          repetitionTime: 2.35
+          repetitionTime: 4.35,
+          warmupTime: 30,
+          weight: 12
         })
         .expect(201)
     })
