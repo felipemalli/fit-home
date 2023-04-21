@@ -1,17 +1,15 @@
 import { ExerciseModel } from '../models/exercises/exercise'
+import { ExerciseConfiguration } from '../models/exercises/shared/exercise-variation'
 
-export interface AddExerciseModel {
+export interface AddExerciseModel extends ExerciseConfiguration {
+  workoutId?: string
+  templateId?: string
   name: string
   description?: string
-  url?: string
   accountId: string
-  workoutId?: string
-  isFavorite?: boolean
-  templateId?: string
-  series: number
-  betweenSeriesTime: number
-  repetitions: number
-  repetitionTime: number
+  variationName: string
+  variationDescription?: string
+  variationUrl?: string
 }
 
 export interface AddExercise {
