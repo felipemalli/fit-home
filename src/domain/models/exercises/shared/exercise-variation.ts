@@ -5,3 +5,8 @@ export interface ExerciseConfiguration {
   repetitionTime: number
   warmupTime: number
 }
+
+export interface ExerciseVariation {
+  name: string
+  configuration: ExerciseConfiguration
+}
