@@ -3,7 +3,7 @@ export interface ExerciseConfiguration {
   betweenSeriesTime: number
   repetitions: number
   repetitionTime: number
-  warmupTime: number
+  warmupTime?: number
   weight?: number
 }
 

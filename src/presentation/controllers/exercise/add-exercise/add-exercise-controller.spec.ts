@@ -22,10 +22,10 @@ const makeAddExercise = (): AddExercise => {
 
 const makeFakeExercise = (): ExerciseModel => ({
   id: 'any_id',
-  workoutId: 'any_workout_id',
-  templateId: 'any_template_id',
   name: 'any_name',
   description: 'any_description',
+  workoutId: 'any_workout_id',
+  templateId: 'any_template_id',
   accountId: 'any_account_id',
   selectedVariationId: 'any_variation_id',
   variations: [{
@@ -46,10 +46,10 @@ const makeFakeExercise = (): ExerciseModel => ({
 
 const makeFakeRequest = (): HttpRequest<AddExerciseModel> => ({
   body: {
-    workoutId: 'any_workout_id',
-    templateId: 'any_template_id',
     name: 'any_name',
     description: 'any_description',
+    workoutId: 'any_workout_id',
+    templateId: 'any_template_id',
     accountId: 'any_account_id',
     variationName: 'any_variation_name',
     variationDescription: 'any_variation_description',
