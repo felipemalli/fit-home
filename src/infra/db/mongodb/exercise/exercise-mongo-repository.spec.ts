@@ -27,22 +27,36 @@ describe('Exercise Mongo Repository', () => {
     const account = await sut.add({
       name: 'any_name',
       description: 'any_description',
-      url: 'https://www.any_url.com/',
-      accountId: 'any_account_id',
       workoutId: 'any_workout_id',
+      templateId: 'any_template_id',
+      accountId: 'any_account_id',
+      variationName: 'any_variation_name',
+      variationDescription: 'any_variation_description',
+      variationUrl: 'https://www.any_variation_url.com/',
       series: 1,
       betweenSeriesTime: 120,
       repetitions: 12,
-      repetitionTime: 4.5
+      repetitionTime: 4.5,
+      warmupTime: 0,
+      weight: 10
     })
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
     expect(account.name).toBe('any_name')
     expect(account.description).toBe('any_description')
-    expect(account.url).toBe('https://www.any_url.com/')
-    expect(account.configurations[0].series).toBe(1)
-    expect(account.configurations[0].betweenSeriesTime).toBe(120)
-    expect(account.configurations[0].repetitions).toBe(12)
-    expect(account.configurations[0].repetitionTime).toBe(4.5)
+    expect(account.workoutId).toBe('any_workout_id')
+    expect(account.templateId).toBe('any_template_id')
+    // expect(account.selectedVariationId).toBeTruthy()
+    const { variations: [firstVariation] } = account
+    // expect(account.selectedVariationId).toBe(firstVariation.id)
+    expect(firstVariation.name).toBe('any_variation_name')
+    expect(firstVariation.description).toBe('any_variation_description')
+    expect(firstVariation.url).toBe('https://www.any_variation_url.com/')
+    expect(firstVariation.configuration.series).toBe(1)
+    expect(firstVariation.configuration.betweenSeriesTime).toBe(120)
+    expect(firstVariation.configuration.repetitions).toBe(12)
+    expect(firstVariation.configuration.repetitionTime).toBe(4.5)
+    expect(firstVariation.configuration.warmupTime).toBe(0)
+    expect(firstVariation.configuration.weight).toBe(10)
   })
 })
