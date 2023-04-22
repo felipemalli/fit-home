@@ -13,13 +13,13 @@ export class AddExerciseController implements Controller {
       if (error) {
         return badRequest(error)
       }
-      const { workoutId, templateId, name, description, accountId, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight } = httpRequest.body
+      const { workoutId, templateId, name, description, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight } = httpRequest.body
       const exercise = await this.addExercise.add({
         workoutId,
         templateId,
         name,
         description,
-        accountId,
+        accountId: httpRequest.accountId ?? '',
         variationName,
         variationDescription,
         variationUrl,

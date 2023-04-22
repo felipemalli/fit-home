@@ -6,12 +6,13 @@ export interface AddExerciseModel extends ExerciseConfiguration {
   templateId?: string
   name: string
   description?: string
-  accountId: string
   variationName: string
   variationDescription?: string
   variationUrl?: string
 }
 
+type AddExerciseModelRequest = AddExerciseModel & { accountId: string }
+
 export interface AddExercise {
-  add: (exercise: AddExerciseModel) => Promise<ExerciseModel>
+  add: (exercise: AddExerciseModelRequest) => Promise<ExerciseModel>
 }

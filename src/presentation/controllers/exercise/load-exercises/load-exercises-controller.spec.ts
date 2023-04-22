@@ -73,7 +73,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadExercises Controller', () => {
-  it('Should call LoadExercises with accountId', async () => {
+  it('Should call LoadExercises with correct values', async () => {
     const { sut, loadExercisesStub } = makeSut()
     const loadSpy = jest.spyOn(loadExercisesStub, 'load')
     const httpRequest = makeFakeRequest()

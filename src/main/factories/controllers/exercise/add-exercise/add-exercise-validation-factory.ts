@@ -4,7 +4,7 @@ import { RequiredFieldValidation, ValidationComposite } from '../../../../../val
 
 export const makeAddExerciseValidation = (): ValidationComposite => {
   const validations: Validation[] = []
-  for (const field of ['name', 'accountId', 'variationName', 'series', 'betweenSeriesTime', 'repetitions', 'repetitionTime']) {
+  for (const field of ['name', 'variationName', 'series', 'betweenSeriesTime', 'repetitions', 'repetitionTime']) {
     validations.push(new RequiredFieldValidation(field))
   }
   return new ValidationComposite(validations)

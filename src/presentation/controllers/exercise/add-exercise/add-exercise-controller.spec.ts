@@ -50,7 +50,6 @@ const makeFakeRequest = (): HttpRequest<AddExerciseModel> => ({
     description: 'any_description',
     workoutId: 'any_workout_id',
     templateId: 'any_template_id',
-    accountId: 'any_account_id',
     variationName: 'any_variation_name',
     variationDescription: 'any_variation_description',
     variationUrl: 'https://www.any_variation_url.com/',
@@ -60,7 +59,8 @@ const makeFakeRequest = (): HttpRequest<AddExerciseModel> => ({
     repetitionTime: 4.5,
     warmupTime: 0,
     weight: 10
-  }
+  },
+  accountId: 'any_id'
 })
 
 interface SutTypes {
@@ -101,7 +101,7 @@ describe('AddExercise Controller', () => {
     const addSpy = jest.spyOn(addExerciseStub, 'add')
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
-    expect(addSpy).toHaveBeenCalledWith(httpRequest.body)
+    expect(addSpy).toHaveBeenCalledWith({ ...httpRequest.body, accountId: 'any_id' })
   })
 
   it('Should return 500 if AddExercise throws', async () => {
