@@ -1,3 +1,4 @@
+import { ok } from '../../../helpers/http/http-helper'
 import { LoadExercisesController } from './load-exercises-controller'
 import { ExerciseModel, LoadExercises } from './load-exercises-protocols'
 
@@ -71,5 +72,11 @@ describe('LoadExercises Controller', () => {
     const loadSpy = jest.spyOn(loadExercisesStub, 'load')
     await sut.handle({})
     expect(loadSpy).toHaveBeenCalled()
+  })
+
+  it('Should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(ok(makeFakeExercises()))
   })
 })
