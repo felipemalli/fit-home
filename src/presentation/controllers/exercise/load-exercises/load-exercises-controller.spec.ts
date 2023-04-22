@@ -42,16 +42,33 @@ const makeFakeExercises = (): ExerciseModel[] => {
   }]
 }
 
+const makeLoadExercises = (): LoadExercises => {
+  class LoadExercisesStub implements LoadExercises {
+    async load (): Promise<ExerciseModel[]> {
+      return await new Promise(resolve => resolve(makeFakeExercises()))
+    }
+  }
+  return new LoadExercisesStub()
+}
+
+interface SutTypes {
+  sut: LoadExercisesController
+  loadExercisesStub: LoadExercises
+}
+
+const makeSut = (): SutTypes => {
+  const loadExercisesStub = makeLoadExercises()
+  const sut = new LoadExercisesController(loadExercisesStub)
+  return {
+    sut,
+    loadExercisesStub
+  }
+}
+
 describe('LoadExercises Controller', () => {
   it('Should call LoadExercises', async () => {
-    class LoadExercisesStub implements LoadExercises {
-      async load (): Promise<ExerciseModel[]> {
-        return await new Promise(resolve => resolve(makeFakeExercises()))
-      }
-    }
-    const loadExercisesStub = new LoadExercisesStub()
+    const { sut, loadExercisesStub } = makeSut()
     const loadSpy = jest.spyOn(loadExercisesStub, 'load')
-    const sut = new LoadExercisesController(loadExercisesStub)
     await sut.handle({})
     expect(loadSpy).toHaveBeenCalled()
   })
