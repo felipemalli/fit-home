@@ -8,7 +8,7 @@ export class DbLoadExercises implements LoadExercises {
   ) {}
 
   async load (accountId: string): Promise<ExerciseModel[]> {
-    await this.loadExercisesRepository.loadAll(accountId)
-    return []
+    const exercises = await this.loadExercisesRepository.loadAll(accountId)
+    return exercises
   }
 }
