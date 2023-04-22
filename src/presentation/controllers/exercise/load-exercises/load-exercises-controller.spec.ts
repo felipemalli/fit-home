@@ -1,4 +1,4 @@
-import { ok } from '../../../helpers/http/http-helper'
+import { ok, serverError } from '../../../helpers/http/http-helper'
 import { LoadExercisesController } from './load-exercises-controller'
 import { ExerciseModel, LoadExercises } from './load-exercises-protocols'
 
@@ -78,5 +78,12 @@ describe('LoadExercises Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({})
     expect(httpResponse).toEqual(ok(makeFakeExercises()))
+  })
+
+  it('Should return 500 if LoadExercises throws', async () => {
+    const { sut, loadExercisesStub } = makeSut()
+    jest.spyOn(loadExercisesStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
