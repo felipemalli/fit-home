@@ -43,16 +43,33 @@ const makeFakeExercises = (): ExerciseModel[] => {
   }]
 }
 
+const makeLoadExercisesRepository = (): LoadExercisesRepository => {
+  class LoadExercisesRepositoryStub implements LoadExercisesRepository {
+    async loadAll (accountId: string): Promise<ExerciseModel[]> {
+      return await new Promise(resolve => resolve(makeFakeExercises()))
+    }
+  }
+  return new LoadExercisesRepositoryStub()
+}
+
+interface SutTypes {
+  sut: DbLoadExercises
+  loadExercisesRepositoryStub: LoadExercisesRepository
+}
+
+const makeSut = (): SutTypes => {
+  const loadExercisesRepositoryStub = makeLoadExercisesRepository()
+  const sut = new DbLoadExercises(loadExercisesRepositoryStub)
+  return {
+    sut,
+    loadExercisesRepositoryStub
+  }
+}
+
 describe('DbLoadExercises', () => {
   it('Should call LoadExercises with correct values', async () => {
-    class LoadExercisesRepositoryStub implements LoadExercisesRepository {
-      async loadAll (accountId: string): Promise<ExerciseModel[]> {
-        return await new Promise(resolve => resolve(makeFakeExercises()))
-      }
-    }
-    const loadExercisesRepositoryStub = new LoadExercisesRepositoryStub()
+    const { sut, loadExercisesRepositoryStub } = makeSut()
     const loadAllSpy = jest.spyOn(loadExercisesRepositoryStub, 'loadAll')
-    const sut = new DbLoadExercises(loadExercisesRepositoryStub)
     await sut.load('any_id')
     expect(loadAllSpy).toHaveBeenCalledWith('any_id')
   })
