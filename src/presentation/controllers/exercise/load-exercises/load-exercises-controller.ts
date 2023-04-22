@@ -5,7 +5,7 @@ export class LoadExercisesController implements Controller {
   constructor (private readonly loadExercises: LoadExercises) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    await this.loadExercises.load()
-    return ok({})
+    const exercises = await this.loadExercises.load()
+    return ok(exercises)
   }
 }
