@@ -67,7 +67,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadExercises', () => {
-  it('Should call LoadExercises with correct values', async () => {
+  it('Should call LoadExercisesRepository with correct values', async () => {
     const { sut, loadExercisesRepositoryStub } = makeSut()
     const loadAllSpy = jest.spyOn(loadExercisesRepositoryStub, 'loadAll')
     await sut.load('any_id')
@@ -78,5 +78,12 @@ describe('DbLoadExercises', () => {
     const { sut } = makeSut()
     const exercises = await sut.load('any_id')
     expect(exercises).toEqual(makeFakeExercises())
+  })
+
+  it('Should throw if LoadExercisesRepository throws', async () => {
+    const { sut, loadExercisesRepositoryStub } = makeSut()
+    jest.spyOn(loadExercisesRepositoryStub, 'loadAll').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.load('any_id')
+    await expect(promise).rejects.toThrow()
   })
 })
