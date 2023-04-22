@@ -1,6 +1,6 @@
 import { ok, serverError } from '../../../helpers/http/http-helper'
 import { LoadExercisesController } from './load-exercises-controller'
-import { ExerciseModel, LoadExercises } from './load-exercises-protocols'
+import { ExerciseModel, HttpRequest, LoadExercises } from './load-exercises-protocols'
 
 const makeFakeExercises = (): ExerciseModel[] => {
   return [{
@@ -45,12 +45,18 @@ const makeFakeExercises = (): ExerciseModel[] => {
 
 const makeLoadExercises = (): LoadExercises => {
   class LoadExercisesStub implements LoadExercises {
-    async load (): Promise<ExerciseModel[]> {
+    async load (accountId: string): Promise<ExerciseModel[]> {
       return await new Promise(resolve => resolve(makeFakeExercises()))
     }
   }
   return new LoadExercisesStub()
 }
+
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    accountId: 'any_id'
+  }
+})
 
 interface SutTypes {
   sut: LoadExercisesController
@@ -67,23 +73,24 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoadExercises Controller', () => {
-  it('Should call LoadExercises', async () => {
+  it('Should call LoadExercises with accountId', async () => {
     const { sut, loadExercisesStub } = makeSut()
     const loadSpy = jest.spyOn(loadExercisesStub, 'load')
-    await sut.handle({})
-    expect(loadSpy).toHaveBeenCalled()
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(loadSpy).toHaveBeenCalledWith(httpRequest.body.accountId)
   })
 
   it('Should return 200 on success', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(ok(makeFakeExercises()))
   })
 
   it('Should return 500 if LoadExercises throws', async () => {
     const { sut, loadExercisesStub } = makeSut()
     jest.spyOn(loadExercisesStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const httpResponse = await sut.handle({})
+    const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
