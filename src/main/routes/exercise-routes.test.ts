@@ -86,4 +86,12 @@ describe('Exercise Routes', () => {
         .expect(201)
     })
   })
+
+  describe('GET /exercises', () => {
+    it('Should return 403 on load exercise without accessToken', async () => {
+      await request(app)
+        .get('/api/exercises')
+        .expect(403)
+    })
+  })
 })
