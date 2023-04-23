@@ -6,7 +6,7 @@ export class LoadExercisesController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const exercises = await this.loadExercises.load(httpRequest.body.accountId)
+      const exercises = await this.loadExercises.load(httpRequest.accountId ?? '')
       return exercises.length ? ok(exercises) : noContent()
     } catch (error) {
       return serverError(error)

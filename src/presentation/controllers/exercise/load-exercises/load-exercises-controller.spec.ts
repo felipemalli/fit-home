@@ -53,9 +53,7 @@ const makeLoadExercises = (): LoadExercises => {
 }
 
 const makeFakeRequest = (): HttpRequest => ({
-  body: {
-    accountId: 'any_id'
-  }
+  accountId: 'any_id'
 })
 
 interface SutTypes {
@@ -78,7 +76,7 @@ describe('LoadExercises Controller', () => {
     const loadSpy = jest.spyOn(loadExercisesStub, 'load')
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
-    expect(loadSpy).toHaveBeenCalledWith(httpRequest.body.accountId)
+    expect(loadSpy).toHaveBeenCalledWith(httpRequest.accountId)
   })
 
   it('Should return 200 on success', async () => {

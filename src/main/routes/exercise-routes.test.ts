@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken'
-import { Collection } from 'mongodb'
+import { Collection, ObjectId } from 'mongodb'
 import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import app from '../config/app'
@@ -7,6 +7,7 @@ import env from '../config/env'
 
 let exerciseCollection: Collection
 let accountCollection: Collection
+const ACCOUNT_ID = '6348acd2e1a47ca32e79f46f'
 
 describe('Exercise Routes', () => {
   beforeAll(async () => {
@@ -26,6 +27,7 @@ describe('Exercise Routes', () => {
 
   describe('POST /exercises', () => {
     it('Should return 403 on add exercise without accessToken', async () => {
+      const accountId = new ObjectId(ACCOUNT_ID)
       await request(app)
         .post('/api/exercises')
         .send({
@@ -33,7 +35,7 @@ describe('Exercise Routes', () => {
           description: 'Lying on the training chair',
           workoutId: '65334ikt04k03e45t4',
           templateId: 'ds3a76434plds334alpsd02',
-          accountId: '2399eiwd0933jk02r1',
+          accountId,
           variationName: 'Standard',
           variationDescription: 'Do half weight in the last 2 repetitions',
           variationUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
@@ -72,7 +74,7 @@ describe('Exercise Routes', () => {
           description: 'Lying on the training chair',
           workoutId: '65334ikt04k03e45t4',
           templateId: 'ds3a76434plds334alpsd02',
-          accountId: '2399eiwd0933jk02r1',
+          accountId: ACCOUNT_ID,
           variationName: 'Standard',
           variationDescription: 'Do half weight in the last 2 repetitions',
           variationUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',

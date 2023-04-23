@@ -3,6 +3,7 @@ import { MongoHelper } from '../helpers/mongo-helper'
 import { ExerciseMongoRepository } from './exercise-mongo-repository'
 
 let exerciseCollection: Collection
+const ACCOUNT_ID = '6348acd2e1a47ca32e79f46f'
 
 const makeSut = (): ExerciseMongoRepository => {
   return new ExerciseMongoRepository()
@@ -30,7 +31,7 @@ describe('Exercise Mongo Repository', () => {
         description: 'any_description',
         workoutId: 'any_workout_id',
         templateId: 'any_template_id',
-        accountId: 'any_account_id',
+        accountId: ACCOUNT_ID,
         variationName: 'any_variation_name',
         variationDescription: 'any_variation_description',
         variationUrl: 'https://www.any_variation_url.com/',
@@ -66,13 +67,14 @@ describe('Exercise Mongo Repository', () => {
     it('Should load all exercises by account on success', async () => {
       const firstVariationId = new ObjectId()
       const secondVariationId = new ObjectId()
+      const accountId = new ObjectId(ACCOUNT_ID)
       await exerciseCollection.insertMany([{
         _id: new ObjectId(),
         name: 'any_name',
         description: 'any_description',
         workoutId: 'any_workout_id',
         templateId: 'any_template_id',
-        accountId: 'valid_account_id',
+        accountId,
         selectedVariationId: firstVariationId,
         variations: [{
           _id: firstVariationId,
@@ -91,7 +93,7 @@ describe('Exercise Mongo Repository', () => {
       }, {
         _id: new ObjectId(),
         name: 'other_name',
-        accountId: 'valid_account_id',
+        accountId,
         selectedVariationId: secondVariationId,
         variations: [{
           _id: secondVariationId,
@@ -105,7 +107,7 @@ describe('Exercise Mongo Repository', () => {
         }]
       }])
       const sut = makeSut()
-      const accounts = await sut.loadAll('valid_account_id')
+      const accounts = await sut.loadAll(ACCOUNT_ID)
       expect(accounts.length).toBe(2)
       expect(accounts[0]).toBeTruthy()
       expect(accounts[0].id).toBeTruthy()
@@ -130,7 +132,7 @@ describe('Exercise Mongo Repository', () => {
 
     it('Should load empty list with no exercises on the accountId', async () => {
       const sut = makeSut()
-      const accounts = await sut.loadAll('account_id')
+      const accounts = await sut.loadAll(ACCOUNT_ID)
       expect(accounts.length).toBe(0)
     })
   })

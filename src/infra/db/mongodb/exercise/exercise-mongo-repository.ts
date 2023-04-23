@@ -9,16 +9,18 @@ import { MongoHelper } from '../helpers/mongo-helper'
 interface ExerciseVariationWithMongoId extends Omit<ExerciseVariation, 'id'> {
   _id: ObjectId
 }
-interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'variations'> {
+interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'> {
+  accountId: ObjectId
   variations: ExerciseVariationWithMongoId[]
 }
 
 export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository {
   async add (exerciseData: AddExerciseModel): Promise<ExerciseModel> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
-    const { variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight, ...data } = exerciseData
+    const { accountId, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight, ...data } = exerciseData
     const exerciseModel: ExerciseModelWithoutId = {
       ...data,
+      accountId: MongoHelper.parseToObjectId(accountId),
       selectedVariationId: '',
       variations: [{
         _id: new ObjectId(),
@@ -41,7 +43,8 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
 
   async loadAll (accountId: string): Promise<ExerciseModel[]> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
-    const exercises = await exerciseCollection.find({ accountId }).toArray() as unknown as ExerciseModel[]
+    const accountIdParsed = MongoHelper.parseToObjectId(accountId)
+    const exercises = await exerciseCollection.find({ accountId: accountIdParsed }).toArray() as unknown as ExerciseModel[]
     for (let i = 0; i < exercises.length; i++) {
       exercises[i] = MongoHelper.map(exercises[i])
       exercises[i].variations = MongoHelper.mapArray(exercises[i].variations)
