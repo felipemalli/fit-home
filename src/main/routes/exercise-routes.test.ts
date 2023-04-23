@@ -7,7 +7,29 @@ import env from '../config/env'
 
 let exerciseCollection: Collection
 let accountCollection: Collection
-const ACCOUNT_ID = '6348acd2e1a47ca32e79f46f'
+
+const makeAccount = async (): Promise<ObjectId> => {
+  const { insertedId } = await accountCollection.insertOne({
+    name: 'Felipe',
+    email: 'felipe@gmail.com',
+    password: '123'
+  })
+  return insertedId
+}
+
+const makeAccessToken = async (insertedId: ObjectId): Promise<string> => {
+  const id = insertedId.toString()
+  const accessToken = sign({ id }, env.jwtSecret)
+  await accountCollection.updateOne({
+    _id: insertedId
+  },
+  {
+    $set: {
+      accessToken
+    }
+  })
+  return accessToken
+}
 
 describe('Exercise Routes', () => {
   beforeAll(async () => {
@@ -27,7 +49,7 @@ describe('Exercise Routes', () => {
 
   describe('POST /exercises', () => {
     it('Should return 403 on add exercise without accessToken', async () => {
-      const accountId = new ObjectId(ACCOUNT_ID)
+      const insertedId = await makeAccount()
       await request(app)
         .post('/api/exercises')
         .send({
@@ -35,7 +57,7 @@ describe('Exercise Routes', () => {
           description: 'Lying on the training chair',
           workoutId: '65334ikt04k03e45t4',
           templateId: 'ds3a76434plds334alpsd02',
-          accountId,
+          accountId: insertedId,
           variationName: 'Standard',
           variationDescription: 'Do half weight in the last 2 repetitions',
           variationUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
@@ -50,22 +72,8 @@ describe('Exercise Routes', () => {
     })
 
     it('Should return 201 on add exercise with valid accessToken', async () => {
-      const { insertedId } = await accountCollection.insertOne({
-        name: 'Felipe',
-        email: 'felipe@gmail.com',
-        password: '123',
-        role: 'admin'
-      })
-      const id = insertedId.toString()
-      const accessToken = sign({ id }, env.jwtSecret)
-      await accountCollection.updateOne({
-        _id: insertedId
-      },
-      {
-        $set: {
-          accessToken
-        }
-      })
+      const insertedId = await makeAccount()
+      const accessToken = await makeAccessToken(insertedId)
       await request(app)
         .post('/api/exercises')
         .set('x-access-token', accessToken)
@@ -74,7 +82,7 @@ describe('Exercise Routes', () => {
           description: 'Lying on the training chair',
           workoutId: '65334ikt04k03e45t4',
           templateId: 'ds3a76434plds334alpsd02',
-          accountId: ACCOUNT_ID,
+          accountId: insertedId,
           variationName: 'Standard',
           variationDescription: 'Do half weight in the last 2 repetitions',
           variationUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
@@ -97,21 +105,8 @@ describe('Exercise Routes', () => {
     })
 
     it('Should return 200 on load exercises with valid accessToken', async () => {
-      const { insertedId } = await accountCollection.insertOne({
-        name: 'Felipe',
-        email: 'felipe@gmail.com',
-        password: '123'
-      })
-      const id = insertedId.toString()
-      const accessToken = sign({ id }, env.jwtSecret)
-      await accountCollection.updateOne({
-        _id: insertedId
-      },
-      {
-        $set: {
-          accessToken
-        }
-      })
+      const insertedId = await makeAccount()
+      const accessToken = await makeAccessToken(insertedId)
       const firstVariationId = new ObjectId()
       await exerciseCollection.insertMany([{
         _id: new ObjectId(),
