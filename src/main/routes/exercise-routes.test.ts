@@ -95,5 +95,51 @@ describe('Exercise Routes', () => {
         .get('/api/exercises')
         .expect(403)
     })
+
+    it('Should return 200 on load exercises with valid accessToken', async () => {
+      const { insertedId } = await accountCollection.insertOne({
+        name: 'Felipe',
+        email: 'felipe@gmail.com',
+        password: '123'
+      })
+      const id = insertedId.toString()
+      const accessToken = sign({ id }, env.jwtSecret)
+      await accountCollection.updateOne({
+        _id: insertedId
+      },
+      {
+        $set: {
+          accessToken
+        }
+      })
+      const firstVariationId = new ObjectId()
+      await exerciseCollection.insertMany([{
+        _id: new ObjectId(),
+        name: 'any_name',
+        description: 'any_description',
+        workoutId: 'any_workout_id',
+        templateId: 'any_template_id',
+        accountId: insertedId,
+        selectedVariationId: firstVariationId,
+        variations: [{
+          _id: firstVariationId,
+          name: 'any_variation_name',
+          description: 'any_variation_description',
+          url: 'https://www.any_variation_url.com/',
+          configuration: {
+            series: 1,
+            betweenSeriesTime: 120,
+            repetitions: 12,
+            repetitionTime: 4.5,
+            warmupTime: 0,
+            weight: 10
+          }
+        }]
+      }])
+      await request(app)
+        .get('/api/exercises')
+        .set('x-access-token', accessToken)
+        .expect(200)
+    })
   })
 })
