@@ -11,8 +11,6 @@
     "down:dev": "docker-compose -f docker-compose.dev.yml down --remove-orphans",
     "build": "rimraf dist/** && tsc -p tsconfig.production.json",
     "build:watch": "chokidar './src/**/*.ts' -c 'if [ '{event}' = 'unlink' ]; then rimraf dist/** && tsc -p tsconfig.production.json; else tsc -p tsconfig.production.json; fi' --silent",
-    "build:dev": "rimraf dist/** && tsc -p tsconfig.development.json",
-    "build:dev:watch": "chokidar './src/**/*.ts' -c 'if [ '{event}' = 'unlink' ]; then rimraf dist/** && tsc -p tsconfig.development.json; else tsc -p tsconfig.development.json; fi'",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
     "api:terminal": "docker exec -it api-container /bin/bash",
     "mongo:terminal": "docker exec -it mongo-container /bin/bash",
@@ -61,10 +59,14 @@
     "bcrypt": "^5.1.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "module-alias": "^2.2.2",
     "mongodb": "^5.2.0",
     "validator": "^13.9.0"
   },
   "engines": {
     "node": "19.x"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   }
 }

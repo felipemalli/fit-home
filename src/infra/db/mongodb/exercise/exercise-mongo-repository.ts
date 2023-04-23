@@ -1,10 +1,10 @@
-import { ObjectId } from 'mongodb'
-import { AddExerciseRepository } from '../../../../data/protocols/db/exercise/add-exercise-repository'
-import { LoadExercisesRepository } from '../../../../data/protocols/db/exercise/load-exercises-repository'
-import { ExerciseModel } from '../../../../domain/models/exercises/exercise'
-import { ExerciseVariation } from '../../../../domain/models/exercises/shared/exercise-variation'
-import { AddExerciseModel } from '../../../../domain/usecases/add-exercise'
 import { MongoHelper } from '../helpers/mongo-helper'
+import { ExerciseModel } from '@/domain/models/exercises/exercise'
+import { ExerciseVariation } from '@/domain/models/exercises/shared/exercise-variation'
+import { AddExerciseModel } from '@/domain/usecases/add-exercise'
+import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
+import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
+import { ObjectId } from 'mongodb'
 
 interface ExerciseVariationWithMongoId extends Omit<ExerciseVariation, 'id'> {
   _id: ObjectId

@@ -1,6 +1,6 @@
-import { noContent, ok, serverError } from '../../../helpers/http/http-helper'
 import { LoadExercisesController } from './load-exercises-controller'
 import { ExerciseModel, HttpRequest, LoadExercises } from './load-exercises-protocols'
+import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
 const makeFakeExercises = (): ExerciseModel[] => {
   return [{

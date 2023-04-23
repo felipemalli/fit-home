@@ -1,5 +1,5 @@
+import env from '@/main/config/env'
 import { Collection, MongoClient, ObjectId } from 'mongodb'
-import env from '../../../../main/config/env'
 
 export const MongoHelper = {
   client: null as unknown as MongoClient,

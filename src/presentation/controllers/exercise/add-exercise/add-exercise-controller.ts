@@ -1,5 +1,5 @@
-import { badRequest, created, serverError } from '../../../helpers/http/http-helper'
 import { AddExercise, Controller, HttpRequest, HttpResponse, Validation } from './add-exercise-controller-protocols'
+import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
 
 export class AddExerciseController implements Controller {
   constructor (

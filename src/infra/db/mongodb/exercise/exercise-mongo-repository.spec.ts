@@ -1,6 +1,6 @@
-import { Collection, ObjectId } from 'mongodb'
-import { MongoHelper } from '../helpers/mongo-helper'
 import { ExerciseMongoRepository } from './exercise-mongo-repository'
+import { MongoHelper } from '../helpers/mongo-helper'
+import { Collection, ObjectId } from 'mongodb'
 
 let exerciseCollection: Collection
 const ACCOUNT_ID = '6348acd2e1a47ca32e79f46f'

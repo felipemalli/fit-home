@@ -1,5 +1,5 @@
-import { ExerciseModel } from '../models/exercises/exercise'
-import { ExerciseConfiguration } from '../models/exercises/shared/exercise-variation'
+import { ExerciseModel } from '@/domain/models/exercises/exercise'
+import { ExerciseConfiguration } from '@/domain/models/exercises/shared/exercise-variation'
 
 export interface AddExerciseBodyModel extends ExerciseConfiguration {
   workoutId?: string

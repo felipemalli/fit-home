@@ -1,4 +1,4 @@
-import { ExerciseModel } from '../models/exercises/exercise'
+import { ExerciseModel } from '@/domain/models/exercises/exercise'
 
 export interface LoadExercises {
   load: (accountId: string) => Promise<ExerciseModel[]>

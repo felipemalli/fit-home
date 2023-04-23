@@ -1,5 +1,5 @@
-import { noContent, ok, serverError } from '../../../helpers/http/http-helper'
 import { Controller, HttpRequest, HttpResponse, LoadExercises } from './load-exercises-protocols'
+import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
 export class LoadExercisesController implements Controller {
   constructor (private readonly loadExercises: LoadExercises) {}

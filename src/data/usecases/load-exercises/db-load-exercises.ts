@@ -1,6 +1,6 @@
-import { LoadExercises } from '../../../domain/usecases/load-exercises'
-import { LoadExercisesRepository } from '../../protocols/db/exercise/load-exercises-repository'
-import { ExerciseModel } from '../add-exercise/db-add-exercise-protocols'
+import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
+import { LoadExercises } from '@/domain/usecases/load-exercises'
+import { ExerciseModel } from '@/domain/models/exercises/exercise'
 
 export class DbLoadExercises implements LoadExercises {
   constructor (

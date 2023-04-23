@@ -10,5 +10,8 @@ module.exports = {
   testEnvironment: 'node',
   preset: '@shelf/jest-mongodb',
   watchPathIgnorePatterns: ['globalConfig'],
-  transformIgnorePatterns: ['<rootDir>/node_modules/']
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  moduleNameMapper: {
+    '@/(.*)': '<rootDir>/src/$1'
+  }
 }

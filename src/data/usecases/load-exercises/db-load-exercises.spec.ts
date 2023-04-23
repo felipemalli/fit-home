@@ -1,6 +1,6 @@
-import { ExerciseModel } from '../../../domain/models/exercises/exercise'
-import { LoadExercisesRepository } from '../../protocols/db/exercise/load-exercises-repository'
 import { DbLoadExercises } from './db-load-exercises'
+import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
+import { ExerciseModel } from '@/domain/models/exercises/exercise'
 
 const makeFakeExercises = (): ExerciseModel[] => {
   return [{

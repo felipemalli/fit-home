@@ -1,7 +1,7 @@
 
-import { Validation } from '../../../../../presentation/protocols'
-import { RequiredFieldValidation, ValidationComposite } from '../../../../../validation/validators'
 import { makeAddExerciseValidation } from './add-exercise-validation-factory'
+import { RequiredFieldValidation, ValidationComposite } from '@/validation/validators'
+import { Validation } from '@/presentation/protocols'
 
 jest.mock('../../../../../validation/validators/validation-composite')
 

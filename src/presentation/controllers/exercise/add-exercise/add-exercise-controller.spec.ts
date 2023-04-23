@@ -1,6 +1,6 @@
-import { badRequest, created, serverError } from '../../../helpers/http/http-helper'
 import { AddExerciseController } from './add-exercise-controller'
 import { AddExercise, AddExerciseBodyModel, AddExerciseModel, ExerciseModel, HttpRequest, Validation } from './add-exercise-controller-protocols'
+import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
