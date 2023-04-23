@@ -72,7 +72,7 @@ describe('Exercise Mongo Repository', () => {
         description: 'any_description',
         workoutId: 'any_workout_id',
         templateId: 'any_template_id',
-        accountId: 'same_account_id',
+        accountId: 'valid_account_id',
         selectedVariationId: firstVariationId,
         variations: [{
           _id: firstVariationId,
@@ -91,7 +91,7 @@ describe('Exercise Mongo Repository', () => {
       }, {
         _id: new ObjectId(),
         name: 'other_name',
-        accountId: 'same_account_id',
+        accountId: 'valid_account_id',
         selectedVariationId: secondVariationId,
         variations: [{
           _id: secondVariationId,
@@ -105,7 +105,7 @@ describe('Exercise Mongo Repository', () => {
         }]
       }])
       const sut = makeSut()
-      const accounts = await sut.loadAll('same_account_id')
+      const accounts = await sut.loadAll('valid_account_id')
       expect(accounts.length).toBe(2)
       expect(accounts[0]).toBeTruthy()
       expect(accounts[0].id).toBeTruthy()
@@ -126,6 +126,12 @@ describe('Exercise Mongo Repository', () => {
       expect(firstVariation.configuration.warmupTime).toBe(0)
       expect(firstVariation.configuration.weight).toBe(10)
       expect(accounts[1].name).toBe('other_name')
+    })
+
+    it('Should load empty list with no exercises on the accountId', async () => {
+      const sut = makeSut()
+      const accounts = await sut.loadAll('account_id')
+      expect(accounts.length).toBe(0)
     })
   })
 })
