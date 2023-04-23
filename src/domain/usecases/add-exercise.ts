@@ -1,7 +1,7 @@
 import { ExerciseModel } from '../models/exercises/exercise'
 import { ExerciseConfiguration } from '../models/exercises/shared/exercise-variation'
 
-export interface AddExerciseModel extends ExerciseConfiguration {
+export interface AddExerciseBodyModel extends ExerciseConfiguration {
   workoutId?: string
   templateId?: string
   name: string
@@ -11,8 +11,8 @@ export interface AddExerciseModel extends ExerciseConfiguration {
   variationUrl?: string
 }
 
-type AddExerciseModelRequest = AddExerciseModel & { accountId: string }
+export type AddExerciseModel = AddExerciseBodyModel & { accountId: string }
 
 export interface AddExercise {
-  add: (exercise: AddExerciseModelRequest) => Promise<ExerciseModel>
+  add: (exercise: AddExerciseModel) => Promise<ExerciseModel>
 }

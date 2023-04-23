@@ -1,6 +1,6 @@
 import { badRequest, created, serverError } from '../../../helpers/http/http-helper'
 import { AddExerciseController } from './add-exercise-controller'
-import { AddExercise, AddExerciseModel, ExerciseModel, HttpRequest, Validation } from './add-exercise-controller-protocols'
+import { AddExercise, AddExerciseBodyModel, AddExerciseModel, ExerciseModel, HttpRequest, Validation } from './add-exercise-controller-protocols'
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
@@ -44,7 +44,7 @@ const makeFakeExercise = (): ExerciseModel => ({
   }]
 })
 
-const makeFakeRequest = (): HttpRequest<AddExerciseModel> => ({
+const makeFakeRequest = (): HttpRequest<AddExerciseBodyModel> => ({
   body: {
     name: 'any_name',
     description: 'any_description',

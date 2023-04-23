@@ -33,7 +33,8 @@ export class ExerciseMongoRepository implements AddExerciseRepository {
     await exerciseCollection.updateOne({ _id: insertedId }, {
       $set: { selectedVariationId: exerciseModel.variations[0]._id }
     })
-    const exercise = await exerciseCollection.findOne({ _id: insertedId })
+    const exercise = await exerciseCollection.findOne({ _id: insertedId }) as unknown as ExerciseModel
+    exercise.variations = MongoHelper.mapArray(exercise.variations)
     return MongoHelper.map(exercise)
   }
 }
