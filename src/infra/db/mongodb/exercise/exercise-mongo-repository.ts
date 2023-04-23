@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { AddExerciseRepository } from '../../../../data/protocols/db/exercise/add-exercise-repository'
+import { LoadExercisesRepository } from '../../../../data/protocols/db/exercise/load-exercises-repository'
 import { ExerciseModel } from '../../../../domain/models/exercises/exercise'
 import { ExerciseVariation } from '../../../../domain/models/exercises/shared/exercise-variation'
 import { AddExerciseModel } from '../../../../domain/usecases/add-exercise'
@@ -12,7 +13,7 @@ interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'variations'
   variations: ExerciseVariationWithMongoId[]
 }
 
-export class ExerciseMongoRepository implements AddExerciseRepository {
+export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository {
   async add (exerciseData: AddExerciseModel): Promise<ExerciseModel> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const { variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight, ...data } = exerciseData
@@ -36,5 +37,15 @@ export class ExerciseMongoRepository implements AddExerciseRepository {
     const exercise = await exerciseCollection.findOne({ _id: insertedId }) as unknown as ExerciseModel
     exercise.variations = MongoHelper.mapArray(exercise.variations)
     return MongoHelper.map(exercise)
+  }
+
+  async loadAll (accountId: string): Promise<ExerciseModel[]> {
+    const exerciseCollection = await MongoHelper.getCollection('exercises')
+    const exercises = await exerciseCollection.find({ accountId }).toArray() as unknown as ExerciseModel[]
+    for (let i = 0; i < exercises.length; i++) {
+      exercises[i] = MongoHelper.map(exercises[i])
+      exercises[i].variations = MongoHelper.mapArray(exercises[i].variations)
+    }
+    return exercises
   }
 }
