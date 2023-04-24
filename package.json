@@ -67,6 +67,6 @@
     "node": "19.x"
   },
   "_moduleAliases": {
-    "@": "dist"
+    "@root": "dist"
   }
 }
