@@ -1,4 +1,4 @@
-# Define a conexão de um exercício à uma série
+# Definir a conexão de um exercício à uma série
 
 ### Rascunho
 

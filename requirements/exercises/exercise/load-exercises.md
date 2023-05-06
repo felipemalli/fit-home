@@ -1,4 +1,4 @@
-# Carrega exercícios do usuário
+# Listar exercícios do usuário
 
 > ## Caso de sucesso
 

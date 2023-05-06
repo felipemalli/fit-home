@@ -1,4 +1,4 @@
-# Define o favorito de um exercício
+# Definir o favorito de um exercício
 
 ### Rascunho
 
