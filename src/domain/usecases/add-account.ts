@@ -1,10 +1,6 @@
 import { AccountModel } from '@/domain/models/accounts/account'
 
-export interface AddAccountModel {
-  name: string
-  email: string
-  password: string
-}
+export interface AddAccountModel extends Omit<AccountModel, 'id'> {}
 
 export interface AddAccount {
   add: (account: AddAccountModel) => Promise<AccountModel | null>
