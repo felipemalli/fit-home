@@ -1,7 +1,25 @@
-import { ExerciseCommon } from './shared/exercise-common'
-
-export interface ExerciseModel extends ExerciseCommon {
+export interface ExerciseModel {
   id: string
-  workoutId?: string
-  templateId?: string
+  name: string
+  description?: string
+  accountId: string
+  isTemplate: boolean
+  variations: ExerciseVariation[]
+}
+
+export interface ExerciseVariation {
+  id: string
+  name: string
+  description?: string
+  url?: string
+  configuration: ExerciseConfiguration
+}
+
+export interface ExerciseConfiguration {
+  series: number
+  betweenSeriesTime: number
+  repetitions: number
+  repetitionTime: number
+  warmupTime?: number
+  weight?: number
 }

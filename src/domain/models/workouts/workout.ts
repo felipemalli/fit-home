@@ -5,4 +5,9 @@ export interface WorkoutModel {
   description?: string
   weekdays?: string[]
   betweenExercisesTime: number
+  exercises: Array<{
+    exerciseId: string
+    selectedVariationId: string
+    order: number
+  }>
 }
