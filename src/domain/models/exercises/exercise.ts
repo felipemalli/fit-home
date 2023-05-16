@@ -3,7 +3,7 @@ export interface ExerciseModel {
   name: string
   description?: string
   accountId: string
-  isTemplate: boolean
+  isTemplate?: boolean
   variations: ExerciseVariation[]
 }
 

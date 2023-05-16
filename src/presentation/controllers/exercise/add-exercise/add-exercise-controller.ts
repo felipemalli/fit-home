@@ -18,7 +18,7 @@ export class AddExerciseController implements Controller {
         name,
         description,
         accountId: httpRequest.accountId ?? '',
-        isTemplate,
+        isTemplate: isTemplate ?? false,
         variationName,
         variationDescription,
         variationUrl,
