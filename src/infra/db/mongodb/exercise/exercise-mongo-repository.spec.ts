@@ -29,9 +29,8 @@ describe('Exercise Mongo Repository', () => {
       const account = await sut.add({
         name: 'any_name',
         description: 'any_description',
-        workoutId: 'any_workout_id',
-        templateId: 'any_template_id',
         accountId: ACCOUNT_ID,
+        isTemplate: true,
         variationName: 'any_variation_name',
         variationDescription: 'any_variation_description',
         variationUrl: 'https://www.any_variation_url.com/',
@@ -46,11 +45,8 @@ describe('Exercise Mongo Repository', () => {
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')
       expect(account.description).toBe('any_description')
-      expect(account.workoutId).toBe('any_workout_id')
-      expect(account.templateId).toBe('any_template_id')
-      expect(account.selectedVariationId).toBeTruthy()
+      expect(account.isTemplate).toBeTruthy()
       const { variations: [firstVariation] } = account
-      expect(account.selectedVariationId.toString()).toBe(firstVariation.id)
       expect(firstVariation.name).toBe('any_variation_name')
       expect(firstVariation.description).toBe('any_variation_description')
       expect(firstVariation.url).toBe('https://www.any_variation_url.com/')
@@ -72,10 +68,8 @@ describe('Exercise Mongo Repository', () => {
         _id: new ObjectId(),
         name: 'any_name',
         description: 'any_description',
-        workoutId: 'any_workout_id',
-        templateId: 'any_template_id',
         accountId,
-        selectedVariationId: firstVariationId,
+        isTemplate: true,
         variations: [{
           _id: firstVariationId,
           name: 'any_variation_name',
@@ -94,7 +88,7 @@ describe('Exercise Mongo Repository', () => {
         _id: new ObjectId(),
         name: 'other_name',
         accountId,
-        selectedVariationId: secondVariationId,
+        isTemplate: false,
         variations: [{
           _id: secondVariationId,
           name: 'other_variation_name',
@@ -113,11 +107,8 @@ describe('Exercise Mongo Repository', () => {
       expect(accounts[0].id).toBeTruthy()
       expect(accounts[0].name).toBe('any_name')
       expect(accounts[0].description).toBe('any_description')
-      expect(accounts[0].workoutId).toBe('any_workout_id')
-      expect(accounts[0].templateId).toBe('any_template_id')
-      expect(accounts[0].selectedVariationId).toBeTruthy()
+      expect(accounts[0].isTemplate).toBeTruthy()
       const { variations: [firstVariation] } = accounts[0]
-      expect(accounts[0].selectedVariationId.toString()).toBe(firstVariation.id)
       expect(firstVariation.name).toBe('any_variation_name')
       expect(firstVariation.description).toBe('any_variation_description')
       expect(firstVariation.url).toBe('https://www.any_variation_url.com/')

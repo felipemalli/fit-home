@@ -1,6 +1,5 @@
 import { MongoHelper } from '../helpers/mongo-helper'
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
-import { ExerciseVariation } from '@/domain/models/exercises/shared/exercise-variation'
+import { ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
 import { AddExerciseModel } from '@/domain/usecases/add-exercise'
 import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
@@ -21,7 +20,6 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     const exerciseModel: ExerciseModelWithoutId = {
       ...data,
       accountId: MongoHelper.parseToObjectId(accountId),
-      selectedVariationId: '',
       variations: [{
         _id: new ObjectId(),
         name: variationName,
@@ -33,9 +31,6 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
       }]
     }
     const { insertedId } = await exerciseCollection.insertOne(exerciseModel)
-    await exerciseCollection.updateOne({ _id: insertedId }, {
-      $set: { selectedVariationId: exerciseModel.variations[0]._id }
-    })
     const exercise = await exerciseCollection.findOne({ _id: insertedId }) as unknown as ExerciseModel
     exercise.variations = MongoHelper.mapArray(exercise.variations)
     return MongoHelper.map(exercise)
