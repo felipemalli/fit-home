@@ -1,4 +1,4 @@
-import { ExerciseModel } from '@/data/usecases/add-exercise/db-add-exercise-protocols'
+import { ExerciseModel } from '@/domain/models/exercises/exercise'
 
 export interface LoadExercisesRepository {
   loadAll: (accountId: string) => Promise<ExerciseModel[]>
