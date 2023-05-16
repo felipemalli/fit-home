@@ -56,4 +56,10 @@ describe('DbLoadExerciseById', () => {
     await sut.loadById('any_id')
     expect(loadByIdSpy).toHaveBeenCalledWith('any_id')
   })
+
+  it('Should return a Exercise on success', async () => {
+    const { sut } = makeSut()
+    const exercises = await sut.loadById('any_id')
+    expect(exercises).toEqual(makeFakeExercise())
+  })
 })
