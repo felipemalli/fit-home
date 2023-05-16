@@ -6,10 +6,8 @@ const makeFakeExercise = (): ExerciseModel => ({
   id: 'any_id',
   name: 'any_name',
   description: 'any_description',
-  workoutId: 'any_workout_id',
-  templateId: 'any_template_id',
   accountId: 'any_account_id',
-  selectedVariationId: 'any_variation_id',
+  isTemplate: true,
   variations: [{
     id: 'any_variation_id',
     name: 'any_variation_name',
@@ -29,9 +27,8 @@ const makeFakeExercise = (): ExerciseModel => ({
 const makeFakeExerciseData = (): AddExerciseModel => ({
   name: 'any_name',
   description: 'any_description',
-  workoutId: 'any_workout_id',
-  templateId: 'any_template_id',
   accountId: 'any_account_id',
+  isTemplate: true,
   variationName: 'any_variation_name',
   variationDescription: 'any_variation_description',
   variationUrl: 'https://www.any_variation_url.com/',
