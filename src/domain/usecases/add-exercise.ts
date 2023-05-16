@@ -1,7 +1,6 @@
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
-import { ExerciseConfiguration } from '@/domain/models/exercises/shared/exercise-variation'
+import { ExerciseModel, ExerciseConfiguration } from '@/domain/models/exercises/exercise'
 
-export interface AddExerciseBodyModel extends Omit<ExerciseModel, 'id' | 'accountId' | 'selectedVariationId' | 'variations'>, ExerciseConfiguration {
+export interface AddExerciseBodyModel extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'>, ExerciseConfiguration {
   variationName: string
   variationDescription?: string
   variationUrl?: string
