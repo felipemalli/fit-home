@@ -25,4 +25,4 @@ updateExercise(exerciseId: string, newParameters: ?): void {
   )
 }
 
-Atualiza o name, description e/ou selectedVariationId
+Atualiza o name e/ou description
