@@ -25,4 +25,4 @@ updateExercise(exerciseId: string, newParameters: ?): void {
   )
 }
 
-Atualiza o name e/ou description
+Atualiza o name, description e/ou isTemplate
