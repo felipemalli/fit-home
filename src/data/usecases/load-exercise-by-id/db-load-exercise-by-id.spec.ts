@@ -1,6 +1,5 @@
-import { LoadExerciseByIdRepository } from '@/data/protocols/db/exercise/load-exercise-by-id-repository'
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
 import { DbLoadExerciseById } from './db-load-exercise-by-id'
+import { LoadExerciseByIdRepository, ExerciseModel } from './db-load-exercise-by-id-protocols'
 
 const makeFakeExercise = (): ExerciseModel => {
   return {
