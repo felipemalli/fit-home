@@ -56,16 +56,16 @@ describe('DbLoadExerciseById', () => {
     expect(loadByIdSpy).toHaveBeenCalledWith('any_id')
   })
 
-  it('Should return a Exercise on success', async () => {
-    const { sut } = makeSut()
-    const exercises = await sut.loadById('any_id')
-    expect(exercises).toEqual(makeFakeExercise())
-  })
-
   it('Should throw if LoadExerciseByIdRepository throws', async () => {
     const { sut, loadExerciseByIdRepositoryStub } = makeSut()
     jest.spyOn(loadExerciseByIdRepositoryStub, 'loadById').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.loadById('any_id')
     await expect(promise).rejects.toThrow()
+  })
+
+  it('Should return a Exercise on success', async () => {
+    const { sut } = makeSut()
+    const exercise = await sut.loadById('any_id')
+    expect(exercise).toEqual(makeFakeExercise())
   })
 })

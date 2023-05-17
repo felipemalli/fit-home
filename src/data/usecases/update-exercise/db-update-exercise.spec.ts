@@ -65,4 +65,10 @@ describe('DbUpdateExercise UseCase', () => {
     const promise = sut.update(makeFakeExerciseData())
     await expect(promise).rejects.toThrow()
   })
+
+  it('Should return an Exercise on success', async () => {
+    const { sut } = makeSut()
+    const exercise = await sut.update(makeFakeExerciseData())
+    expect(exercise).toEqual(makeFakeExercise())
+  })
 })
