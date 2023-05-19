@@ -5,8 +5,8 @@ export class DbUpdateExercise implements UpdateExercise {
     private readonly updateExerciseRepository: UpdateExerciseRepository
   ) {}
 
-  async update (data: UpdateExerciseModel): Promise<ExerciseModel> {
-    const exercise = await this.updateExerciseRepository.update(data)
+  async update (id: string, data: UpdateExerciseModel): Promise<ExerciseModel> {
+    const exercise = await this.updateExerciseRepository.update(id, data)
     return exercise
   }
 }
