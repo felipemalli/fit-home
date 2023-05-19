@@ -29,7 +29,7 @@ const makeFakeExercise = (): ExerciseModel => Object.assign({}, makeFakeExercise
 
 const makeUpdateExerciseRepository = (): UpdateExerciseRepository => {
   class UpdateExerciseRepositoryStub implements UpdateExerciseRepository {
-    async update (data: UpdateExerciseModel): Promise<ExerciseModel> {
+    async update (id: string, data: UpdateExerciseModel): Promise<ExerciseModel> {
       return await new Promise(resolve => resolve(makeFakeExercise()))
     }
   }
@@ -55,20 +55,20 @@ describe('DbUpdateExercise UseCase', () => {
     const { sut, updateExerciseRepositoryStub } = makeSut()
     const updateSpy = jest.spyOn(updateExerciseRepositoryStub, 'update')
     const exerciseData = makeFakeExerciseData()
-    await sut.update(exerciseData)
-    expect(updateSpy).toHaveBeenCalledWith(exerciseData)
+    await sut.update('any_id', exerciseData)
+    expect(updateSpy).toHaveBeenCalledWith('any_id', exerciseData)
   })
 
   it('Should throw if UpdateExerciseRepository throws', async () => {
     const { sut, updateExerciseRepositoryStub } = makeSut()
     jest.spyOn(updateExerciseRepositoryStub, 'update').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const promise = sut.update(makeFakeExerciseData())
+    const promise = sut.update('any_id', makeFakeExerciseData())
     await expect(promise).rejects.toThrow()
   })
 
   it('Should return an Exercise on success', async () => {
     const { sut } = makeSut()
-    const exercise = await sut.update(makeFakeExerciseData())
+    const exercise = await sut.update('any_id', makeFakeExerciseData())
     expect(exercise).toEqual(makeFakeExercise())
   })
 })
