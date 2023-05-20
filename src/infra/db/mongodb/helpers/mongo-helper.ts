@@ -22,18 +22,19 @@ export const MongoHelper = {
     return this.client.db().collection(name)
   },
 
-  map (collection: any): any {
-    const { _id, ...collectionWithoutId } = collection
+  map (data: any): any {
+    const { _id, ...collectionWithoutId } = data
     return Object.assign({}, collectionWithoutId, { id: _id.toHexString() })
   },
 
-  mapArray (collectionArray: any): any {
-    const newCollectionArray: any = []
-    for (const collection of collectionArray) {
-      const { _id, ...collectionWithoutId } = collection
-      newCollectionArray.push(Object.assign({}, collectionWithoutId, { id: _id.toHexString() }))
+  mapCollection (collection: any[], propertyWithCollection?: string): any[] {
+    if (propertyWithCollection) {
+      collection.map((c) => {
+        c[propertyWithCollection].map((p: any) => MongoHelper.map(p))
+        return MongoHelper.map(c)
+      })
     }
-    return newCollectionArray
+    return collection.map((c) => MongoHelper.map(c))
   },
 
   parseToObjectId (id: string): ObjectId {

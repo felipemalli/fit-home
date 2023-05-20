@@ -34,7 +34,7 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     }
     const { insertedId } = await exerciseCollection.insertOne(exerciseModel)
     const exercise = await exerciseCollection.findOne({ _id: insertedId }) as unknown as ExerciseModel
-    exercise.variations = MongoHelper.mapArray(exercise.variations)
+    exercise.variations = MongoHelper.mapCollection(exercise.variations)
     return MongoHelper.map(exercise)
   }
 
@@ -42,26 +42,21 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const accountIdParsed = MongoHelper.parseToObjectId(accountId)
     const exercises = await exerciseCollection.find({ accountId: accountIdParsed }).toArray() as unknown as ExerciseModel[]
-    for (let i = 0; i < exercises.length; i++) {
-      exercises[i] = MongoHelper.map(exercises[i])
-      exercises[i].variations = MongoHelper.mapArray(exercises[i].variations)
-    }
-    return exercises
+    return MongoHelper.mapCollection(exercises, 'variations')
   }
 
   async loadById (id: string): Promise<ExerciseModel> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const exercise = await exerciseCollection.findOne({ _id: MongoHelper.parseToObjectId(id) })
-    return MongoHelper.map(exercise)
+    return exercise && MongoHelper.map(exercise)
   }
 
   async update (id: string, data: UpdateExerciseModel): Promise<ExerciseModel> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const exercise = await exerciseCollection.findOneAndUpdate(
       { _id: MongoHelper.parseToObjectId(id) },
-      { $set: data },
-      { returnDocument: 'after' }
+      { $set: data }, { returnDocument: 'after' }
     )
-    return MongoHelper.map(exercise.value)
+    return exercise && MongoHelper.map(exercise.value)
   }
 }
