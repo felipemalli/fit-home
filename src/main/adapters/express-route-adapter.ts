@@ -5,6 +5,7 @@ export const adaptRoute = (controller: Controller): RequestHandler => {
   return (req: Request, res: Response) => {
     const httpRequest: HttpRequest = {
       body: req.body,
+      params: req.params,
       accountId: req.accountId
     }
     void controller.handle(httpRequest).then((httpResponse) => {
