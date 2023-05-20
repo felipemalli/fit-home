@@ -1,5 +1,5 @@
 import { InvalidParamError } from '@/presentation/errors'
-import { forbidden } from '@/presentation/helpers/http/http-helper'
+import { forbidden, serverError } from '@/presentation/helpers/http/http-helper'
 import { Controller, HttpRequest, HttpResponse, LoadExerciseById } from './update-exercise-controller-protocols'
 
 export class UpdateExerciseController implements Controller {
@@ -8,10 +8,14 @@ export class UpdateExerciseController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest<any, any>): Promise<HttpResponse> {
-    const exercise = await this.loadExerciseById.loadById(httpRequest.params.exerciseId)
-    if (!exercise) {
-      return forbidden(new InvalidParamError('exerciseId'))
+    try {
+      const exercise = await this.loadExerciseById.loadById(httpRequest.params.exerciseId)
+      if (!exercise) {
+        return forbidden(new InvalidParamError('exerciseId'))
+      }
+      return null
+    } catch (error) {
+      return serverError(error)
     }
-    return null
   }
 }
