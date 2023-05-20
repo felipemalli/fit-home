@@ -101,6 +101,15 @@ describe('AddExercise Controller', () => {
     expect(addSpy).toHaveBeenCalledWith({ ...httpRequest.body, accountId: 'any_id' })
   })
 
+  it('Should call AddExercise with isTemplate false if is not passed', async () => {
+    const { sut, addExerciseStub } = makeSut()
+    const addSpy = jest.spyOn(addExerciseStub, 'add')
+    const httpRequest = makeFakeRequest()
+    if (httpRequest.body) httpRequest.body.isTemplate = undefined
+    await sut.handle(httpRequest)
+    expect(addSpy).toHaveBeenCalledWith({ ...httpRequest.body, accountId: 'any_id', isTemplate: false })
+  })
+
   it('Should return 500 if AddExercise throws', async () => {
     const { sut, addExerciseStub } = makeSut()
     jest.spyOn(addExerciseStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
