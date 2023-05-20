@@ -1,8 +1,8 @@
 
 import { DbUpdateExercise } from './db-update-exercise'
-import { UpdateExerciseModel, ExerciseModel, UpdateExerciseRepository } from './db-update-exercise-protocols'
+import { UpdateExerciseData, ExerciseModel, UpdateExerciseRepository } from './db-update-exercise-protocols'
 
-const makeFakeExerciseData = (): UpdateExerciseModel => ({
+const makeFakeExerciseData = (): UpdateExerciseData => ({
   name: 'updated_name',
   description: 'updated_description',
   isTemplate: true
@@ -30,7 +30,7 @@ const makeFakeExercise = (): ExerciseModel => Object.assign({}, makeFakeExercise
 
 const makeUpdateExerciseRepository = (): UpdateExerciseRepository => {
   class UpdateExerciseRepositoryStub implements UpdateExerciseRepository {
-    async update (id: string, data: UpdateExerciseModel): Promise<ExerciseModel> {
+    async update (id: string, data: UpdateExerciseData): Promise<ExerciseModel> {
       return await new Promise(resolve => resolve(makeFakeExercise()))
     }
   }

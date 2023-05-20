@@ -1,6 +1,6 @@
-import { UpdateExerciseModel } from '@/domain/usecases/exercise/update-exercise'
+import { UpdateExerciseData } from '@/domain/usecases/exercise/update-exercise'
 import { ExerciseModel } from '@/domain/models/exercises/exercise'
 
 export interface UpdateExerciseRepository {
-  update: (id: string, data: UpdateExerciseModel) => Promise<ExerciseModel>
+  update: (id: string, data: UpdateExerciseData) => Promise<ExerciseModel>
 }

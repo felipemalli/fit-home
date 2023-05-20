@@ -1,9 +1,9 @@
 import { UpdateExerciseController } from './update-exercise-controller'
-import { ExerciseModel, HttpRequest, LoadExerciseById, UpdateExercise, UpdateExerciseBodyModel, UpdateExerciseParamsModel } from './update-exercise-controller-protocols'
+import { ExerciseModel, HttpRequest, LoadExerciseById, UpdateExercise, UpdateExerciseBody, UpdateExerciseParams } from './update-exercise-controller-protocols'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
-const makeFakeRequest = (): HttpRequest<UpdateExerciseBodyModel, UpdateExerciseParamsModel> => ({
+const makeFakeRequest = (): HttpRequest<UpdateExerciseBody, UpdateExerciseParams> => ({
   body: {
     name: 'updated_name',
     description: 'updated_description',
@@ -69,7 +69,7 @@ const makeLoadExerciseById = (): LoadExerciseById => {
 
 const makeUpdateExercise = (): UpdateExercise => {
   class UpdateExerciseStub implements UpdateExercise {
-    async update (id: string, data: UpdateExerciseBodyModel): Promise<ExerciseModel> {
+    async update (id: string, data: UpdateExerciseBody): Promise<ExerciseModel> {
       return await new Promise(resolve => resolve(makeFakeUpdatedExercise()))
     }
   }

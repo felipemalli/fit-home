@@ -1,6 +1,6 @@
 
 import { DbAddExercise } from './db-add-exercise'
-import { AddExerciseModel, AddExerciseRepository, ExerciseModel } from './db-add-exercise-protocols'
+import { AddExerciseData, AddExerciseRepository, ExerciseModel } from './db-add-exercise-protocols'
 
 const makeFakeExercise = (): ExerciseModel => ({
   id: 'any_id',
@@ -24,7 +24,7 @@ const makeFakeExercise = (): ExerciseModel => ({
   }]
 })
 
-const makeFakeExerciseData = (): AddExerciseModel => ({
+const makeFakeExerciseData = (): AddExerciseData => ({
   name: 'any_name',
   description: 'any_description',
   accountId: 'any_account_id',
@@ -42,7 +42,7 @@ const makeFakeExerciseData = (): AddExerciseModel => ({
 
 const makeAddExerciseRepository = (): AddExerciseRepository => {
   class AddExerciseRepositoryStub implements AddExerciseRepository {
-    async add (exerciseData: AddExerciseModel): Promise<ExerciseModel> {
+    async add (exerciseData: AddExerciseData): Promise<ExerciseModel> {
       return await new Promise(resolve => resolve(makeFakeExercise()))
     }
   }

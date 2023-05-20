@@ -1,5 +1,5 @@
 import { AddExerciseController } from './add-exercise-controller'
-import { AddExercise, AddExerciseBodyModel, AddExerciseModel, ExerciseModel, HttpRequest, Validation } from './add-exercise-controller-protocols'
+import { AddExercise, AddExerciseBody, AddExerciseData, ExerciseModel, HttpRequest, Validation } from './add-exercise-controller-protocols'
 import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
 
 const makeValidation = (): Validation => {
@@ -13,7 +13,7 @@ const makeValidation = (): Validation => {
 
 const makeAddExercise = (): AddExercise => {
   class AddExerciseStub implements AddExercise {
-    async add (data: AddExerciseModel): Promise<ExerciseModel> {
+    async add (data: AddExerciseData): Promise<ExerciseModel> {
       return await new Promise(resolve => resolve(makeFakeExercise()))
     }
   }
@@ -42,7 +42,7 @@ const makeFakeExercise = (): ExerciseModel => ({
   }]
 })
 
-const makeFakeRequest = (): HttpRequest<AddExerciseBodyModel> => ({
+const makeFakeRequest = (): HttpRequest<AddExerciseBody> => ({
   body: {
     name: 'any_name',
     description: 'any_description',
