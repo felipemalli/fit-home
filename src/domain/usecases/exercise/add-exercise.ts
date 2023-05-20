@@ -1,13 +1,13 @@
 import { ExerciseModel, ExerciseConfiguration } from '@/domain/models/exercises/exercise'
 
-export interface AddExerciseBody extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'>, ExerciseConfiguration {
+export interface AddExerciseRequestBody extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'>, ExerciseConfiguration {
   variationName: string
   variationDescription?: string
   variationUrl?: string
 }
 
-export type AddExerciseData = AddExerciseBody & { accountId: string }
+export type AddExerciseParams = AddExerciseRequestBody & { accountId: string }
 
 export interface AddExercise {
-  add: (exercise: AddExerciseData) => Promise<ExerciseModel>
+  add: (exercise: AddExerciseParams) => Promise<ExerciseModel>
 }

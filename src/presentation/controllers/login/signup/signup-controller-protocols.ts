@@ -1,4 +1,6 @@
 export * from '@/presentation/protocols'
+export * from '@/presentation/test'
 export * from '@/domain/models/accounts/account'
 export * from '@/domain/usecases/account/add-account'
 export * from '@/domain/usecases/account/authentication'
+export * from '@/domain/test'

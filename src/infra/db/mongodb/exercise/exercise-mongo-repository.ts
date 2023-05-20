@@ -1,11 +1,11 @@
 import { MongoHelper, ObjectId } from '../helpers/mongo-helper'
 import { ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
-import { AddExerciseData } from '@/domain/usecases/exercise/add-exercise'
+import { AddExerciseParams } from '@/domain/usecases/exercise/add-exercise'
 import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
 import { LoadExerciseByIdRepository } from '@/data/usecases/exercise/load-exercise-by-id/db-load-exercise-by-id-protocols'
 import { UpdateExerciseRepository } from '@/data/usecases/exercise/update-exercise/db-update-exercise-protocols'
-import { UpdateExerciseData } from '@/domain/usecases/exercise/update-exercise'
+import { UpdateExerciseParams } from '@/domain/usecases/exercise/update-exercise'
 
 interface ExerciseVariationWithMongoId extends Omit<ExerciseVariation, 'id'> {
   _id: ObjectId
@@ -16,7 +16,7 @@ export interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'acco
 }
 
 export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository, LoadExerciseByIdRepository, UpdateExerciseRepository {
-  async add (exerciseData: AddExerciseData): Promise<ExerciseModel> {
+  async add (exerciseData: AddExerciseParams): Promise<ExerciseModel> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const { accountId, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight, ...data } = exerciseData
     const exerciseModel: ExerciseModelWithoutId = {
@@ -51,7 +51,7 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     return exercise && MongoHelper.map(exercise)
   }
 
-  async update (id: string, data: UpdateExerciseData): Promise<ExerciseModel> {
+  async update (id: string, data: UpdateExerciseParams): Promise<ExerciseModel> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const exercise = await exerciseCollection.findOneAndUpdate(
       { _id: MongoHelper.createObjectId(id) },

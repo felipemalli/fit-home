@@ -1,4 +1,6 @@
 export * from '@/presentation/protocols'
-export * from '@/domain/usecases/exercise/load-exercise-by-id'
+export * from '@/presentation/test'
 export * from '@/domain/models/exercises/exercise'
+export * from '@/domain/usecases/exercise/load-exercise-by-id'
 export * from '@/domain/usecases/exercise/update-exercise'
+export * from '@/domain/test'

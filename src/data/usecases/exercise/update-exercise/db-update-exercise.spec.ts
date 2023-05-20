@@ -1,41 +1,5 @@
-
 import { DbUpdateExercise } from './db-update-exercise'
-import { UpdateExerciseData, ExerciseModel, UpdateExerciseRepository } from './db-update-exercise-protocols'
-
-const makeFakeExerciseData = (): UpdateExerciseData => ({
-  name: 'updated_name',
-  description: 'updated_description',
-  isTemplate: true
-})
-
-const makeFakeExercise = (): ExerciseModel => Object.assign({}, makeFakeExerciseData(), {
-  id: 'any_id',
-  name: 'any_name',
-  accountId: 'any_account_id',
-  variations: [{
-    id: 'any_variation_id',
-    name: 'any_variation_name',
-    description: 'any_variation_description',
-    url: 'https://www.any_variation_url.com/',
-    configuration: {
-      series: 1,
-      betweenSeriesTime: 120,
-      repetitions: 12,
-      repetitionTime: 4.5,
-      warmupTime: 0,
-      weight: 10
-    }
-  }]
-})
-
-const makeUpdateExerciseRepository = (): UpdateExerciseRepository => {
-  class UpdateExerciseRepositoryStub implements UpdateExerciseRepository {
-    async update (id: string, data: UpdateExerciseData): Promise<ExerciseModel> {
-      return await new Promise(resolve => resolve(makeFakeExercise()))
-    }
-  }
-  return new UpdateExerciseRepositoryStub()
-}
+import { UpdateExerciseRepository, throwError, mockUpdateExerciseParams, mockUpdateExerciseModel, mockUpdateExerciseRepository } from './db-update-exercise-protocols'
 
 interface SutTypes {
   sut: DbUpdateExercise
@@ -43,7 +7,7 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
-  const updateExerciseRepositoryStub = makeUpdateExerciseRepository()
+  const updateExerciseRepositoryStub = mockUpdateExerciseRepository()
   const sut = new DbUpdateExercise(updateExerciseRepositoryStub)
   return {
     sut,
@@ -55,21 +19,21 @@ describe('DbUpdateExercise UseCase', () => {
   it('Should call UpdateExerciseRepository with correct values', async () => {
     const { sut, updateExerciseRepositoryStub } = makeSut()
     const updateSpy = jest.spyOn(updateExerciseRepositoryStub, 'update')
-    const exerciseData = makeFakeExerciseData()
-    await sut.update('any_id', exerciseData)
-    expect(updateSpy).toHaveBeenCalledWith('any_id', exerciseData)
+    const updateExerciseParams = mockUpdateExerciseParams()
+    await sut.update('any_id', updateExerciseParams)
+    expect(updateSpy).toHaveBeenCalledWith('any_id', updateExerciseParams)
   })
 
   it('Should throw if UpdateExerciseRepository throws', async () => {
     const { sut, updateExerciseRepositoryStub } = makeSut()
-    jest.spyOn(updateExerciseRepositoryStub, 'update').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const promise = sut.update('any_id', makeFakeExerciseData())
+    jest.spyOn(updateExerciseRepositoryStub, 'update').mockImplementationOnce(throwError)
+    const promise = sut.update('any_id', mockUpdateExerciseParams())
     await expect(promise).rejects.toThrow()
   })
 
   it('Should return an Exercise on success', async () => {
     const { sut } = makeSut()
-    const exercise = await sut.update('any_id', makeFakeExerciseData())
-    expect(exercise).toEqual(makeFakeExercise())
+    const exercise = await sut.update('any_id', mockUpdateExerciseParams())
+    expect(exercise).toEqual(mockUpdateExerciseModel())
   })
 })
