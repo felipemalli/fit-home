@@ -1,9 +1,14 @@
 import { UpdateExerciseController } from './update-exercise-controller'
-import { ExerciseModel, HttpRequest, LoadExerciseById } from './update-exercise-controller-protocols'
+import { ExerciseModel, HttpRequest, LoadExerciseById, UpdateExercise, UpdateExerciseBodyModel, UpdateExerciseParamsModel } from './update-exercise-controller-protocols'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, serverError } from '@/presentation/helpers/http/http-helper'
 
-const makeFakeRequest = (): HttpRequest => ({
+const makeFakeRequest = (): HttpRequest<UpdateExerciseBodyModel, UpdateExerciseParamsModel> => ({
+  body: {
+    name: 'updated_name',
+    description: 'updated_description',
+    isTemplate: true
+  },
   params: {
     exerciseId: 'any_exercise_id'
   }
@@ -40,17 +45,29 @@ const makeLoadExerciseById = (): LoadExerciseById => {
   return new LoadExerciseByIdStub()
 }
 
+const makeUpdateExercise = (): UpdateExercise => {
+  class UpdateExerciseStub implements UpdateExercise {
+    async update (id: string, data: UpdateExerciseBodyModel): Promise<ExerciseModel> {
+      return await new Promise(resolve => resolve(makeFakeExercise()))
+    }
+  }
+  return new UpdateExerciseStub()
+}
+
 interface SutTypes {
   sut: UpdateExerciseController
   loadExerciseByIdStub: LoadExerciseById
+  updateExerciseStub: UpdateExercise
 }
 
 const makeSut = (): SutTypes => {
   const loadExerciseByIdStub = makeLoadExerciseById()
-  const sut = new UpdateExerciseController(loadExerciseByIdStub)
+  const updateExerciseStub = makeUpdateExercise()
+  const sut = new UpdateExerciseController(loadExerciseByIdStub, updateExerciseStub)
   return {
     sut,
-    loadExerciseByIdStub
+    loadExerciseByIdStub,
+    updateExerciseStub
   }
 }
 
@@ -60,7 +77,7 @@ describe('UpdateExercise Controller', () => {
     const loadByIdSpy = jest.spyOn(loadExerciseByIdStub, 'loadById')
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
-    expect(loadByIdSpy).toHaveBeenCalledWith(httpRequest.params.exerciseId)
+    expect(loadByIdSpy).toHaveBeenCalledWith(httpRequest.params?.exerciseId)
   })
 
   it('Should return 403 if LoadExerciseById returns null', async () => {
@@ -76,5 +93,13 @@ describe('UpdateExercise Controller', () => {
     jest.spyOn(loadExerciseByIdStub, 'loadById').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  it('Should call SaveExercise with correct values', async () => {
+    const { sut, updateExerciseStub } = makeSut()
+    const updateSpy = jest.spyOn(updateExerciseStub, 'update')
+    const httpRequest = makeFakeRequest()
+    await sut.handle(httpRequest)
+    expect(updateSpy).toHaveBeenCalledWith(httpRequest.params?.exerciseId, httpRequest.body)
   })
 })
