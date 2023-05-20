@@ -50,9 +50,8 @@ describe('Exercise Routes', () => {
         .send({
           name: 'Bench Press',
           description: 'Lying on the training chair',
-          workoutId: '65334ikt04k03e45t4',
-          templateId: 'ds3a76434plds334alpsd02',
           accountId: insertedId,
+          isTemplate: true,
           variationName: 'Standard',
           variationDescription: 'Do half weight in the last 2 repetitions',
           variationUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
@@ -75,9 +74,8 @@ describe('Exercise Routes', () => {
         .send({
           name: 'Bench Press',
           description: 'Lying on the training chair',
-          workoutId: '65334ikt04k03e45t4',
-          templateId: 'ds3a76434plds334alpsd02',
           accountId: insertedId,
+          isTemplate: true,
           variationName: 'Standard',
           variationDescription: 'Do half weight in the last 2 repetitions',
           variationUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4&ab_channel=Calisthenicmovement',
@@ -107,9 +105,8 @@ describe('Exercise Routes', () => {
         _id: MongoHelper.createObjectId(),
         name: 'any_name',
         description: 'any_description',
-        workoutId: 'any_workout_id',
-        templateId: 'any_template_id',
         accountId: insertedId,
+        isTemplate: true,
         selectedVariationId: firstVariationId,
         variations: [{
           _id: firstVariationId,
@@ -130,6 +127,19 @@ describe('Exercise Routes', () => {
         .get('/api/exercises')
         .set('x-access-token', accessToken)
         .expect(200)
+    })
+  })
+
+  describe('PUT /exercises/:exerciseId', () => {
+    it('Should return 403 on update exercise without accessToken', async () => {
+      await request(app)
+        .put('/api/exercises/any_id')
+        .send({
+          name: 'Bench Press',
+          description: 'Lying on the training chair',
+          isTemplate: true
+        })
+        .expect(403)
     })
   })
 })
