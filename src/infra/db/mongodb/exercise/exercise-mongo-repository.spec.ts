@@ -1,9 +1,43 @@
-import { ExerciseMongoRepository } from './exercise-mongo-repository'
+import { ExerciseModelWithoutId, ExerciseMongoRepository } from './exercise-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection, ObjectId } from 'mongodb'
 
 let exerciseCollection: Collection
 const ACCOUNT_ID = '6348acd2e1a47ca32e79f46f'
+
+interface CreateExerciseTypes {
+  id: string
+  exerciseParameters: ExerciseModelWithoutId
+}
+
+const createExercise = async (): Promise<CreateExerciseTypes> => {
+  const exerciseParameters = {
+    _id: new ObjectId(),
+    name: 'any_name',
+    description: 'any_description',
+    accountId: new ObjectId(ACCOUNT_ID),
+    isTemplate: true,
+    variations: [{
+      _id: new ObjectId(),
+      name: 'any_variation_name',
+      description: 'any_variation_description',
+      url: 'https://www.any_variation_url.com/',
+      configuration: {
+        series: 1,
+        betweenSeriesTime: 120,
+        repetitions: 12,
+        repetitionTime: 4.5,
+        warmupTime: 0,
+        weight: 10
+      }
+    }]
+  }
+  const { insertedId } = await exerciseCollection.insertOne(exerciseParameters)
+  return {
+    id: insertedId.toString(),
+    exerciseParameters
+  }
+}
 
 const makeSut = (): ExerciseMongoRepository => {
   return new ExerciseMongoRepository()
@@ -127,36 +161,39 @@ describe('Exercise Mongo Repository', () => {
   })
 
   describe('loadById()', () => {
-    it('Should load exercise by id on success', async () => {
-      const firstVariationId = new ObjectId()
-      const accountId = new ObjectId(ACCOUNT_ID)
-      const { insertedId } = await exerciseCollection.insertOne({
-        _id: new ObjectId(),
-        name: 'any_name',
-        description: 'any_description',
-        accountId,
-        isTemplate: true,
-        variations: [{
-          _id: firstVariationId,
-          name: 'any_variation_name',
-          description: 'any_variation_description',
-          url: 'https://www.any_variation_url.com/',
-          configuration: {
-            series: 1,
-            betweenSeriesTime: 120,
-            repetitions: 12,
-            repetitionTime: 4.5,
-            warmupTime: 0,
-            weight: 10
-          }
-        }]
-      })
+    it('Should load an exercise by id on success', async () => {
+      const { id, exerciseParameters } = await createExercise()
       const sut = makeSut()
-      const exercise = await sut.loadById(insertedId.toString())
+      const exercise = await sut.loadById(id)
       expect(exercise).toBeTruthy()
-      expect(exercise.name).toBe('any_name')
-      expect(exercise.variations[0].name).toBe('any_variation_name')
-      expect(exercise.variations[0].configuration.repetitions).toBe(12)
+      expect(exercise.id).toBeTruthy()
+      expect(exercise.name).toBe(exerciseParameters.name)
+      expect(exercise.variations[0].name).toBe(exerciseParameters.variations[0].name)
+      expect(exercise.variations[0].configuration.repetitions).toBe(exerciseParameters.variations[0].configuration.repetitions)
+    })
+  })
+
+  describe('update()', () => {
+    it('Should update an exercise by id on success', async () => {
+      const { id: firstId } = await createExercise()
+      const sut = makeSut()
+      const firstExercise = await sut.update(firstId, {
+        name: 'updated_name',
+        description: 'updated_description',
+        isTemplate: false
+      })
+      expect(firstExercise).toBeTruthy()
+      expect(firstExercise.id).toBeTruthy()
+      expect(firstExercise.name).toBe('updated_name')
+      expect(firstExercise.description).toBe('updated_description')
+      expect(firstExercise.isTemplate).toBeFalsy()
+      const { id: secondId } = await createExercise()
+      const secondExercise = await sut.update(secondId, {
+        name: 'updated_name'
+      })
+      expect(secondExercise.name).toBe('updated_name')
+      expect(secondExercise.description).toBe('any_description')
+      expect(secondExercise.isTemplate).toBeTruthy()
     })
   })
 })
