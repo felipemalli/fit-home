@@ -5,16 +5,17 @@ import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
 import { LoadExerciseByIdRepository } from '@/data/usecases/load-exercise-by-id/db-load-exercise-by-id-protocols'
 import { ObjectId } from 'mongodb'
+import { UpdateExerciseModel, UpdateExerciseRepository } from '@/data/usecases/update-exercise/db-update-exercise-protocols'
 
 interface ExerciseVariationWithMongoId extends Omit<ExerciseVariation, 'id'> {
   _id: ObjectId
 }
-interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'> {
+export interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'> {
   accountId: ObjectId
   variations: ExerciseVariationWithMongoId[]
 }
 
-export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository, LoadExerciseByIdRepository {
+export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository, LoadExerciseByIdRepository, UpdateExerciseRepository {
   async add (exerciseData: AddExerciseModel): Promise<ExerciseModel> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const { accountId, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight, ...data } = exerciseData
@@ -52,5 +53,15 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const exercise = await exerciseCollection.findOne({ _id: MongoHelper.parseToObjectId(id) })
     return MongoHelper.map(exercise)
+  }
+
+  async update (id: string, data: UpdateExerciseModel): Promise<ExerciseModel> {
+    const exerciseCollection = await MongoHelper.getCollection('exercises')
+    const exercise = await exerciseCollection.findOneAndUpdate(
+      { _id: MongoHelper.parseToObjectId(id) },
+      { $set: data },
+      { returnDocument: 'after' }
+    )
+    return MongoHelper.map(exercise.value)
   }
 }
