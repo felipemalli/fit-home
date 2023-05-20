@@ -1,8 +1,7 @@
 import app from '@/main/config/app'
 import env from '@/main/config/env'
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper, Collection, ObjectId } from '@/infra/db/mongodb/helpers/mongo-helper'
 import { sign } from 'jsonwebtoken'
-import { Collection, ObjectId } from 'mongodb'
 import request from 'supertest'
 
 let exerciseCollection: Collection
@@ -20,14 +19,10 @@ const makeAccount = async (): Promise<ObjectId> => {
 const makeAccessToken = async (insertedId: ObjectId): Promise<string> => {
   const id = insertedId.toString()
   const accessToken = sign({ id }, env.jwtSecret)
-  await accountCollection.updateOne({
-    _id: insertedId
-  },
-  {
-    $set: {
-      accessToken
-    }
-  })
+  await accountCollection.updateOne(
+    { _id: insertedId },
+    { $set: { accessToken } }
+  )
   return accessToken
 }
 
@@ -107,9 +102,9 @@ describe('Exercise Routes', () => {
     it('Should return 200 on load exercises with valid accessToken', async () => {
       const insertedId = await makeAccount()
       const accessToken = await makeAccessToken(insertedId)
-      const firstVariationId = new ObjectId()
+      const firstVariationId = MongoHelper.createObjectId()
       await exerciseCollection.insertMany([{
-        _id: new ObjectId(),
+        _id: MongoHelper.createObjectId(),
         name: 'any_name',
         description: 'any_description',
         workoutId: 'any_workout_id',

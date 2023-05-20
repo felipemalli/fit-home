@@ -1,6 +1,7 @@
 import env from '@/main/config/env'
 import { Collection, MongoClient, ObjectId } from 'mongodb'
 
+export { ObjectId, Collection }
 export const MongoHelper = {
   client: null as unknown as MongoClient,
   uri: null as unknown as string,
@@ -37,7 +38,7 @@ export const MongoHelper = {
     return collection.map((c) => MongoHelper.map(c))
   },
 
-  parseToObjectId (id: string): ObjectId {
+  createObjectId (id?: string): ObjectId {
     return new ObjectId(id)
   }
 }

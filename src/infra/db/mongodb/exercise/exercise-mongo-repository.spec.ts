@@ -1,6 +1,5 @@
 import { ExerciseModelWithoutId, ExerciseMongoRepository } from './exercise-mongo-repository'
-import { MongoHelper } from '../helpers/mongo-helper'
-import { Collection, ObjectId } from 'mongodb'
+import { MongoHelper, Collection } from '../helpers/mongo-helper'
 
 let exerciseCollection: Collection
 const ACCOUNT_ID = '6348acd2e1a47ca32e79f46f'
@@ -12,13 +11,13 @@ interface CreateExerciseTypes {
 
 const createExercise = async (): Promise<CreateExerciseTypes> => {
   const exerciseParameters = {
-    _id: new ObjectId(),
+    _id: MongoHelper.createObjectId(),
     name: 'any_name',
     description: 'any_description',
-    accountId: new ObjectId(ACCOUNT_ID),
+    accountId: MongoHelper.createObjectId(ACCOUNT_ID),
     isTemplate: true,
     variations: [{
-      _id: new ObjectId(),
+      _id: MongoHelper.createObjectId(),
       name: 'any_variation_name',
       description: 'any_variation_description',
       url: 'https://www.any_variation_url.com/',
@@ -95,15 +94,15 @@ describe('Exercise Mongo Repository', () => {
 
   describe('loadAll()', () => {
     it('Should load all exercises by account on success', async () => {
-      const accountId = new ObjectId(ACCOUNT_ID)
+      const accountId = MongoHelper.createObjectId(ACCOUNT_ID)
       await exerciseCollection.insertMany([{
-        _id: new ObjectId(),
+        _id: MongoHelper.createObjectId(),
         name: 'any_name',
         description: 'any_description',
         accountId,
         isTemplate: true,
         variations: [{
-          _id: new ObjectId(),
+          _id: MongoHelper.createObjectId(),
           name: 'any_variation_name',
           description: 'any_variation_description',
           url: 'https://www.any_variation_url.com/',
@@ -117,12 +116,12 @@ describe('Exercise Mongo Repository', () => {
           }
         }]
       }, {
-        _id: new ObjectId(),
+        _id: MongoHelper.createObjectId(),
         name: 'other_name',
         accountId,
         isTemplate: false,
         variations: [{
-          _id: new ObjectId(),
+          _id: MongoHelper.createObjectId(),
           name: 'other_variation_name',
           configuration: {
             series: 3,
