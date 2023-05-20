@@ -6,7 +6,7 @@
 2. ⛔ Valida se a requisição foi feita por um usuário
 3. ✅ Valida o parâmetro **exercise_id**
 4. ✅ **Atualiza** um exercício com os dados fornecidos
-5. ⛔ Retorna **200** com os dados do exercício
+5. ✅ Retorna **200** com os dados do exercício
 
 > ## Exceções
 

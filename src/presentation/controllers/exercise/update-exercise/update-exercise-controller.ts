@@ -1,6 +1,6 @@
 
 import { InvalidParamError } from '@/presentation/errors'
-import { forbidden, noContent, serverError } from '@/presentation/helpers/http/http-helper'
+import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { Controller, HttpRequest, HttpResponse, LoadExerciseById, UpdateExercise } from './update-exercise-controller-protocols'
 
 export class UpdateExerciseController implements Controller {
@@ -15,8 +15,8 @@ export class UpdateExerciseController implements Controller {
       if (!exercise) {
         return forbidden(new InvalidParamError('exerciseId'))
       }
-      await this.updateExercise.update(httpRequest.params.exerciseId, httpRequest.body)
-      return noContent()
+      const updatedExercise = await this.updateExercise.update(httpRequest.params.exerciseId, httpRequest.body)
+      return ok(updatedExercise)
     } catch (error) {
       return serverError(error)
     }
