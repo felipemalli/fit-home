@@ -8,8 +8,9 @@ const makeFakeExerciseData = (): UpdateExerciseModel => ({
   isTemplate: true
 })
 
-const makeFakeExercise = (): ExerciseModel => Object.assign({}, makeFakeExerciseData() as Required<UpdateExerciseModel>, {
+const makeFakeExercise = (): ExerciseModel => Object.assign({}, makeFakeExerciseData(), {
   id: 'any_id',
+  name: 'any_name',
   accountId: 'any_account_id',
   variations: [{
     id: 'any_variation_id',
