@@ -45,7 +45,7 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     return MongoHelper.mapCollection(exercises, 'variations')
   }
 
-  async loadById (id: string): Promise<ExerciseModel> {
+  async loadById (id: string): Promise<ExerciseModel | null> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const exercise = await exerciseCollection.findOne({ _id: MongoHelper.createObjectId(id) })
     return exercise && MongoHelper.map(exercise)
