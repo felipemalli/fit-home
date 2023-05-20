@@ -141,5 +141,44 @@ describe('Exercise Routes', () => {
         })
         .expect(403)
     })
+
+    it('Should return 200 on update exercise with valid accessToken', async () => {
+      const exerciseId = MongoHelper.createObjectId()
+      const insertedId = await makeAccount()
+      const accessToken = await makeAccessToken(insertedId)
+      const firstVariationId = MongoHelper.createObjectId()
+      await exerciseCollection.insertOne({
+        _id: exerciseId,
+        name: 'any_name',
+        description: 'any_description',
+        accountId: insertedId,
+        isTemplate: true,
+        selectedVariationId: firstVariationId,
+        variations: [{
+          _id: firstVariationId,
+          name: 'any_variation_name',
+          description: 'any_variation_description',
+          url: 'https://www.any_variation_url.com/',
+          configuration: {
+            series: 1,
+            betweenSeriesTime: 120,
+            repetitions: 12,
+            repetitionTime: 4.5,
+            warmupTime: 0,
+            weight: 10
+          }
+        }]
+      })
+
+      await request(app)
+        .put(`/api/exercises/${exerciseId.toString()}`)
+        .set('x-access-token', accessToken)
+        .send({
+          name: 'updated_name',
+          description: 'updated_description',
+          isTemplate: false
+        })
+        .expect(200)
+    })
   })
 })
