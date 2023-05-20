@@ -1,5 +1,5 @@
 import { makeLogControllerDecorator } from '@/main/factories/decorators/log-controller-decorator-factory'
-import { makeDbLoadExercises } from '@/main/factories/usecases/exercise/load-exercises/db-load-exercises'
+import { makeDbLoadExercises } from '@/main/factories/usecases/exercise/load-exercises/db-load-exercises-factory'
 import { Controller } from '@/presentation/protocols'
 import { LoadExercisesController } from '@/presentation/controllers/exercise/load-exercises/load-exercises-controller'
 
