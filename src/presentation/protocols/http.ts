@@ -3,9 +3,9 @@ export interface HttpResponse {
   body: any
 }
 
-export interface HttpRequest<TBody = any, THeaders = any, TParams = any> {
-  accountId?: string
+export interface HttpRequest<TBody = any, TParams = any, THeaders = any> {
   body?: TBody
-  headers?: THeaders
   params?: TParams
+  headers?: THeaders
+  accountId?: string
 }
