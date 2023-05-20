@@ -102,4 +102,11 @@ describe('UpdateExercise Controller', () => {
     await sut.handle(httpRequest)
     expect(updateSpy).toHaveBeenCalledWith(httpRequest.params?.exerciseId, httpRequest.body)
   })
+
+  it('Should return 500 if SaveExercise throws', async () => {
+    const { sut, updateExerciseStub } = makeSut()
+    jest.spyOn(updateExerciseStub, 'update').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
 })
