@@ -1,7 +1,7 @@
 import { UpdateExerciseController } from './update-exercise-controller'
 import { ExerciseModel, HttpRequest, LoadExerciseById } from './update-exercise-controller-protocols'
 import { InvalidParamError } from '@/presentation/errors'
-import { forbidden } from '@/presentation/helpers/http/http-helper'
+import { forbidden, serverError } from '@/presentation/helpers/http/http-helper'
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
@@ -69,5 +69,12 @@ describe('UpdateExercise Controller', () => {
     const httpRequest = makeFakeRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('exerciseId')))
+  })
+
+  it('Should return 500 if LoadExerciseById throws', async () => {
+    const { sut, loadExerciseByIdStub } = makeSut()
+    jest.spyOn(loadExerciseByIdStub, 'loadById').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
