@@ -1,6 +1,6 @@
-import { loginPath } from './paths/login-path'
-import { accountSchema } from './schemas/account-schema'
-import { loginParamsSchema } from './schemas/login-params-schema'
+import { loginPath } from './paths'
+import { accountSchema, loginParamsSchema, errorSchema } from './schemas'
+import { badRequest, unauthorized, notFound, serverError } from './components'
 
 export default {
   openapi: '3.0.0',
@@ -8,6 +8,10 @@ export default {
     title: 'Fit Home API',
     description: 'API for handling physical exercises organization and improve their efficiency',
     version: '1.0.0'
+  },
+  license: {
+    name: 'ISC',
+    url: ''
   },
   servers: [{
     url: '/api'
@@ -20,6 +24,13 @@ export default {
   },
   schemas: {
     account: accountSchema,
-    loginParams: loginParamsSchema
+    loginParams: loginParamsSchema,
+    error: errorSchema
+  },
+  components: {
+    badRequest,
+    unauthorized,
+    notFound,
+    serverError
   }
 }
