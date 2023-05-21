@@ -42,7 +42,7 @@ describe('UpdateExercise Controller', () => {
 
   it('Should return 403 if LoadExerciseById returns null', async () => {
     const { sut, loadExerciseByIdStub } = makeSut()
-    jest.spyOn(loadExerciseByIdStub, 'loadById').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+    jest.spyOn(loadExerciseByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
     const httpRequest = mockRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('exerciseId')))

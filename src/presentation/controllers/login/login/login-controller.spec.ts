@@ -41,7 +41,7 @@ describe('Login Controller', () => {
 
   it('Should return 401 if invalid credentials are provided', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise(resolve => resolve('')))
+    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(Promise.resolve(''))
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(unauthorized())
   })

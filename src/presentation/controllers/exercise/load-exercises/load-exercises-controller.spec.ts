@@ -37,7 +37,7 @@ describe('LoadExercises Controller', () => {
 
   it('Should return 204 if LoadExercises returns empty', async () => {
     const { sut, loadExercisesStub } = makeSut()
-    jest.spyOn(loadExercisesStub, 'load').mockReturnValueOnce(new Promise((resolve) => resolve([])))
+    jest.spyOn(loadExercisesStub, 'load').mockReturnValueOnce(Promise.resolve([]))
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(noContent())
   })

@@ -8,7 +8,7 @@ import { mockExerciseModel, mockExerciseModels, mockUpdateExerciseModel } from '
 export const mockAddExercise = (): AddExercise => {
   class AddExerciseStub implements AddExercise {
     async add (data: AddExerciseParams): Promise<ExerciseModel> {
-      return await new Promise(resolve => resolve(mockExerciseModel()))
+      return await Promise.resolve(mockExerciseModel())
     }
   }
   return new AddExerciseStub()
@@ -17,7 +17,7 @@ export const mockAddExercise = (): AddExercise => {
 export const mockLoadExercises = (): LoadExercises => {
   class LoadExercisesStub implements LoadExercises {
     async load (accountId: string): Promise<ExerciseModel[]> {
-      return await new Promise(resolve => resolve(mockExerciseModels()))
+      return await Promise.resolve(mockExerciseModels())
     }
   }
   return new LoadExercisesStub()
@@ -26,7 +26,7 @@ export const mockLoadExercises = (): LoadExercises => {
 export const mockLoadExerciseById = (): LoadExerciseById => {
   class LoadExerciseByIdStub implements LoadExerciseById {
     async loadById (id: string): Promise<ExerciseModel | null> {
-      return await new Promise(resolve => resolve(mockExerciseModel()))
+      return await Promise.resolve(mockExerciseModel())
     }
   }
   return new LoadExerciseByIdStub()
@@ -35,7 +35,7 @@ export const mockLoadExerciseById = (): LoadExerciseById => {
 export const mockUpdateExercise = (): UpdateExercise => {
   class UpdateExerciseStub implements UpdateExercise {
     async update (id: string, data: UpdateExerciseRequestBody): Promise<ExerciseModel> {
-      return await new Promise(resolve => resolve(mockUpdateExerciseModel()))
+      return await Promise.resolve(mockUpdateExerciseModel())
     }
   }
   return new UpdateExerciseStub()
