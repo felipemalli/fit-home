@@ -17,7 +17,7 @@ export class AddExerciseController implements Controller {
       const exercise = await this.addExercise.add({
         name,
         description,
-        accountId: httpRequest.accountId,
+        accountId: httpRequest.accountId!,
         isTemplate: isTemplate ?? false,
         variationName,
         variationDescription,
