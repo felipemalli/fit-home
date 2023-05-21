@@ -1,10 +1,13 @@
 module.exports = {
   roots: ['<rootDir>/src'],
   collectCoverageFrom: [
-    '!**/protocols/**',
     '<rootDir>/src/**/*.ts',
+    '!**/protocols/**',
     '!<rootDir>/src/**/*-protocols.ts',
-    '!<rootDir>/src/main/**'
+    '!<rootDir>/src/**/index.ts',
+    '!<rootDir>/src/main/**',
+    '!<rootDir>/src/domain/**',
+    '!**/test/**'
   ],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
