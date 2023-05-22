@@ -1,6 +1,6 @@
-import { loginPath } from './paths'
-import { accountSchema, loginParamsSchema, errorSchema } from './schemas'
-import { badRequest, unauthorized, notFound, serverError } from './components'
+import { exercisePath, loginPath } from './paths'
+import { accountSchema, loginParamsSchema, errorSchema, exerciseSchema, exercisesSchema, exerciseVariationSchema, apiKeyAuthSchema } from './schemas'
+import { badRequest, unauthorized, notFound, serverError, forbidden } from './components'
 
 export default {
   openapi: '3.0.0',
@@ -18,19 +18,30 @@ export default {
   }],
   tags: [{
     name: 'Login'
+  },
+  {
+    name: 'Exercise'
   }],
   paths: {
-    '/login': loginPath
+    '/login': loginPath,
+    '/exercises': exercisePath
   },
   schemas: {
     account: accountSchema,
     loginParams: loginParamsSchema,
-    error: errorSchema
+    error: errorSchema,
+    exercise: exerciseSchema,
+    exercises: exercisesSchema,
+    exerciseVariation: exerciseVariationSchema
   },
   components: {
+    securitySchemes: {
+      apiKeyAuth: apiKeyAuthSchema
+    },
     badRequest,
     unauthorized,
     notFound,
-    serverError
+    serverError,
+    forbidden
   }
 }

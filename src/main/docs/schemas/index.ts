@@ -1,3 +1,7 @@
 export * from './account-schema'
 export * from './error-schema'
 export * from './login-params-schema'
+export * from './exercise-schema'
+export * from './exercises-schema'
+export * from './exercise-variation-schema'
+export * from './api-key-auth-schema'
