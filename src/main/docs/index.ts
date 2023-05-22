@@ -1,5 +1,5 @@
-import { exercisePath, loginPath, signUpPath } from './paths'
-import { accountSchema, loginParamsSchema, errorSchema, exerciseSchema, exercisesSchema, exerciseVariationSchema, apiKeyAuthSchema, signUpParamsSchema, addExerciseParamsSchema } from './schemas'
+import { exerciseIdPath, exercisePath, loginPath, signUpPath } from './paths'
+import { accountSchema, loginParamsSchema, errorSchema, exerciseSchema, exercisesSchema, exerciseVariationSchema, apiKeyAuthSchema, signUpParamsSchema, addExerciseParamsSchema, updateExerciseParamsSchema } from './schemas'
 import { badRequest, unauthorized, notFound, serverError, forbidden } from './components'
 
 export default {
@@ -25,7 +25,8 @@ export default {
   paths: {
     '/login': loginPath,
     '/signup': signUpPath,
-    '/exercises': exercisePath
+    '/exercises': exercisePath,
+    '/exercises/{exerciseId}': exerciseIdPath
   },
   schemas: {
     error: errorSchema,
@@ -35,7 +36,8 @@ export default {
     exerciseVariation: exerciseVariationSchema,
     loginParams: loginParamsSchema,
     signUpParams: signUpParamsSchema,
-    addExerciseParams: addExerciseParamsSchema
+    addExerciseParams: addExerciseParamsSchema,
+    updateExerciseParams: updateExerciseParamsSchema
   },
   components: {
     securitySchemes: {
