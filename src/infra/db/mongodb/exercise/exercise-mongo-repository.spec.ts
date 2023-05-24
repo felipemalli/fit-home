@@ -1,6 +1,6 @@
 import { ExerciseModelWithoutId, ExerciseMongoRepository } from './exercise-mongo-repository'
 import { MongoHelper, Collection } from '../helpers/mongo-helper'
-import { mockAddExerciseParams, mockExerciseModel, mockExerciseVariationParams } from '@/domain/test'
+import { mockAddExerciseParams, mockExerciseModel, mockExerciseParams, mockExerciseVariationParams } from '@/domain/test'
 
 let exerciseCollection: Collection
 const ACCOUNT_ID = '6348acd2e1a47ca32e79f46f'
@@ -12,7 +12,7 @@ interface CreateExerciseTypes {
 
 const createExercise = async (): Promise<CreateExerciseTypes> => {
   const exerciseParameters = Object.assign({},
-    mockAddExerciseParams(),
+    mockExerciseParams(),
     { accountId: MongoHelper.createObjectId(ACCOUNT_ID) },
     {
       variations: [{
