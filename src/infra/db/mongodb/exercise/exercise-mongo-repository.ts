@@ -33,9 +33,8 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
       }]
     }
     const { insertedId } = await exerciseCollection.insertOne(exerciseModel)
-    const exercise = await exerciseCollection.findOne({ _id: insertedId }) as unknown as ExerciseModel
-    exercise.variations = MongoHelper.mapCollection(exercise.variations)
-    return MongoHelper.map(exercise)
+    const exercise = await this.loadById(insertedId.toHexString()) as unknown as ExerciseModel
+    return exercise
   }
 
   async loadAll (accountId: string): Promise<ExerciseModel[]> {
@@ -48,7 +47,7 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
   async loadById (id: string): Promise<ExerciseModel | null> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const exercise = await exerciseCollection.findOne({ _id: MongoHelper.createObjectId(id) })
-    return exercise && MongoHelper.map(exercise)
+    return exercise && MongoHelper.map(exercise, 'variations')
   }
 
   async update (id: string, data: UpdateExerciseParams): Promise<ExerciseModel> {

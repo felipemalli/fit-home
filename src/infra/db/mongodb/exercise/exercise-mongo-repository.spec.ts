@@ -85,8 +85,11 @@ describe('Exercise Mongo Repository', () => {
       expect(exercises[0].name).toBe(firstExercise.name)
       expect(exercises[0].description).toBe(firstExercise.description)
       expect(exercises[0].isTemplate).toBe(firstExercise.isTemplate)
-      expect(exercises[0].variations[0]).toEqual(firstExercise.variations[0])
-      expect(exercises[1].variations[0]).toEqual(secondExercise.variations[0])
+      expect(exercises[0].variations[0].id).toBeTruthy()
+      const { _id: firstId, ...firstVariation } = firstExercise.variations[0]
+      const { _id: secondId, ...secondVariation } = secondExercise.variations[0]
+      expect(exercises[0].variations[0]).toEqual(expect.objectContaining(firstVariation))
+      expect(exercises[1].variations[0]).toEqual(expect.objectContaining(secondVariation))
     })
 
     it('Should load empty list with no exercises on the accountId', async () => {
@@ -106,7 +109,9 @@ describe('Exercise Mongo Repository', () => {
       expect(exercise?.name).toBe(exerciseParameters.name)
       expect(exercise?.description).toBe(exerciseParameters.description)
       expect(exercise?.isTemplate).toBe(exerciseParameters.isTemplate)
-      expect(exercise?.variations[0]).toEqual(exerciseParameters.variations[0])
+      expect(exercise?.variations[0].id).toBeTruthy()
+      const { _id, ...firstVariation } = exerciseParameters.variations[0]
+      expect(exercise?.variations[0]).toEqual(expect.objectContaining(firstVariation))
     })
   })
 

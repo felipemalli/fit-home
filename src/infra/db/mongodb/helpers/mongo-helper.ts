@@ -23,7 +23,10 @@ export const MongoHelper = {
     return this.client.db().collection(name)
   },
 
-  map (data: any): any {
+  map (data: any, propertyWithCollection?: string): any {
+    if (propertyWithCollection) {
+      data[propertyWithCollection] = data[propertyWithCollection].map((p: any) => MongoHelper.map(p))
+    }
     const { _id, ...collectionWithoutId } = data
     return Object.assign({}, collectionWithoutId, { id: _id.toHexString() })
   },
@@ -31,7 +34,7 @@ export const MongoHelper = {
   mapCollection (collection: any[], propertyWithCollection?: string): any[] {
     if (propertyWithCollection) {
       collection.map((c) => {
-        c[propertyWithCollection].map((p: any) => MongoHelper.map(p))
+        c[propertyWithCollection] = c[propertyWithCollection].map((p: any) => MongoHelper.map(p))
         return MongoHelper.map(c)
       })
     }
