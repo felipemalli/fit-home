@@ -1,6 +1,6 @@
 {
   "name": "fit_home_api",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Project for plan your own physical exercise schedule at home and help you to perform the exercises at the correct time.",
   "main": "index.js",
   "scripts": {
