@@ -16,7 +16,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadExercises', () => {
-  it('Should call LoadExercisesRepository with correct values', async () => {
+  it('Should call LoadExercisesRepository with correct value', async () => {
     const { sut, loadExercisesRepositoryStub } = makeSut()
     const loadAllSpy = jest.spyOn(loadExercisesRepositoryStub, 'loadAll')
     await sut.load('any_id')
