@@ -1,5 +1,5 @@
 import { SignUpController } from './signup-controller'
-import { AddAccount, Authentication, HttpRequest, mockValidation, throwError, Validation, mockAuthentication, mockAddAccount } from './signup-controller-protocols'
+import { AddAccount, Authentication, HttpRequest, mockValidation, throwError, Validation, mockAuthentication, mockAddAccount, mockAuthenticationModel } from './signup-controller-protocols'
 import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
@@ -64,7 +64,7 @@ describe('SignUp Controller', () => {
   it('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(ok(mockAuthenticationModel()))
   })
 
   it('Should call Validation with correct value', async () => {
