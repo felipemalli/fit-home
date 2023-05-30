@@ -7,5 +7,6 @@ export const accountSchema = {
     name: {
       type: 'string'
     }
-  }
+  },
+  required: ['accessToken', 'name']
 }

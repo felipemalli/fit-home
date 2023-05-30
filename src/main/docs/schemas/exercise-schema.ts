@@ -22,5 +22,6 @@ export const exerciseSchema = {
         $ref: '#/schemas/exerciseVariation'
       }
     }
-  }
+  },
+  required: ['id', 'name', 'accountId', 'variations']
 }

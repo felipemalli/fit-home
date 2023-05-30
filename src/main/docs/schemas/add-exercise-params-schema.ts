@@ -37,5 +37,6 @@ export const addExerciseParamsSchema = {
     weight: {
       type: 'number'
     }
-  }
+  },
+  required: ['name', 'variationName', 'series', 'betweenSeriesTime', 'repetitions', 'repetitionTime']
 }
