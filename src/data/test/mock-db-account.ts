@@ -15,6 +15,16 @@ export const mockAddAccountRepository = (): AddAccountRepository => {
   return new AddAccountRepositoryStub()
 }
 
+export class AddAccountRepositorySpy implements AddAccountRepository {
+  params: AddAccountParams
+  result = mockAccountModel()
+
+  async add (params: AddAccountParams): Promise<AccountModel> {
+    this.params = params
+    return this.result
+  }
+}
+
 export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
     async loadByEmail (email: string): Promise<AccountModel | null> {
@@ -22,6 +32,16 @@ export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository
     }
   }
   return new LoadAccountByEmailRepositoryStub()
+}
+
+export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
+  email: string
+  result: AccountModel | null = mockAccountModel()
+
+  async loadByEmail (email: string): Promise<AccountModel | null> {
+    this.email = email
+    return this.result
+  }
 }
 
 export const mockLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
