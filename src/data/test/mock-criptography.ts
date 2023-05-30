@@ -36,38 +36,11 @@ export class EncrypterSpy implements Encrypter {
 }
 
 export class DecrypterSpy implements Decrypter {
-  plaintext = 'any_value'
+  plaintext: string | null = 'any_value'
   ciphertext: string
 
-  async decrypt (ciphertext: string): Promise<string> {
+  async decrypt (ciphertext: string): Promise<string | null> {
     this.ciphertext = ciphertext
     return this.plaintext
   }
-}
-
-export const mockEncrypter = (): Encrypter => {
-  class EncrypterStub implements Encrypter {
-    async encrypt (value: string): Promise<string> {
-      return await Promise.resolve('any_token')
-    }
-  }
-  return new EncrypterStub()
-}
-
-export const mockDecrypter = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    async decrypt (value: string): Promise<string | null> {
-      return await Promise.resolve('any_value')
-    }
-  }
-  return new DecrypterStub()
-}
-
-export const mockHashComparer = (): HashComparer => {
-  class HashComparerStub implements HashComparer {
-    async compare (value: string, hash: string): Promise<boolean> {
-      return await Promise.resolve(true)
-    }
-  }
-  return new HashComparerStub()
 }

@@ -6,15 +6,6 @@ import { AccountModel } from '@/domain/models/accounts/account'
 import { AddAccountParams } from '@/domain/usecases/account/add-account'
 import { mockAccountModel } from '@/domain/test'
 
-export const mockAddAccountRepository = (): AddAccountRepository => {
-  class AddAccountRepositoryStub implements AddAccountRepository {
-    async add (accountData: AddAccountParams): Promise<AccountModel> {
-      return await Promise.resolve(mockAccountModel())
-    }
-  }
-  return new AddAccountRepositoryStub()
-}
-
 export class AddAccountRepositorySpy implements AddAccountRepository {
   params: AddAccountParams
   result = mockAccountModel()
@@ -23,15 +14,6 @@ export class AddAccountRepositorySpy implements AddAccountRepository {
     this.params = params
     return this.result
   }
-}
-
-export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
-  class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
-    async loadByEmail (email: string): Promise<AccountModel | null> {
-      return await Promise.resolve(mockAccountModel())
-    }
-  }
-  return new LoadAccountByEmailRepositoryStub()
 }
 
 export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
@@ -44,22 +26,16 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
   }
 }
 
-export const mockLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
-  class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
-    async loadByToken (token: string, role?: string): Promise<AccountModel | null> {
-      return await Promise.resolve(mockAccountModel())
-    }
-  }
-  return new LoadAccountByTokenRepositoryStub()
-}
+export class LoadAccountByTokenRepositorySpy implements LoadAccountByTokenRepository {
+  token: string
+  role: string | undefined
+  result: AccountModel | null = mockAccountModel()
 
-export const mockUpdateAccessTokenRepository = (): UpdateAccessTokenRepository => {
-  class UpdateAccessTokenRepositoryStub implements UpdateAccessTokenRepository {
-    async updateAccessToken (id: string, token: string): Promise<void> {
-      return await Promise.resolve()
-    }
+  async loadByToken (token: string, role?: string): Promise<AccountModel | null> {
+    this.token = token
+    this.role = role
+    return this.result
   }
-  return new UpdateAccessTokenRepositoryStub()
 }
 
 export class UpdateAccessTokenRepositorySpy implements UpdateAccessTokenRepository {
