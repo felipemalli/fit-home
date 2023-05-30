@@ -31,13 +31,12 @@ export const MongoHelper = {
     return Object.assign({}, collectionWithoutId, { id: _id.toHexString() })
   },
 
-  mapCollection (collection: any[], propertyWithCollection?: string): any[] {
-    if (propertyWithCollection) {
-      collection.map((c) => {
-        c[propertyWithCollection] = c[propertyWithCollection].map((p: any) => MongoHelper.map(p))
-        return MongoHelper.map(c)
-      })
-    }
+  mapCollection (collection: any[], propertyWithCollection: string): any[] {
+    collection.map((c) => {
+      c[propertyWithCollection] = c[propertyWithCollection].map((p: any) => MongoHelper.map(p))
+      return MongoHelper.map(c)
+    })
+
     return collection.map((c) => MongoHelper.map(c))
   },
 
