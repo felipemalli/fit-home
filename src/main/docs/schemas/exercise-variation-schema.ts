@@ -15,26 +15,10 @@ export const exerciseVariationSchema = {
     },
     configuration: {
       type: 'object',
-      properties: {
-        series: {
-          type: 'number'
-        },
-        betweenSeriesTime: {
-          type: 'number'
-        },
-        repetitions: {
-          type: 'number'
-        },
-        repetitionTime: {
-          type: 'number'
-        },
-        warmupTime: {
-          type: 'number'
-        },
-        weight: {
-          type: 'number'
-        }
+      items: {
+        $ref: '#/schemas/exerciseConfiguration'
       }
     }
-  }
+  },
+  required: ['id', 'name', 'configuration']
 }
