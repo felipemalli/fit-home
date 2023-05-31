@@ -16,6 +16,16 @@ export const mockAddExerciseRepository = (): AddExerciseRepository => {
   return new AddExerciseRepositoryStub()
 }
 
+export class AddExerciseRepositorySpy implements AddExerciseRepository {
+  params: AddExerciseParams
+  result = mockExerciseModel()
+
+  async add (params: AddExerciseParams): Promise<ExerciseModel> {
+    this.params = params
+    return this.result
+  }
+}
+
 export const mockLoadExerciseByIdRepository = (): LoadExerciseByIdRepository => {
   class LoadExerciseByIdRepositoryStub implements LoadExerciseByIdRepository {
     async loadById (id: string): Promise<ExerciseModel> {
@@ -23,6 +33,16 @@ export const mockLoadExerciseByIdRepository = (): LoadExerciseByIdRepository => 
     }
   }
   return new LoadExerciseByIdRepositoryStub()
+}
+
+export class LoadExerciseByIdRepositorySpy implements LoadExerciseByIdRepository {
+  id: string
+  result = mockExerciseModel()
+
+  async loadById (id: string): Promise<ExerciseModel> {
+    this.id = id
+    return this.result
+  }
 }
 
 export const mockLoadExercisesRepository = (): LoadExercisesRepository => {
@@ -34,6 +54,16 @@ export const mockLoadExercisesRepository = (): LoadExercisesRepository => {
   return new LoadExercisesRepositoryStub()
 }
 
+export class LoadExercisesRepositoryStub implements LoadExercisesRepository {
+  accountId: string
+  result = mockExerciseModels()
+
+  async loadAll (accountId: string): Promise<ExerciseModel[]> {
+    this.accountId = accountId
+    return this.result
+  }
+}
+
 export const mockUpdateExerciseRepository = (): UpdateExerciseRepository => {
   class UpdateExerciseRepositoryStub implements UpdateExerciseRepository {
     async update (id: string, data: UpdateExerciseParams): Promise<ExerciseModel> {
@@ -41,4 +71,16 @@ export const mockUpdateExerciseRepository = (): UpdateExerciseRepository => {
     }
   }
   return new UpdateExerciseRepositoryStub()
+}
+
+export class UpdateExerciseRepositoryStub implements UpdateExerciseRepository {
+  id: string
+  updateData: UpdateExerciseParams
+  result = mockUpdateExerciseModel()
+
+  async update (id: string, updateData: UpdateExerciseParams): Promise<ExerciseModel> {
+    this.id = id
+    this.updateData = updateData
+    return this.result
+  }
 }
