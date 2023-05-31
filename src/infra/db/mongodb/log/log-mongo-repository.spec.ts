@@ -7,9 +7,9 @@ const makeSut = (): LogMongoRepository => {
   return new LogMongoRepository()
 }
 
-describe('Log Mongo Repository', () => {
-  let errorCollection: Collection
+let errorCollection: Collection
 
+describe('Log Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect()
   })

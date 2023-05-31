@@ -2,6 +2,10 @@ import { AccountMongoRepository } from './account-mongo-repository'
 import { mockAddAccountParams } from '@/domain/test'
 import { MongoHelper, Collection } from '../helpers/mongo-helper'
 
+const makeSut = (): AccountMongoRepository => {
+  return new AccountMongoRepository()
+}
+
 let accountCollection: Collection
 
 describe('Account Mongo Repository', () => {
@@ -17,10 +21,6 @@ describe('Account Mongo Repository', () => {
     accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
-
-  const makeSut = (): AccountMongoRepository => {
-    return new AccountMongoRepository()
-  }
 
   describe('add()', () => {
     it('Should return an account on add success', async () => {
