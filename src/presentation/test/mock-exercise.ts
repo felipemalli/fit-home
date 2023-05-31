@@ -5,13 +5,14 @@ import { LoadExercises } from '@/domain/usecases/exercise/load-exercises'
 import { UpdateExercise, UpdateExerciseRequestBody } from '@/domain/usecases/exercise/update-exercise'
 import { mockExerciseModel, mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
 
-export const mockAddExercise = (): AddExercise => {
-  class AddExerciseStub implements AddExercise {
-    async add (data: AddExerciseParams): Promise<ExerciseModel> {
-      return await Promise.resolve(mockExerciseModel())
-    }
+export class AddExerciseSpy implements AddExercise {
+  params: AddExerciseParams
+  result = mockExerciseModel()
+
+  async add (params: AddExerciseParams): Promise<ExerciseModel> {
+    this.params = params
+    return this.result
   }
-  return new AddExerciseStub()
 }
 
 export const mockLoadExercises = (): LoadExercises => {

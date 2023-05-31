@@ -1,5 +1,5 @@
 import { AddExerciseController } from './add-exercise-controller'
-import { AddExercise, AddExerciseRequestBody, HttpRequest, Validation, throwError, mockExerciseModel, mockAddExercise, ValidationSpy } from './add-exercise-controller-protocols'
+import { AddExerciseRequestBody, HttpRequest, throwError, ValidationSpy, AddExerciseSpy } from './add-exercise-controller-protocols'
 import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
 
 const mockRequest = (): HttpRequest<AddExerciseRequestBody> => ({
@@ -22,64 +22,71 @@ const mockRequest = (): HttpRequest<AddExerciseRequestBody> => ({
 
 interface SutTypes {
   sut: AddExerciseController
-  validationStub: Validation
-  addExerciseStub: AddExercise
+  validationSpy: ValidationSpy
+  addExerciseSpy: AddExerciseSpy
 }
 
 const makeSut = (): SutTypes => {
-  const validationStub = new ValidationSpy()
-  const addExerciseStub = mockAddExercise()
-  const sut = new AddExerciseController(validationStub, addExerciseStub)
+  const validationSpy = new ValidationSpy()
+  const addExerciseSpy = new AddExerciseSpy()
+  const sut = new AddExerciseController(validationSpy, addExerciseSpy)
   return {
     sut,
-    validationStub,
-    addExerciseStub
+    validationSpy,
+    addExerciseSpy
   }
 }
 
 describe('AddExercise Controller', () => {
   it('Should call Validation with correct values', async () => {
-    const { sut, validationStub } = makeSut()
-    const validateSpy = jest.spyOn(validationStub, 'validate')
+    const { sut, validationSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
+    expect(validationSpy.input).toEqual(httpRequest.body)
   })
 
   it('Should return 400 if Validation fails', async () => {
-    const { sut, validationStub } = makeSut()
-    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Error())
+    const { sut, validationSpy } = makeSut()
+    validationSpy.error = new Error()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(badRequest(new Error()))
+    expect(httpResponse).toEqual(badRequest(validationSpy.error))
   })
 
   it('Should call AddExercise with correct values', async () => {
-    const { sut, addExerciseStub } = makeSut()
-    const addSpy = jest.spyOn(addExerciseStub, 'add')
+    const { sut, addExerciseSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(addSpy).toHaveBeenCalledWith({ ...httpRequest.body, accountId: 'any_id' })
+    expect(addExerciseSpy.params).toEqual(
+      {
+        ...httpRequest.body,
+        accountId: httpRequest.accountId
+      }
+    )
   })
 
   it('Should call AddExercise with isTemplate false if is not passed', async () => {
-    const { sut, addExerciseStub } = makeSut()
-    const addSpy = jest.spyOn(addExerciseStub, 'add')
+    const { sut, addExerciseSpy } = makeSut()
     const httpRequest = mockRequest()
     if (httpRequest.body) httpRequest.body.isTemplate = undefined
     await sut.handle(httpRequest)
-    expect(addSpy).toHaveBeenCalledWith({ ...httpRequest.body, accountId: 'any_id', isTemplate: false })
+    expect(addExerciseSpy.params).toEqual(
+      {
+        ...httpRequest.body,
+        accountId: httpRequest.accountId,
+        isTemplate: false
+      })
   })
 
   it('Should return 500 if AddExercise throws', async () => {
-    const { sut, addExerciseStub } = makeSut()
-    jest.spyOn(addExerciseStub, 'add').mockImplementationOnce(throwError)
+    const { sut, addExerciseSpy } = makeSut()
+    jest.spyOn(addExerciseSpy, 'add').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   it('Should return 201 on success', async () => {
-    const { sut } = makeSut()
+    const { sut, addExerciseSpy } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(created(mockExerciseModel()))
+    expect(httpResponse).toEqual(created(addExerciseSpy.result))
   })
 })
