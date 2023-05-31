@@ -1,5 +1,5 @@
 import { UpdateExerciseController } from './update-exercise-controller'
-import { HttpRequest, LoadExerciseById, mockLoadExerciseById, mockUpdateExercise, mockUpdateExerciseModel, throwError, UpdateExercise, UpdateExerciseRequestBody, UpdateExerciseRequestParams } from './update-exercise-controller-protocols'
+import { HttpRequest, LoadExerciseByIdSpy, throwError, UpdateExerciseRequestBody, UpdateExerciseRequestParams, UpdateExerciseSpy } from './update-exercise-controller-protocols'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
@@ -16,63 +16,61 @@ const mockRequest = (): HttpRequest<UpdateExerciseRequestBody, UpdateExerciseReq
 
 interface SutTypes {
   sut: UpdateExerciseController
-  loadExerciseByIdStub: LoadExerciseById
-  updateExerciseStub: UpdateExercise
+  loadExerciseByIdSpy: LoadExerciseByIdSpy
+  updateExerciseSpy: UpdateExerciseSpy
 }
 
 const makeSut = (): SutTypes => {
-  const loadExerciseByIdStub = mockLoadExerciseById()
-  const updateExerciseStub = mockUpdateExercise()
-  const sut = new UpdateExerciseController(loadExerciseByIdStub, updateExerciseStub)
+  const loadExerciseByIdSpy = new LoadExerciseByIdSpy()
+  const updateExerciseSpy = new UpdateExerciseSpy()
+  const sut = new UpdateExerciseController(loadExerciseByIdSpy, updateExerciseSpy)
   return {
     sut,
-    loadExerciseByIdStub,
-    updateExerciseStub
+    loadExerciseByIdSpy,
+    updateExerciseSpy
   }
 }
 
 describe('UpdateExercise Controller', () => {
-  it('Should call LoadExerciseById with correct values', async () => {
-    const { sut, loadExerciseByIdStub } = makeSut()
-    const loadByIdSpy = jest.spyOn(loadExerciseByIdStub, 'loadById')
+  it('Should call LoadExerciseById with correct value', async () => {
+    const { sut, loadExerciseByIdSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(loadByIdSpy).toHaveBeenCalledWith(httpRequest.params?.exerciseId)
+    expect(loadExerciseByIdSpy.id).toBe(httpRequest.params?.exerciseId)
   })
 
   it('Should return 403 if LoadExerciseById returns null', async () => {
-    const { sut, loadExerciseByIdStub } = makeSut()
-    jest.spyOn(loadExerciseByIdStub, 'loadById').mockReturnValueOnce(Promise.resolve(null))
-    const httpRequest = mockRequest()
-    const httpResponse = await sut.handle(httpRequest)
+    const { sut, loadExerciseByIdSpy } = makeSut()
+    loadExerciseByIdSpy.result = null
+    const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('exerciseId')))
   })
 
   it('Should return 500 if LoadExerciseById throws', async () => {
-    const { sut, loadExerciseByIdStub } = makeSut()
-    jest.spyOn(loadExerciseByIdStub, 'loadById').mockImplementationOnce(throwError)
+    const { sut, loadExerciseByIdSpy } = makeSut()
+    jest.spyOn(loadExerciseByIdSpy, 'loadById').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   it('Should call SaveExercise with correct values', async () => {
-    const { sut, updateExerciseStub } = makeSut()
-    const updateSpy = jest.spyOn(updateExerciseStub, 'update')
+    const { sut, updateExerciseSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(updateSpy).toHaveBeenCalledWith(httpRequest.params?.exerciseId, httpRequest.body)
+    expect(updateExerciseSpy.id).toBe(httpRequest.params?.exerciseId)
+    expect(updateExerciseSpy.updateParams).toBe(httpRequest.body)
   })
 
   it('Should return 500 if SaveExercise throws', async () => {
-    const { sut, updateExerciseStub } = makeSut()
-    jest.spyOn(updateExerciseStub, 'update').mockImplementationOnce(throwError)
+    const { sut, updateExerciseSpy } = makeSut()
+    jest.spyOn(updateExerciseSpy, 'update').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
   it('Should return 200 on success', async () => {
-    const { sut } = makeSut()
+    const { sut, updateExerciseSpy } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok(mockUpdateExerciseModel()))
+    expect(httpResponse).toEqual(ok(updateExerciseSpy.result))
   })
 })

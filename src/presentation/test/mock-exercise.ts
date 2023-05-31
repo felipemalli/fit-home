@@ -25,20 +25,24 @@ export class LoadExercisesSpy implements LoadExercises {
   }
 }
 
-export const mockLoadExerciseById = (): LoadExerciseById => {
-  class LoadExerciseByIdStub implements LoadExerciseById {
-    async loadById (id: string): Promise<ExerciseModel | null> {
-      return await Promise.resolve(mockExerciseModel())
-    }
+export class LoadExerciseByIdSpy implements LoadExerciseById {
+  id: string
+  result: ExerciseModel | null = mockExerciseModel()
+
+  async loadById (id: string): Promise<ExerciseModel | null> {
+    this.id = id
+    return this.result
   }
-  return new LoadExerciseByIdStub()
 }
 
-export const mockUpdateExercise = (): UpdateExercise => {
-  class UpdateExerciseStub implements UpdateExercise {
-    async update (id: string, data: UpdateExerciseRequestBody): Promise<ExerciseModel> {
-      return await Promise.resolve(mockUpdateExerciseModel())
-    }
+export class UpdateExerciseSpy implements UpdateExercise {
+  id: string
+  updateParams: UpdateExerciseRequestBody
+  result = mockUpdateExerciseModel()
+
+  async update (id: string, updateParams: UpdateExerciseRequestBody): Promise<ExerciseModel> {
+    this.id = id
+    this.updateParams = updateParams
+    return this.result
   }
-  return new UpdateExerciseStub()
 }
