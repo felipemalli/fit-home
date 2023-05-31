@@ -33,6 +33,16 @@ export const mockAddAccount = (): AddAccount => {
   return new AddAccountStub()
 }
 
+export class AddAccountSpy implements AddAccount {
+  params: AddAccountParams
+  result: AccountModel | null = mockAccountModel()
+
+  async add (params: AddAccountParams): Promise<AccountModel | null> {
+    this.params = params
+    return this.result
+  }
+}
+
 export const mockLoadAccountByToken = (): LoadAccountByToken => {
   class LoadAccountByTokenStub implements LoadAccountByToken {
     async load (accessToken: string, role?: string | undefined): Promise<AccountModel | null> {
