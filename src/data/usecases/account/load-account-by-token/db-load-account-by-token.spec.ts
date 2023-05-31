@@ -39,7 +39,7 @@ describe('DbLoadAccountByToken UseCase', () => {
     const { sut, decrypterSpy } = makeSut()
     jest.spyOn(decrypterSpy, 'decrypt').mockImplementationOnce(throwError)
     const account = await sut.load(token, role)
-    await expect(account).toBeNull()
+    expect(account).toBeNull()
   })
 
   it('Should call LoadAccountByTokenRepository with correct values', async () => {
