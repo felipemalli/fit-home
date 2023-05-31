@@ -14,6 +14,16 @@ export const mockAuthentication = (): Authentication => {
   return new AuthenticationStub()
 }
 
+export class AuthenticationSpy implements Authentication {
+  params: AuthenticationParams
+  result: AuthenticationModel | null = mockAuthenticationModel()
+
+  async auth (params: AuthenticationParams): Promise<AuthenticationModel | null> {
+    this.params = params
+    return this.result
+  }
+}
+
 export const mockAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountParams): Promise<AccountModel | null> {
