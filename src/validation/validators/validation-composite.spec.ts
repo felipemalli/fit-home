@@ -1,7 +1,7 @@
 import { ValidationComposite } from './validation-composite'
-import { mockValidation } from '@/validation/test'
 import { Validation } from '@/presentation/protocols'
 import { MissingParamError } from '@/presentation/errors'
+import { ValidationSpy } from '@/presentation/test'
 
 interface SutTypes {
   sut: ValidationComposite
@@ -10,8 +10,8 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
   const validationStubs = [
-    mockValidation(),
-    mockValidation()
+    new ValidationSpy(),
+    new ValidationSpy()
   ]
   const sut = new ValidationComposite(validationStubs)
   return {

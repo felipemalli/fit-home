@@ -1,5 +1,5 @@
 import { AddExerciseController } from './add-exercise-controller'
-import { AddExercise, AddExerciseRequestBody, HttpRequest, Validation, throwError, mockExerciseModel, mockValidation, mockAddExercise } from './add-exercise-controller-protocols'
+import { AddExercise, AddExerciseRequestBody, HttpRequest, Validation, throwError, mockExerciseModel, mockAddExercise, ValidationSpy } from './add-exercise-controller-protocols'
 import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
 
 const mockRequest = (): HttpRequest<AddExerciseRequestBody> => ({
@@ -27,7 +27,7 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
-  const validationStub = mockValidation()
+  const validationStub = new ValidationSpy()
   const addExerciseStub = mockAddExercise()
   const sut = new AddExerciseController(validationStub, addExerciseStub)
   return {
