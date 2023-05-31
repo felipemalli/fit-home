@@ -37,23 +37,14 @@ export class LoadExercisesRepositorySpy implements LoadExercisesRepository {
   }
 }
 
-export const mockUpdateExerciseRepository = (): UpdateExerciseRepository => {
-  class UpdateExerciseRepositoryStub implements UpdateExerciseRepository {
-    async update (id: string, data: UpdateExerciseParams): Promise<ExerciseModel> {
-      return await Promise.resolve(mockUpdateExerciseModel())
-    }
-  }
-  return new UpdateExerciseRepositoryStub()
-}
-
 export class UpdateExerciseRepositorySpy implements UpdateExerciseRepository {
   id: string
-  updateData: UpdateExerciseParams
+  updateParams: UpdateExerciseParams
   result = mockUpdateExerciseModel()
 
   async update (id: string, updateData: UpdateExerciseParams): Promise<ExerciseModel> {
     this.id = id
-    this.updateData = updateData
+    this.updateParams = updateData
     return this.result
   }
 }
