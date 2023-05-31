@@ -27,15 +27,6 @@ export class LoadExerciseByIdRepositorySpy implements LoadExerciseByIdRepository
   }
 }
 
-export const mockLoadExercisesRepository = (): LoadExercisesRepository => {
-  class LoadExercisesRepositoryStub implements LoadExercisesRepository {
-    async loadAll (accountId: string): Promise<ExerciseModel[]> {
-      return await Promise.resolve(mockExerciseModels())
-    }
-  }
-  return new LoadExercisesRepositoryStub()
-}
-
 export class LoadExercisesRepositorySpy implements LoadExercisesRepository {
   accountId: string
   result = mockExerciseModels()
