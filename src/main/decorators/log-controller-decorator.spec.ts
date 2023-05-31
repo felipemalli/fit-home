@@ -2,15 +2,14 @@ import { LogControllerDecorator } from './log-controller-decorator'
 import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
 import { ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { LogErrorRepositorySpy } from '@/data/test'
-import { mockAccountModel } from '@/domain/test'
 
 class ControllerSpy implements Controller {
   httpRequest: HttpRequest
-  result = ok(mockAccountModel())
+  httpResponse = ok('any_id')
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     this.httpRequest = httpRequest
-    return this.result
+    return this.httpResponse
   }
 }
 
@@ -55,16 +54,15 @@ describe('LogController Decorator', () => {
   })
 
   it('Should return the same result as the controller', async () => {
-    const { sut } = makeSut()
+    const { sut, controllerSpy } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok(mockAccountModel()))
+    expect(httpResponse).toEqual(controllerSpy.httpResponse)
   })
 
   it('Should call LogErrorRepository with correct error if controller returns a server error', async () => {
     const { sut, controllerSpy, logErrorRepositorySpy } = makeSut()
-    const serverError = mockServerError()
-    controllerSpy.result = serverError
+    controllerSpy.httpResponse = mockServerError()
     await sut.handle(mockRequest())
-    expect(logErrorRepositorySpy.stack).toBe(serverError.body.stack)
+    expect(logErrorRepositorySpy.stack).toBe(controllerSpy.httpResponse.body.stack)
   })
 })
