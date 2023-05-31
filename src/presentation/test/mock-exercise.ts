@@ -15,13 +15,14 @@ export class AddExerciseSpy implements AddExercise {
   }
 }
 
-export const mockLoadExercises = (): LoadExercises => {
-  class LoadExercisesStub implements LoadExercises {
-    async load (accountId: string): Promise<ExerciseModel[]> {
-      return await Promise.resolve(mockExerciseModels())
-    }
+export class LoadExercisesSpy implements LoadExercises {
+  accountId: string
+  result = mockExerciseModels()
+
+  async load (accountId: string): Promise<ExerciseModel[]> {
+    this.accountId = accountId
+    return this.result
   }
-  return new LoadExercisesStub()
 }
 
 export const mockLoadExerciseById = (): LoadExerciseById => {
