@@ -18,8 +18,8 @@ const makeSut = (): SutTypes => {
   }
 }
 
-let token: 'any_token'
-let role: 'any_role'
+const token = 'any_token'
+const role = 'any_role'
 
 describe('DbLoadAccountByToken UseCase', () => {
   it('Should call Decrypter with correct values', async () => {

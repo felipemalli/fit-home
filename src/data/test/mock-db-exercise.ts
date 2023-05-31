@@ -17,15 +17,6 @@ export class AddExerciseRepositorySpy implements AddExerciseRepository {
   }
 }
 
-export const mockLoadExerciseByIdRepository = (): LoadExerciseByIdRepository => {
-  class LoadExerciseByIdRepositoryStub implements LoadExerciseByIdRepository {
-    async loadById (id: string): Promise<ExerciseModel> {
-      return await Promise.resolve(mockExerciseModel())
-    }
-  }
-  return new LoadExerciseByIdRepositoryStub()
-}
-
 export class LoadExerciseByIdRepositorySpy implements LoadExerciseByIdRepository {
   id: string
   result = mockExerciseModel()

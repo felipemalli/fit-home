@@ -1,38 +1,39 @@
 import { DbLoadExerciseById } from './db-load-exercise-by-id'
-import { LoadExerciseByIdRepository, throwError, mockExerciseModel, mockLoadExerciseByIdRepository } from './db-load-exercise-by-id-protocols'
+import { throwError, LoadExerciseByIdRepositorySpy } from './db-load-exercise-by-id-protocols'
 
 interface SutTypes {
   sut: DbLoadExerciseById
-  loadExerciseByIdRepositoryStub: LoadExerciseByIdRepository
+  loadExerciseByIdRepositorySpy: LoadExerciseByIdRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
-  const loadExerciseByIdRepositoryStub = mockLoadExerciseByIdRepository()
-  const sut = new DbLoadExerciseById(loadExerciseByIdRepositoryStub)
+  const loadExerciseByIdRepositorySpy = new LoadExerciseByIdRepositorySpy()
+  const sut = new DbLoadExerciseById(loadExerciseByIdRepositorySpy)
   return {
     sut,
-    loadExerciseByIdRepositoryStub
+    loadExerciseByIdRepositorySpy
   }
 }
 
+const id = 'any_id'
+
 describe('DbLoadExerciseById', () => {
   it('Should call LoadExerciseByIdRepository with correct id', async () => {
-    const { sut, loadExerciseByIdRepositoryStub } = makeSut()
-    const loadByIdSpy = jest.spyOn(loadExerciseByIdRepositoryStub, 'loadById')
-    await sut.loadById('any_id')
-    expect(loadByIdSpy).toHaveBeenCalledWith('any_id')
+    const { sut, loadExerciseByIdRepositorySpy } = makeSut()
+    await sut.loadById(id)
+    expect(loadExerciseByIdRepositorySpy.id).toBe(id)
   })
 
   it('Should throw if LoadExerciseByIdRepository throws', async () => {
-    const { sut, loadExerciseByIdRepositoryStub } = makeSut()
-    jest.spyOn(loadExerciseByIdRepositoryStub, 'loadById').mockImplementationOnce(throwError)
-    const promise = sut.loadById('any_id')
+    const { sut, loadExerciseByIdRepositorySpy } = makeSut()
+    jest.spyOn(loadExerciseByIdRepositorySpy, 'loadById').mockImplementationOnce(throwError)
+    const promise = sut.loadById(id)
     await expect(promise).rejects.toThrow()
   })
 
   it('Should return a Exercise on success', async () => {
-    const { sut } = makeSut()
-    const exercise = await sut.loadById('any_id')
-    expect(exercise).toEqual(mockExerciseModel())
+    const { sut, loadExerciseByIdRepositorySpy } = makeSut()
+    const exercise = await sut.loadById(id)
+    expect(exercise).toEqual(loadExerciseByIdRepositorySpy.result)
   })
 })
