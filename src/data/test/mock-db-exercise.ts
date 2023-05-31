@@ -7,15 +7,6 @@ import { AddExerciseParams } from '@/domain/usecases/exercise/add-exercise'
 import { UpdateExerciseParams } from '@/domain/usecases/exercise/update-exercise'
 import { mockExerciseModel, mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
 
-export const mockAddExerciseRepository = (): AddExerciseRepository => {
-  class AddExerciseRepositoryStub implements AddExerciseRepository {
-    async add (exerciseData: AddExerciseParams): Promise<ExerciseModel> {
-      return await Promise.resolve(mockExerciseModel())
-    }
-  }
-  return new AddExerciseRepositoryStub()
-}
-
 export class AddExerciseRepositorySpy implements AddExerciseRepository {
   params: AddExerciseParams
   result = mockExerciseModel()
@@ -54,7 +45,7 @@ export const mockLoadExercisesRepository = (): LoadExercisesRepository => {
   return new LoadExercisesRepositoryStub()
 }
 
-export class LoadExercisesRepositoryStub implements LoadExercisesRepository {
+export class LoadExercisesRepositorySpy implements LoadExercisesRepository {
   accountId: string
   result = mockExerciseModels()
 
@@ -73,7 +64,7 @@ export const mockUpdateExerciseRepository = (): UpdateExerciseRepository => {
   return new UpdateExerciseRepositoryStub()
 }
 
-export class UpdateExerciseRepositoryStub implements UpdateExerciseRepository {
+export class UpdateExerciseRepositorySpy implements UpdateExerciseRepository {
   id: string
   updateData: UpdateExerciseParams
   result = mockUpdateExerciseModel()

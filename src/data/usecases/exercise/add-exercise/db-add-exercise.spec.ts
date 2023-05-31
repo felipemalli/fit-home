@@ -1,39 +1,38 @@
 import { DbAddExercise } from './db-add-exercise'
-import { AddExerciseRepository, mockAddExerciseRepository, mockAddExerciseParams, mockExerciseModel, throwError } from './db-add-exercise-protocols'
+import { mockAddExerciseParams, throwError, AddExerciseRepositorySpy } from './db-add-exercise-protocols'
 
 interface SutTypes {
   sut: DbAddExercise
-  addExerciseRepositoryStub: AddExerciseRepository
+  addExerciseRepositorySpy: AddExerciseRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
-  const addExerciseRepositoryStub = mockAddExerciseRepository()
-  const sut = new DbAddExercise(addExerciseRepositoryStub)
+  const addExerciseRepositorySpy = new AddExerciseRepositorySpy()
+  const sut = new DbAddExercise(addExerciseRepositorySpy)
   return {
     sut,
-    addExerciseRepositoryStub
+    addExerciseRepositorySpy
   }
 }
 
 describe('DbAddExercise UseCase', () => {
   it('Should call AddExerciseRepository with correct values', async () => {
-    const { sut, addExerciseRepositoryStub } = makeSut()
-    const addSpy = jest.spyOn(addExerciseRepositoryStub, 'add')
+    const { sut, addExerciseRepositorySpy } = makeSut()
     const exerciseData = mockAddExerciseParams()
     await sut.add(exerciseData)
-    expect(addSpy).toHaveBeenCalledWith(exerciseData)
+    expect(addExerciseRepositorySpy.params).toBe(exerciseData)
   })
 
   it('Should throw if AddExerciseRepository throws', async () => {
-    const { sut, addExerciseRepositoryStub } = makeSut()
-    jest.spyOn(addExerciseRepositoryStub, 'add').mockImplementationOnce(throwError)
+    const { sut, addExerciseRepositorySpy } = makeSut()
+    jest.spyOn(addExerciseRepositorySpy, 'add').mockImplementationOnce(throwError)
     const promise = sut.add(mockAddExerciseParams())
     await expect(promise).rejects.toThrow()
   })
 
   it('Should return an exercise on success', async () => {
-    const { sut } = makeSut()
+    const { sut, addExerciseRepositorySpy } = makeSut()
     const account = await sut.add(mockAddExerciseParams())
-    expect(account).toEqual(mockExerciseModel())
+    expect(account).toEqual(addExerciseRepositorySpy.result)
   })
 })
