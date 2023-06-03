@@ -1,4 +1,4 @@
-import { MongoHelper, ObjectId } from '../helpers/mongo-helper'
+import { MongoHelper, ObjectId } from '@/infra/db/mongodb/helpers/mongo-helper'
 import { ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
 import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'

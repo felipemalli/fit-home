@@ -2,12 +2,10 @@ import { AddAccountRepository } from '@/data/protocols/db/account/add-account-re
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
 import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
-import { AccountModel } from '@/domain/models/accounts/account'
-import { mockAccountModel } from '@/domain/test'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
   params: AddAccountRepository.Params
-  result = mockAccountModel()
+  result = true
 
   async add (params: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     this.params = params
@@ -17,9 +15,13 @@ export class AddAccountRepositorySpy implements AddAccountRepository {
 
 export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
   email: string
-  result: AccountModel | null = mockAccountModel()
+  result: LoadAccountByEmailRepository.Result | null = {
+    id: 'any_id',
+    name: 'any_name',
+    password: 'any_password'
+  }
 
-  async loadByEmail (email: string): Promise<AccountModel | null> {
+  async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result | null> {
     this.email = email
     return this.result
   }
@@ -28,7 +30,7 @@ export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailReposi
 export class LoadAccountByTokenRepositorySpy implements LoadAccountByTokenRepository {
   token: string
   role: string | undefined
-  result: AccountModel | null = mockAccountModel()
+  result: LoadAccountByTokenRepository.Result | null = { id: 'any_id' }
 
   async loadByToken (token: string, role?: string): Promise<LoadAccountByTokenRepository.Result | null> {
     this.token = token
