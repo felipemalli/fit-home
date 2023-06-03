@@ -1,15 +1,14 @@
 import { AccountModel } from '@/domain/models/accounts/account'
-import { AuthenticationModel } from '@/domain/models/accounts/authentication'
 import { AddAccount } from '@/domain/usecases/account/add-account'
 import { mockAccountModel, mockAuthenticationModel } from '@/domain/test/mock-account'
-import { Authentication, AuthenticationParams } from '@/domain/usecases/account/authentication'
+import { Authentication } from '@/domain/usecases/account/authentication'
 import { LoadAccountByToken } from '@/domain/usecases/account/load-account-by-token'
 
 export class AuthenticationSpy implements Authentication {
-  params: AuthenticationParams
-  result: AuthenticationModel | null = mockAuthenticationModel()
+  params: Authentication.Params
+  result: Authentication.Result | null = mockAuthenticationModel()
 
-  async auth (params: AuthenticationParams): Promise<AuthenticationModel | null> {
+  async auth (params: Authentication.Params): Promise<Authentication.Result | null> {
     this.params = params
     return this.result
   }
