@@ -1,15 +1,15 @@
 import { ExerciseModel } from '@/domain/models/exercises/exercise'
-import { AddExercise, AddExerciseParams } from '@/domain/usecases/exercise/add-exercise'
+import { AddExercise } from '@/domain/usecases/exercise/add-exercise'
 import { LoadExerciseById } from '@/domain/usecases/exercise/load-exercise-by-id'
 import { LoadExercises } from '@/domain/usecases/exercise/load-exercises'
 import { UpdateExercise, UpdateExerciseRequestBody } from '@/domain/usecases/exercise/update-exercise'
 import { mockExerciseModel, mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
 
 export class AddExerciseSpy implements AddExercise {
-  params: AddExerciseParams
+  params: AddExercise.Params
   result = mockExerciseModel()
 
-  async add (params: AddExerciseParams): Promise<ExerciseModel> {
+  async add (params: AddExercise.Params): Promise<ExerciseModel> {
     this.params = params
     return this.result
   }

@@ -1,6 +1,11 @@
-import { AddExerciseParams } from '@/domain/usecases/exercise/add-exercise'
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
+import { AddExercise } from '@/domain/usecases/exercise/add-exercise'
 
 export interface AddExerciseRepository {
-  add: (exerciseData: AddExerciseParams) => Promise<ExerciseModel>
+  add: (exerciseData: AddExerciseRepository.Params) => Promise<AddExerciseRepository.Result>
+}
+
+export namespace AddExerciseRepository {
+  export type Params = AddExercise.Params
+
+  export type Result = AddExercise.Result
 }

@@ -1,6 +1,6 @@
 import { ExerciseConfiguration, ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
-import { AddExerciseParams } from '@/domain/usecases/exercise/add-exercise'
 import { UpdateExerciseParams } from '@/domain/usecases/exercise/update-exercise'
+import { AddExercise } from '../usecases/exercise/add-exercise'
 
 const mockExerciseConfiguration = (): ExerciseConfiguration => ({
   series: 1,
@@ -25,26 +25,22 @@ export const mockExerciseParams = (): Omit<ExerciseModel, 'id' | 'variations'> =
   isTemplate: true
 })
 
-export const mockExerciseModel = (): ExerciseModel => Object.assign({},
-  mockExerciseParams(),
-  {
-    id: 'any_id',
-    variations: [{
-      id: 'any_variation_id',
-      ...mockExerciseVariationParams()
-    }]
-  }
-)
+export const mockExerciseModel = (): ExerciseModel => ({
+  ...mockExerciseParams(),
+  id: 'any_id',
+  variations: [{
+    id: 'any_variation_id',
+    ...mockExerciseVariationParams()
+  }]
+})
 
-export const mockAddExerciseParams = (): AddExerciseParams => Object.assign({},
-  mockExerciseParams(),
-  mockExerciseConfiguration(),
-  {
-    variationName: 'any_variation_name',
-    variationDescription: 'any_variation_description',
-    variationUrl: 'https://www.any_variation_url.com/'
-  }
-)
+export const mockAddExerciseParams = (): AddExercise.Params => ({
+  ...mockExerciseParams(),
+  ...mockExerciseConfiguration(),
+  variationName: 'any_variation_name',
+  variationDescription: 'any_variation_description',
+  variationUrl: 'https://www.any_variation_url.com/'
+})
 
 export const mockUpdateExerciseParams = (): UpdateExerciseParams => ({
   name: 'updated_name',
@@ -52,7 +48,7 @@ export const mockUpdateExerciseParams = (): UpdateExerciseParams => ({
   isTemplate: true
 })
 
-export const mockUpdateExerciseModel = (): ExerciseModel => Object.assign({}, mockUpdateExerciseParams(), mockExerciseModel())
+export const mockUpdateExerciseModel = (): ExerciseModel => ({ ...mockUpdateExerciseParams(), ...mockExerciseModel() })
 
 const mockRequiredFieldsExerciseModel = (): ExerciseModel => {
   return {
