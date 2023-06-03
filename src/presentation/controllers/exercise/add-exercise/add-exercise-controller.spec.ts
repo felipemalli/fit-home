@@ -1,23 +1,21 @@
 import { AddExerciseController } from './add-exercise-controller'
-import { AddExerciseRequestBody, HttpRequest, throwError, ValidationSpy, AddExerciseSpy } from './add-exercise-controller-protocols'
+import { throwError, ValidationSpy, AddExerciseSpy } from './add-exercise-controller-protocols'
 import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
 
-const mockRequest = (): HttpRequest<AddExerciseRequestBody> => ({
-  body: {
-    name: 'any_name',
-    description: 'any_description',
-    isTemplate: true,
-    variationName: 'any_variation_name',
-    variationDescription: 'any_variation_description',
-    variationUrl: 'https://www.any_variation_url.com/',
-    series: 1,
-    betweenSeriesTime: 120,
-    repetitions: 12,
-    repetitionTime: 4.5,
-    warmupTime: 0,
-    weight: 10
-  },
-  accountId: 'any_id'
+const mockRequest = (): AddExerciseController.Request => ({
+  name: 'any_name',
+  description: 'any_description',
+  accountId: 'any_id',
+  isTemplate: true,
+  variationName: 'any_variation_name',
+  variationDescription: 'any_variation_description',
+  variationUrl: 'https://www.any_variation_url.com/',
+  series: 1,
+  betweenSeriesTime: 120,
+  repetitions: 12,
+  repetitionTime: 4.5,
+  warmupTime: 0,
+  weight: 10
 })
 
 interface SutTypes {
@@ -40,9 +38,9 @@ const makeSut = (): SutTypes => {
 describe('AddExercise Controller', () => {
   it('Should call Validation with correct values', async () => {
     const { sut, validationSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(validationSpy.input).toEqual(httpRequest.body)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(validationSpy.input).toEqual(request)
   })
 
   it('Should return 400 if Validation fails', async () => {
@@ -54,27 +52,17 @@ describe('AddExercise Controller', () => {
 
   it('Should call AddExercise with correct values', async () => {
     const { sut, addExerciseSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(addExerciseSpy.params).toEqual(
-      {
-        ...httpRequest.body,
-        accountId: httpRequest.accountId
-      }
-    )
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(addExerciseSpy.params).toEqual(request)
   })
 
   it('Should call AddExercise with isTemplate false if is not passed', async () => {
     const { sut, addExerciseSpy } = makeSut()
-    const httpRequest = mockRequest()
-    if (httpRequest.body) httpRequest.body.isTemplate = undefined
-    await sut.handle(httpRequest)
-    expect(addExerciseSpy.params).toEqual(
-      {
-        ...httpRequest.body,
-        accountId: httpRequest.accountId,
-        isTemplate: false
-      })
+    const request = mockRequest()
+    if (request) request.isTemplate = undefined
+    await sut.handle(request)
+    expect(addExerciseSpy.params).toEqual({ ...request, isTemplate: false })
   })
 
   it('Should return 500 if AddExercise throws', async () => {

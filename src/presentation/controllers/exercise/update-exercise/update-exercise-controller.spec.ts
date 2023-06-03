@@ -1,17 +1,13 @@
 import { UpdateExerciseController } from './update-exercise-controller'
-import { HttpRequest, LoadExerciseByIdSpy, throwError, UpdateExerciseRequestBody, UpdateExerciseRequestParams, UpdateExerciseSpy } from './update-exercise-controller-protocols'
+import { LoadExerciseByIdSpy, throwError, UpdateExerciseSpy } from './update-exercise-controller-protocols'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
-const mockRequest = (): HttpRequest<UpdateExerciseRequestBody, UpdateExerciseRequestParams> => ({
-  body: {
-    name: 'updated_name',
-    description: 'updated_description',
-    isTemplate: false
-  },
-  params: {
-    exerciseId: 'any_exercise_id'
-  }
+const mockRequest = (): UpdateExerciseController.Request => ({
+  name: 'updated_name',
+  description: 'updated_description',
+  isTemplate: false,
+  exerciseId: 'any_exercise_id'
 })
 
 interface SutTypes {
@@ -34,9 +30,9 @@ const makeSut = (): SutTypes => {
 describe('UpdateExercise Controller', () => {
   it('Should call LoadExerciseById with correct value', async () => {
     const { sut, loadExerciseByIdSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(loadExerciseByIdSpy.id).toBe(httpRequest.params?.exerciseId)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(loadExerciseByIdSpy.id).toBe(request.exerciseId)
   })
 
   it('Should return 403 if LoadExerciseById returns null', async () => {
@@ -55,10 +51,11 @@ describe('UpdateExercise Controller', () => {
 
   it('Should call SaveExercise with correct values', async () => {
     const { sut, updateExerciseSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(updateExerciseSpy.id).toBe(httpRequest.params?.exerciseId)
-    expect(updateExerciseSpy.updateParams).toBe(httpRequest.body)
+    const request = mockRequest()
+    await sut.handle(request)
+    const { exerciseId, ...updatedParams } = request
+    expect(updateExerciseSpy.id).toBe(exerciseId)
+    expect(updateExerciseSpy.updatedParams).toEqual(updatedParams)
   })
 
   it('Should return 500 if SaveExercise throws', async () => {

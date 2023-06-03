@@ -37,12 +37,12 @@ export class LoadExerciseByIdSpy implements LoadExerciseById {
 
 export class UpdateExerciseSpy implements UpdateExercise {
   id: string
-  updateParams: UpdateExerciseRequestBody
+  updatedParams: UpdateExerciseRequestBody
   result = mockUpdateExerciseModel()
 
-  async update (id: string, updateParams: UpdateExerciseRequestBody): Promise<ExerciseModel> {
+  async update (id: string, updatedParams: UpdateExerciseRequestBody): Promise<ExerciseModel> {
     this.id = id
-    this.updateParams = updateParams
+    this.updatedParams = updatedParams
     return this.result
   }
 }

@@ -1,12 +1,10 @@
 import { AuthMiddleware } from './auth-middleware'
-import { HttpRequest, throwError, LoadAccountByTokenSpy } from './auth-middleware-protocols'
+import { throwError, LoadAccountByTokenSpy } from './auth-middleware-protocols'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { AccessDeniedError } from '@/presentation/errors'
 
-const mockRequest = (): HttpRequest => ({
-  headers: {
-    'x-access-token': 'any_token'
-  }
+const mockRequest = (): AuthMiddleware.Request => ({
+  accessToken: 'any_token'
 })
 
 interface SutTypes {
@@ -35,7 +33,7 @@ describe('Auth Middleware', () => {
     const { sut, loadAccountByTokenSpy } = makeSut(role)
     const request = mockRequest()
     await sut.handle(request)
-    expect(loadAccountByTokenSpy.acessToken).toBe(request.headers['x-access-token'])
+    expect(loadAccountByTokenSpy.acessToken).toBe(request.accessToken)
     expect(loadAccountByTokenSpy.role).toBe(role)
   })
 

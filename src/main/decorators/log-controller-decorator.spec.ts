@@ -1,26 +1,19 @@
 import { LogControllerDecorator } from './log-controller-decorator'
-import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
+import { Controller, HttpResponse } from '@/presentation/protocols'
 import { ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { LogErrorRepositorySpy } from '@/data/test'
 
 class ControllerSpy implements Controller {
-  httpRequest: HttpRequest
   httpResponse = ok('any_id')
+  request: any
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    this.httpRequest = httpRequest
+  async handle (request: any): Promise<HttpResponse> {
+    this.request = request
     return this.httpResponse
   }
 }
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    name: 'any_name',
-    email: 'any_email@mail.com',
-    password: 'any_password',
-    passwordConfirmation: 'any_password'
-  }
-})
+const mockRequest = (): any => ('anything')
 
 const mockServerError = (): HttpResponse => {
   const fakeError = new Error()
@@ -50,7 +43,7 @@ describe('LogController Decorator', () => {
     const { sut, controllerSpy } = makeSut()
     const request = mockRequest()
     await sut.handle(request)
-    expect(controllerSpy.httpRequest).toBe(request)
+    expect(controllerSpy.request).toBe(request)
   })
 
   it('Should return the same result as the controller', async () => {
@@ -61,8 +54,9 @@ describe('LogController Decorator', () => {
 
   it('Should call LogErrorRepository with correct error if controller returns a server error', async () => {
     const { sut, controllerSpy, logErrorRepositorySpy } = makeSut()
-    controllerSpy.httpResponse = mockServerError()
+    const serverError = mockServerError()
+    controllerSpy.httpResponse = serverError
     await sut.handle(mockRequest())
-    expect(logErrorRepositorySpy.stack).toBe(controllerSpy.httpResponse.body.stack)
+    expect(logErrorRepositorySpy.stack).toBe(serverError.body.stack)
   })
 })

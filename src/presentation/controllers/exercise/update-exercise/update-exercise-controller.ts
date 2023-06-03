@@ -1,7 +1,7 @@
 
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
-import { Controller, HttpRequest, HttpResponse, LoadExerciseById, UpdateExercise } from './update-exercise-controller-protocols'
+import { Controller, HttpResponse, LoadExerciseById, UpdateExercise } from './update-exercise-controller-protocols'
 
 export class UpdateExerciseController implements Controller {
   constructor (
@@ -9,16 +9,26 @@ export class UpdateExerciseController implements Controller {
     private readonly updateExercise: UpdateExercise
   ) {}
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: UpdateExerciseController.Request): Promise<HttpResponse> {
     try {
-      const exercise = await this.loadExerciseById.loadById(httpRequest.params.exerciseId)
+      const { exerciseId, ...updatedParams } = request
+      const exercise = await this.loadExerciseById.loadById(exerciseId)
       if (!exercise) {
         return forbidden(new InvalidParamError('exerciseId'))
       }
-      const updatedExercise = await this.updateExercise.update(httpRequest.params.exerciseId, httpRequest.body)
+      const updatedExercise = await this.updateExercise.update(exerciseId, updatedParams)
       return ok(updatedExercise)
     } catch (error) {
       return serverError(error)
     }
+  }
+}
+
+export namespace UpdateExerciseController {
+  export interface Request {
+    name?: string
+    description?: string
+    isTemplate?: boolean
+    exerciseId: string
   }
 }

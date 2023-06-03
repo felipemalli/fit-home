@@ -1,4 +1,4 @@
-import { AddExercise, Controller, HttpRequest, HttpResponse, Validation } from './add-exercise-controller-protocols'
+import { AddExercise, Controller, HttpResponse, Validation } from './add-exercise-controller-protocols'
 import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
 
 export class AddExerciseController implements Controller {
@@ -7,17 +7,17 @@ export class AddExerciseController implements Controller {
     private readonly addExercise: AddExercise
   ) {}
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: AddExerciseController.Request): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(request)
       if (error) {
         return badRequest(error)
       }
-      const { isTemplate, name, description, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight } = httpRequest.body
+      const { name, description, accountId, isTemplate, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight } = request
       const exercise = await this.addExercise.add({
         name,
         description,
-        accountId: httpRequest.accountId!,
+        accountId,
         isTemplate: isTemplate ?? false,
         variationName,
         variationDescription,
@@ -33,5 +33,23 @@ export class AddExerciseController implements Controller {
     } catch (error) {
       return serverError(error)
     }
+  }
+}
+
+export namespace AddExerciseController {
+  export interface Request {
+    name: string
+    description?: string
+    accountId: string
+    isTemplate?: boolean
+    variationName: string
+    variationDescription?: string
+    variationUrl?: string
+    series: number
+    betweenSeriesTime: number
+    repetitions: number
+    repetitionTime: number
+    warmupTime: number
+    weight?: number
   }
 }

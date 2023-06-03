@@ -1,8 +1,8 @@
 import { LoadExercisesController } from './load-exercises-controller'
-import { HttpRequest, LoadExercisesSpy, throwError } from './load-exercises-controller-protocols'
+import { LoadExercisesSpy, throwError } from './load-exercises-controller-protocols'
 import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
-const mockRequest = (): HttpRequest => ({
+const mockRequest = (): LoadExercisesController.Request => ({
   accountId: 'any_id'
 })
 
@@ -23,9 +23,9 @@ const makeSut = (): SutTypes => {
 describe('LoadExercises Controller', () => {
   it('Should call LoadExercises with correct value', async () => {
     const { sut, loadExercisesSpy } = makeSut()
-    const httpRequest = mockRequest()
-    await sut.handle(httpRequest)
-    expect(loadExercisesSpy.accountId).toBe(httpRequest.accountId)
+    const request = mockRequest()
+    await sut.handle(request)
+    expect(loadExercisesSpy.accountId).toBe(request.accountId)
   })
 
   it('Should return 200 on success', async () => {

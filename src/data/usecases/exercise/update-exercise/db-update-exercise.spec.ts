@@ -23,7 +23,7 @@ describe('DbUpdateExercise UseCase', () => {
     const updateExerciseParams = mockUpdateExerciseParams()
     await sut.update(id, updateExerciseParams)
     expect(updateExerciseRepositorySpy.id).toBe(id)
-    expect(updateExerciseRepositorySpy.updateParams).toBe(updateExerciseParams)
+    expect(updateExerciseRepositorySpy.updatedParams).toBe(updateExerciseParams)
   })
 
   it('Should throw if UpdateExerciseRepository throws', async () => {

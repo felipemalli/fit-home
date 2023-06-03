@@ -39,12 +39,12 @@ export class LoadExercisesRepositorySpy implements LoadExercisesRepository {
 
 export class UpdateExerciseRepositorySpy implements UpdateExerciseRepository {
   id: string
-  updateParams: UpdateExerciseParams
+  updatedParams: UpdateExerciseParams
   result = mockUpdateExerciseModel()
 
   async update (id: string, updateData: UpdateExerciseParams): Promise<ExerciseModel> {
     this.id = id
-    this.updateParams = updateData
+    this.updatedParams = updateData
     return this.result
   }
 }
