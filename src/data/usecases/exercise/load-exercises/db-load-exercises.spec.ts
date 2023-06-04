@@ -36,4 +36,11 @@ describe('DbLoadExercises', () => {
     const exercises = await sut.load(accountId)
     expect(exercises).toEqual(loadExercisesRepositorySpy.result)
   })
+
+  it('Should return empty array if LoadExercisesRepository returns an empty array', async () => {
+    const { sut, loadExercisesRepositorySpy } = makeSut()
+    loadExercisesRepositorySpy.result = []
+    const exercises = await sut.load(accountId)
+    expect(exercises).toEqual([])
+  })
 })
