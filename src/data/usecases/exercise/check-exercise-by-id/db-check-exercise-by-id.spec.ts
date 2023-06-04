@@ -31,9 +31,16 @@ describe('DbCheckExerciseById', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  it('Should return true on success', async () => {
+  it('Should return true if CheckExerciseByIdRepository returns true', async () => {
+    const { sut } = makeSut()
+    const exists = await sut.checkById(id)
+    expect(exists).toBeTruthy()
+  })
+
+  it('Should return false if CheckExerciseByIdRepository returns false', async () => {
     const { sut, checkExerciseByIdRepositorySpy } = makeSut()
-    const exercise = await sut.checkById(id)
-    expect(exercise).toEqual(checkExerciseByIdRepositorySpy.result)
+    checkExerciseByIdRepositorySpy.result = false
+    const exists = await sut.checkById(id)
+    expect(exists).toBeFalsy()
   })
 })
