@@ -98,19 +98,18 @@ describe('Exercise Mongo Repository', () => {
     })
   })
 
-  describe('loadById()', () => {
-    it('Should load an exercise by id on success', async () => {
-      const { id, exerciseParameters } = await createExercise()
+  describe('checkById()', () => {
+    it('Should return true if exercise exists', async () => {
+      const { id } = await createExercise()
       const sut = makeSut()
-      const exercise = await sut.loadById(id)
-      expect(exercise).toBeTruthy()
-      expect(exercise?.id).toBeTruthy()
-      expect(exercise?.name).toBe(exerciseParameters.name)
-      expect(exercise?.description).toBe(exerciseParameters.description)
-      expect(exercise?.isTemplate).toBe(exerciseParameters.isTemplate)
-      expect(exercise?.variations[0].id).toBeTruthy()
-      const { _id, ...firstVariation } = exerciseParameters.variations[0]
-      expect(exercise?.variations[0]).toEqual(expect.objectContaining(firstVariation))
+      const exists = await sut.checkById(id)
+      expect(exists).toBeTruthy()
+    })
+
+    it('Should return false if there is no exercise', async () => {
+      const sut = makeSut()
+      const exists = await sut.checkById(MongoHelper.createObjectId().toString())
+      expect(exists).toBeFalsy()
     })
   })
 

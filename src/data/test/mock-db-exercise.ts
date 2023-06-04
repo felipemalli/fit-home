@@ -1,5 +1,5 @@
 import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
-import { LoadExerciseByIdRepository } from '@/data/protocols/db/exercise/load-exercise-by-id-repository'
+import { CheckExerciseByIdRepository } from '@/data/protocols/db/exercise/load-exercise-by-id-repository'
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
 import { UpdateExerciseRepository } from '@/data/protocols/db/exercise/update-exercise-repository'
 import { ExerciseModel } from '@/domain/models/exercises/exercise'
@@ -16,11 +16,11 @@ export class AddExerciseRepositorySpy implements AddExerciseRepository {
   }
 }
 
-export class LoadExerciseByIdRepositorySpy implements LoadExerciseByIdRepository {
+export class CheckExerciseByIdRepositorySpy implements CheckExerciseByIdRepository {
   id: string
-  result = mockExerciseModel()
+  result = true
 
-  async loadById (id: string): Promise<ExerciseModel> {
+  async checkById (id: string): Promise<CheckExerciseByIdRepository.Result> {
     this.id = id
     return this.result
   }

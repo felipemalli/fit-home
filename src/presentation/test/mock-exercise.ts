@@ -1,6 +1,6 @@
 import { ExerciseModel } from '@/domain/models/exercises/exercise'
 import { AddExercise } from '@/domain/usecases/exercise/add-exercise'
-import { LoadExerciseById } from '@/domain/usecases/exercise/load-exercise-by-id'
+import { CheckExerciseById } from '@/domain/usecases/exercise/check-exercise-by-id'
 import { LoadExercises } from '@/domain/usecases/exercise/load-exercises'
 import { UpdateExercise, UpdateExerciseRequestBody } from '@/domain/usecases/exercise/update-exercise'
 import { mockExerciseModel, mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
@@ -25,11 +25,11 @@ export class LoadExercisesSpy implements LoadExercises {
   }
 }
 
-export class LoadExerciseByIdSpy implements LoadExerciseById {
+export class CheckExerciseByIdSpy implements CheckExerciseById {
   id: string
-  result: ExerciseModel | null = mockExerciseModel()
+  result = true
 
-  async loadById (id: string): Promise<ExerciseModel | null> {
+  async checkById (id: string): Promise<CheckExerciseById.Result> {
     this.id = id
     return this.result
   }

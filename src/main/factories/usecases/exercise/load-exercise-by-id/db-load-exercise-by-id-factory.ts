@@ -1,8 +1,8 @@
-import { LoadExerciseById } from '@/domain/usecases/exercise/load-exercise-by-id'
-import { DbLoadExerciseById } from '@/data/usecases/exercise/load-exercise-by-id/db-load-exercise-by-id'
+import { CheckExerciseById } from '@/domain/usecases/exercise/load-exercise-by-id'
+import { DbCheckExerciseById } from '@/data/usecases/exercise/load-exercise-by-id/db-load-exercise-by-id'
 import { ExerciseMongoRepository } from '@/infra/db/mongodb/exercise/exercise-mongo-repository'
 
-export const makeDbLoadExerciseById = (): LoadExerciseById => {
+export const makeDbLoadExerciseById = (): CheckExerciseById => {
   const exerciseMongoRepository = new ExerciseMongoRepository()
-  return new DbLoadExerciseById(exerciseMongoRepository)
+  return new DbCheckExerciseById(exerciseMongoRepository)
 }

@@ -1,5 +1,5 @@
 import { UpdateExerciseController } from './update-exercise-controller'
-import { LoadExerciseByIdSpy, throwError, UpdateExerciseSpy } from './update-exercise-controller-protocols'
+import { CheckExerciseByIdSpy, throwError, UpdateExerciseSpy } from './update-exercise-controller-protocols'
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 
@@ -12,39 +12,39 @@ const mockRequest = (): UpdateExerciseController.Request => ({
 
 interface SutTypes {
   sut: UpdateExerciseController
-  loadExerciseByIdSpy: LoadExerciseByIdSpy
+  checkExerciseByIdSpy: CheckExerciseByIdSpy
   updateExerciseSpy: UpdateExerciseSpy
 }
 
 const makeSut = (): SutTypes => {
-  const loadExerciseByIdSpy = new LoadExerciseByIdSpy()
+  const checkExerciseByIdSpy = new CheckExerciseByIdSpy()
   const updateExerciseSpy = new UpdateExerciseSpy()
-  const sut = new UpdateExerciseController(loadExerciseByIdSpy, updateExerciseSpy)
+  const sut = new UpdateExerciseController(checkExerciseByIdSpy, updateExerciseSpy)
   return {
     sut,
-    loadExerciseByIdSpy,
+    checkExerciseByIdSpy,
     updateExerciseSpy
   }
 }
 
 describe('UpdateExercise Controller', () => {
-  it('Should call LoadExerciseById with correct value', async () => {
-    const { sut, loadExerciseByIdSpy } = makeSut()
+  it('Should call CheckExerciseById with correct value', async () => {
+    const { sut, checkExerciseByIdSpy } = makeSut()
     const request = mockRequest()
     await sut.handle(request)
-    expect(loadExerciseByIdSpy.id).toBe(request.exerciseId)
+    expect(checkExerciseByIdSpy.id).toBe(request.exerciseId)
   })
 
-  it('Should return 403 if LoadExerciseById returns null', async () => {
-    const { sut, loadExerciseByIdSpy } = makeSut()
-    loadExerciseByIdSpy.result = null
+  it('Should return 403 if CheckExerciseById returns false', async () => {
+    const { sut, checkExerciseByIdSpy } = makeSut()
+    checkExerciseByIdSpy.result = false
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('exerciseId')))
   })
 
-  it('Should return 500 if LoadExerciseById throws', async () => {
-    const { sut, loadExerciseByIdSpy } = makeSut()
-    jest.spyOn(loadExerciseByIdSpy, 'loadById').mockImplementationOnce(throwError)
+  it('Should return 500 if CheckExerciseById throws', async () => {
+    const { sut, checkExerciseByIdSpy } = makeSut()
+    jest.spyOn(checkExerciseByIdSpy, 'checkById').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })

@@ -2,9 +2,9 @@ import { MongoHelper, ObjectId } from '@/infra/db/mongodb/helpers/mongo-helper'
 import { ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
 import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
-import { LoadExerciseByIdRepository } from '@/data/usecases/exercise/load-exercise-by-id/db-load-exercise-by-id-protocols'
 import { UpdateExerciseRepository } from '@/data/usecases/exercise/update-exercise/db-update-exercise-protocols'
 import { UpdateExerciseParams } from '@/domain/usecases/exercise/update-exercise'
+import { CheckExerciseByIdRepository } from '@/data/usecases/exercise/check-exercise-by-id/db-check-exercise-by-id-protocols'
 
 interface ExerciseVariationWithMongoId extends Omit<ExerciseVariation, 'id'> {
   _id: ObjectId
@@ -14,7 +14,7 @@ export interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'acco
   variations: ExerciseVariationWithMongoId[]
 }
 
-export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository, LoadExerciseByIdRepository, UpdateExerciseRepository {
+export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository, CheckExerciseByIdRepository, UpdateExerciseRepository {
   async add (exerciseData: AddExerciseRepository.Params): Promise<AddExerciseRepository.Result> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const { accountId, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight, ...data } = exerciseData
@@ -47,6 +47,18 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const exercise = await exerciseCollection.findOne({ _id: MongoHelper.createObjectId(id) })
     return exercise && MongoHelper.map(exercise, 'variations')
+  }
+
+  async checkById (id: string): Promise<CheckExerciseByIdRepository.Result> {
+    const exerciseCollection = await MongoHelper.getCollection('exercises')
+    const exercise = await exerciseCollection.findOne({
+      _id: MongoHelper.createObjectId(id)
+    }, {
+      projection: {
+        _id: 1
+      }
+    })
+    return !!exercise
   }
 
   async update (id: string, data: UpdateExerciseParams): Promise<ExerciseModel> {

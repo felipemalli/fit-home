@@ -1,19 +1,19 @@
 
 import { InvalidParamError } from '@/presentation/errors'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
-import { Controller, HttpResponse, LoadExerciseById, UpdateExercise } from './update-exercise-controller-protocols'
+import { Controller, HttpResponse, CheckExerciseById, UpdateExercise } from './update-exercise-controller-protocols'
 
 export class UpdateExerciseController implements Controller {
   constructor (
-    private readonly loadExerciseById: LoadExerciseById,
+    private readonly checkExerciseById: CheckExerciseById,
     private readonly updateExercise: UpdateExercise
   ) {}
 
   async handle (request: UpdateExerciseController.Request): Promise<HttpResponse> {
     try {
       const { exerciseId, ...updatedParams } = request
-      const exercise = await this.loadExerciseById.loadById(exerciseId)
-      if (!exercise) {
+      const exists = await this.checkExerciseById.checkById(exerciseId)
+      if (!exists) {
         return forbidden(new InvalidParamError('exerciseId'))
       }
       const updatedExercise = await this.updateExercise.update(exerciseId, updatedParams)
