@@ -7,7 +7,7 @@ interface ExerciseVariationWithMongoId extends Omit<ExerciseVariation, 'id'> {
   _id: ObjectId
 }
 
-export interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'> {
+interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'> {
   accountId: ObjectId
   variations: ExerciseVariationWithMongoId[]
 }
