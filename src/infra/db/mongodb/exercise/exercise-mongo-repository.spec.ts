@@ -64,7 +64,7 @@ describe('Exercise Mongo Repository', () => {
   })
 
   describe('add()', () => {
-    it('Should return an exercise on add success', async () => {
+    it('Should create an exercise on add success', async () => {
       const sut = makeSut()
       const addExerciseParams = mockAddExerciseParams()
       await sut.add({
@@ -98,7 +98,7 @@ describe('Exercise Mongo Repository', () => {
       expect(exercises[1].variations[0]).toEqual(expect.objectContaining(secondVariation))
     })
 
-    it('Should load empty list with no exercises on the accountId', async () => {
+    it('Should return empty array if there are no exercises in accountId', async () => {
       const sut = makeSut()
       const exercises = await sut.loadAll(ACCOUNT_ID)
       expect(exercises.length).toBe(0)
