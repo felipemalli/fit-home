@@ -1,9 +1,7 @@
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
 import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
 import { UpdateExerciseRepository } from '@/data/usecases/exercise/update-exercise/db-update-exercise-protocols'
-import { UpdateExerciseParams } from '@/domain/usecases/exercise/update-exercise'
 import { CheckExerciseByIdRepository } from '@/data/usecases/exercise/check-exercise-by-id/db-check-exercise-by-id-protocols'
 
 export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository, CheckExerciseByIdRepository, UpdateExerciseRepository {
@@ -26,10 +24,10 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     await exerciseCollection.insertOne(exerciseModel)
   }
 
-  async loadAll (accountId: string): Promise<ExerciseModel[]> {
+  async loadAll (accountId: string): Promise<LoadExercisesRepository.Result> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const accountIdParsed = MongoHelper.createObjectId(accountId)
-    const exercises = await exerciseCollection.find({ accountId: accountIdParsed }).toArray() as unknown as ExerciseModel[]
+    const exercises = await exerciseCollection.find({ accountId: accountIdParsed }).toArray() as unknown as LoadExercisesRepository.Result
     return MongoHelper.mapCollection(exercises, 'variations')
   }
 
@@ -45,7 +43,7 @@ export class ExerciseMongoRepository implements AddExerciseRepository, LoadExerc
     return !!exercise
   }
 
-  async update (id: string, data: UpdateExerciseParams): Promise<ExerciseModel> {
+  async update (id: string, data: UpdateExerciseRepository.Params): Promise<UpdateExerciseRepository.Result> {
     const exerciseCollection = await MongoHelper.getCollection('exercises')
     const exercise = await exerciseCollection.findOneAndUpdate(
       { _id: MongoHelper.createObjectId(id) },

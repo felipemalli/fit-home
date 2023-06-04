@@ -1,11 +1,11 @@
 import { ExerciseModel } from '@/domain/models/exercises/exercise'
 
-export interface UpdateExerciseRequestBody extends Partial<Omit<ExerciseModel, 'id' | 'accountId' | 'variations'>> {}
-export interface UpdateExerciseRequestParams {
-  exerciseId: string
+export interface UpdateExercise {
+  update: (id: string, data: UpdateExercise.Params) => Promise<UpdateExercise.Result>
 }
 
-export type UpdateExerciseParams = UpdateExerciseRequestBody
-export interface UpdateExercise {
-  update: (id: string, data: UpdateExerciseParams) => Promise<ExerciseModel>
+export namespace UpdateExercise {
+  export type Params = Partial<Omit<ExerciseModel, 'id' | 'accountId' | 'variations'>>
+
+  export type Result = ExerciseModel
 }
