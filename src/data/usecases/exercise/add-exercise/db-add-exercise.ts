@@ -6,8 +6,7 @@ export class DbAddExercise implements AddExercise {
     private readonly addExerciseRepository: AddExerciseRepository
   ) {}
 
-  async add (exerciseData: AddExercise.Params): Promise<AddExercise.Result> {
-    const exercise = await this.addExerciseRepository.add(exerciseData)
-    return exercise
+  async add (exerciseData: AddExercise.Params): Promise<void> {
+    await this.addExerciseRepository.add(exerciseData)
   }
 }

@@ -29,10 +29,4 @@ describe('DbAddExercise UseCase', () => {
     const promise = sut.add(mockAddExerciseParams())
     await expect(promise).rejects.toThrow()
   })
-
-  it('Should return an exercise on success', async () => {
-    const { sut, addExerciseRepositorySpy } = makeSut()
-    const account = await sut.add(mockAddExerciseParams())
-    expect(account).toEqual(addExerciseRepositorySpy.result)
-  })
 })

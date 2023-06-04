@@ -1,6 +1,17 @@
-import { ExerciseModelWithoutId, ExerciseMongoRepository } from './exercise-mongo-repository'
-import { MongoHelper, Collection } from '../helpers/mongo-helper'
-import { mockAddExerciseParams, mockExerciseModel, mockExerciseParams, mockExerciseVariationParams } from '@/domain/test'
+import { ExerciseMongoRepository } from './exercise-mongo-repository'
+import { MongoHelper, Collection, ObjectId } from '../helpers/mongo-helper'
+import { mockAddExerciseParams, mockExerciseParams, mockExerciseVariationParams } from '@/domain/test'
+import { ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
+
+interface ExerciseVariationWithMongoId extends Omit<ExerciseVariation, 'id'> {
+  _id: ObjectId
+}
+
+export interface ExerciseModelWithoutId extends Omit<ExerciseModel, 'id' | 'accountId' | 'variations'> {
+  accountId: ObjectId
+  variations: ExerciseVariationWithMongoId[]
+}
+
 interface CreateExerciseTypes {
   id: string
   exerciseParameters: ExerciseModelWithoutId
@@ -57,19 +68,17 @@ describe('Exercise Mongo Repository', () => {
   describe('add()', () => {
     it('Should return an exercise on add success', async () => {
       const sut = makeSut()
-      const exercise = await sut.add(Object.assign({},
-        mockAddExerciseParams(),
-        { accountId: ACCOUNT_ID }
-      ))
+      const addExerciseParams = mockAddExerciseParams()
+      await sut.add({
+        ...addExerciseParams,
+        accountId: ACCOUNT_ID
+      })
+      const exercise = await exerciseCollection.findOne({ accountId: MongoHelper.createObjectId(ACCOUNT_ID) })
       expect(exercise).toBeTruthy()
-      expect(exercise.id).toBeTruthy()
-      expect(exercise.accountId).toBeTruthy()
-      expect(exercise.variations[0].id).toBeTruthy()
-      const exerciseWithCorrectIds = mockExerciseModel()
-      exerciseWithCorrectIds.id = exercise.id
-      exerciseWithCorrectIds.accountId = exercise.accountId
-      exerciseWithCorrectIds.variations[0].id = exercise.variations[0].id
-      expect(exercise).toEqual(exerciseWithCorrectIds)
+      expect(exercise?.accountId).toBeTruthy()
+      expect(exercise?.name).toBe(addExerciseParams.name)
+      expect(exercise?.variations[0]).toBeTruthy()
+      expect(exercise?.accountId).toEqual(MongoHelper.createObjectId(ACCOUNT_ID))
     })
   })
 

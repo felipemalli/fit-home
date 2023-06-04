@@ -1,18 +1,16 @@
 import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
-import { CheckExerciseByIdRepository } from '@/data/protocols/db/exercise/load-exercise-by-id-repository'
+import { CheckExerciseByIdRepository } from '@/data/protocols/db/exercise/check-exercise-by-id-repository'
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
 import { UpdateExerciseRepository } from '@/data/protocols/db/exercise/update-exercise-repository'
 import { ExerciseModel } from '@/domain/models/exercises/exercise'
 import { UpdateExerciseParams } from '@/domain/usecases/exercise/update-exercise'
-import { mockExerciseModel, mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
+import { mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
 
 export class AddExerciseRepositorySpy implements AddExerciseRepository {
   params: AddExerciseRepository.Params
-  result = mockExerciseModel()
 
-  async add (params: AddExerciseRepository.Params): Promise<AddExerciseRepository.Result> {
+  async add (params: AddExerciseRepository.Params): Promise<void> {
     this.params = params
-    return this.result
   }
 }
 
