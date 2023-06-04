@@ -1,6 +1,6 @@
 import { AddExerciseController } from './add-exercise-controller'
 import { throwError, ValidationSpy, AddExerciseSpy } from './add-exercise-controller-protocols'
-import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
+import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
 
 const mockRequest = (): AddExerciseController.Request => ({
   name: 'any_name',
@@ -72,9 +72,9 @@ describe('AddExercise Controller', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
-  it('Should return 201 on success', async () => {
-    const { sut, addExerciseSpy } = makeSut()
+  it('Should return 204 on success', async () => {
+    const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(created(addExerciseSpy.result))
+    expect(httpResponse).toEqual(noContent())
   })
 })

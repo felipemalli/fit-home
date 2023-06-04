@@ -1,17 +1,14 @@
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
 import { AddExercise } from '@/domain/usecases/exercise/add-exercise'
 import { CheckExerciseById } from '@/domain/usecases/exercise/check-exercise-by-id'
 import { LoadExercises } from '@/domain/usecases/exercise/load-exercises'
-import { UpdateExercise, UpdateExerciseRequestBody } from '@/domain/usecases/exercise/update-exercise'
-import { mockExerciseModel, mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
+import { UpdateExercise } from '@/domain/usecases/exercise/update-exercise'
+import { mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
 
 export class AddExerciseSpy implements AddExercise {
   params: AddExercise.Params
-  result = mockExerciseModel()
 
-  async add (params: AddExercise.Params): Promise<ExerciseModel> {
+  async add (params: AddExercise.Params): Promise<void> {
     this.params = params
-    return this.result
   }
 }
 
@@ -19,7 +16,7 @@ export class LoadExercisesSpy implements LoadExercises {
   accountId: string
   result = mockExerciseModels()
 
-  async load (accountId: string): Promise<ExerciseModel[]> {
+  async load (accountId: string): Promise<LoadExercises.Result> {
     this.accountId = accountId
     return this.result
   }
@@ -37,10 +34,10 @@ export class CheckExerciseByIdSpy implements CheckExerciseById {
 
 export class UpdateExerciseSpy implements UpdateExercise {
   id: string
-  updatedParams: UpdateExerciseRequestBody
+  updatedParams: UpdateExercise.Params
   result = mockUpdateExerciseModel()
 
-  async update (id: string, updatedParams: UpdateExerciseRequestBody): Promise<ExerciseModel> {
+  async update (id: string, updatedParams: UpdateExercise.Params): Promise<UpdateExercise.Result> {
     this.id = id
     this.updatedParams = updatedParams
     return this.result

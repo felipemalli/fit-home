@@ -86,7 +86,7 @@ describe('Exercise Routes', () => {
           warmupTime: 30,
           weight: 12
         })
-        .expect(201)
+        .expect(204)
     })
   })
 

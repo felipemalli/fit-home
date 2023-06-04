@@ -1,5 +1,5 @@
 import { AddExercise, Controller, HttpResponse, Validation } from './add-exercise-controller-protocols'
-import { badRequest, created, serverError } from '@/presentation/helpers/http/http-helper'
+import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
 
 export class AddExerciseController implements Controller {
   constructor (
@@ -14,7 +14,7 @@ export class AddExerciseController implements Controller {
         return badRequest(error)
       }
       const { name, description, accountId, isTemplate, variationName, variationDescription, variationUrl, series, betweenSeriesTime, repetitions, repetitionTime, warmupTime, weight } = request
-      const exercise = await this.addExercise.add({
+      await this.addExercise.add({
         name,
         description,
         accountId,
@@ -29,7 +29,7 @@ export class AddExerciseController implements Controller {
         warmupTime,
         weight
       })
-      return created(exercise)
+      return noContent()
     } catch (error) {
       return serverError(error)
     }
