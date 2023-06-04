@@ -82,10 +82,10 @@ describe('Account Mongo Repository', () => {
     it('Should return an account on loadByToken success if user is not admin and not requires admin role', async () => {
       const sut = makeSut()
       const addAccountParams = mockAddAccountParams()
-      await accountCollection.insertOne(Object.assign({},
-        addAccountParams,
-        { accessToken: 'any_token' }
-      ))
+      await accountCollection.insertOne({
+        ...addAccountParams,
+        accessToken: 'any_token'
+      })
       const account = await sut.loadByToken('any_token')
       expect(account).toBeTruthy()
       expect(account?.id).toBeTruthy()
@@ -94,13 +94,11 @@ describe('Account Mongo Repository', () => {
     it('Should return an account on loadByToken success if user is admin and requires admin role', async () => {
       const sut = makeSut()
       const addAccountParams = mockAddAccountParams()
-      await accountCollection.insertOne(Object.assign({},
-        addAccountParams,
-        {
-          accessToken: 'any_token',
-          role: 'admin'
-        }
-      ))
+      await accountCollection.insertOne({
+        ...addAccountParams,
+        accessToken: 'any_token',
+        role: 'admin'
+      })
       const account = await sut.loadByToken('any_token', 'admin')
       expect(account).toBeTruthy()
       expect(account?.id).toBeTruthy()
@@ -109,13 +107,11 @@ describe('Account Mongo Repository', () => {
     it('Should return an account on loadByToken success if user is admin and not requires admin role', async () => {
       const sut = makeSut()
       const addAccountParams = mockAddAccountParams()
-      await accountCollection.insertOne(Object.assign({},
-        addAccountParams,
-        {
-          accessToken: 'any_token',
-          role: 'admin'
-        }
-      ))
+      await accountCollection.insertOne({
+        ...addAccountParams,
+        accessToken: 'any_token',
+        role: 'admin'
+      })
       const account = await sut.loadByToken('any_token')
       expect(account).toBeTruthy()
       expect(account?.id).toBeTruthy()
@@ -123,10 +119,10 @@ describe('Account Mongo Repository', () => {
 
     it('Should return null on loadByToken if user is not admin and requires admin role', async () => {
       const sut = makeSut()
-      await accountCollection.insertOne(Object.assign({},
-        mockAddAccountParams(),
-        { accessToken: 'any_token' }
-      ))
+      await accountCollection.insertOne({
+        ...mockAddAccountParams(),
+        accessToken: 'any_token'
+      })
       const account = await sut.loadByToken('any_token', 'admin')
       expect(account).toBeNull()
     })

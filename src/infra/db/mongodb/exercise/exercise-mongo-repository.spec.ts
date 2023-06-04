@@ -18,16 +18,14 @@ interface CreateExerciseTypes {
 }
 
 const createExercise = async (): Promise<CreateExerciseTypes> => {
-  const exerciseParameters = Object.assign({},
-    mockExerciseParams(),
-    { accountId: MongoHelper.createObjectId(ACCOUNT_ID) },
-    {
-      variations: [{
-        _id: MongoHelper.createObjectId(),
-        ...mockExerciseVariationParams()
-      }]
-    }
-  )
+  const exerciseParameters = {
+    ...mockExerciseParams(),
+    accountId: MongoHelper.createObjectId(ACCOUNT_ID),
+    variations: [{
+      _id: MongoHelper.createObjectId(),
+      ...mockExerciseVariationParams()
+    }]
+  }
   const { insertedId } = await exerciseCollection.insertOne(exerciseParameters)
   return {
     id: insertedId.toString(),
