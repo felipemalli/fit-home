@@ -2,6 +2,13 @@
 
 Project for plan your own physical exercise schedule at home and help you to perform the exercises at the correct time.
 
+## Description
+
+Developing with Clean Arquitecture, Domain Driven Design (DDD), SOLID and following the Test Driven Development (TDD). It also has 100% of test coverage.
+
+To help me architect the project, I develop a 
+<a href="https://www.figma.com/file/W1WoZLRKxBFEK26KZ4NF8Q/Felipevm---Fit-Home?type=design&t=5zFCrxs0qhNAdS48-1">figma draft</a> (it's also not the final version).
+
 ## Startup
 
 1. Clone the repository.
@@ -19,9 +26,18 @@ With the application running, access: http://localhost:5050/api-docs/
 
 ## Technologies
 
-Developing with Clean Arquitecture, Domain Driven Design (DDD), SOLID and following the Test Driven Development (TDD). It also has 100% of test coverage.
+- Typescript
+- NodeJS
+- Express
+- MongoDB
+- Jest
+- Swagger
+- JWT
+- BCrypt
+- Validator 
 
-I used Typescript, NodeJS, Express, MongoDB, Jest, Swagger, JWT, BCrypt, Validator and other development dependencies to make the project works properly.
+Other useful dependencies were used to make the project works properly (you can check the `package.json` file).
+
 
 ## Future of the project
 
