@@ -19,7 +19,7 @@ With the application running, access: http://localhost:5050/api-docs/
 
 ## Technologies
 
-Developing with Clean Arquitecture, Domain Driven Design (DDD), SOLID and following the Test Driven Development (TDD).
+Developing with Clean Arquitecture, Domain Driven Design (DDD), SOLID and following the Test Driven Development (TDD). It also has 100% of test coverage.
 
 I used Typescript, NodeJS, Express, MongoDB, Jest, Swagger, JWT, BCrypt, Validator and other development dependencies to make the project works properly.
 
