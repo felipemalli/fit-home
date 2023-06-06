@@ -2,6 +2,8 @@
 
 Project for plan your own physical exercise schedule at home and help you to perform the exercises at the correct time.
 
+The backend of the project is not ready. Although the architecture is already done, I still need to do some routes that I realize I will need.
+
 ## Description
 
 Developing with Clean Arquitecture, Domain Driven Design (DDD), SOLID and following the Test Driven Development (TDD). It also has 100% of test coverage.
@@ -41,4 +43,5 @@ Other useful dependencies were used to make the project works properly (you can 
 
 ## Future of the project
 
-Although a lot of things on backend are already done, I'm still finishing some routes. After, I plan to deploy it on AWS and create a Front-end.
+- Deploy on AWS
+- Create a Front-end
