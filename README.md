@@ -26,7 +26,7 @@ To help me architect the project, I develop a
 
 ## Documentation
 
-With the application running, access: http://localhost:5050/api-docs/
+With the service running, access: http://localhost:5050/api-docs/
 
 ### Tests
 
