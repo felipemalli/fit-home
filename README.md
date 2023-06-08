@@ -6,7 +6,9 @@ The backend of the project is not ready. Although the architecture is already do
 
 ## Description
 
-Developing with Clean Arquitecture, Domain Driven Design (DDD), SOLID and following the Test Driven Development (TDD). It also has 100% of test coverage.
+Developing with Clean Arquitecture, Domain Driven Design (DDD), Test Driven Development (TDD) and Design patterns.
+Following the principles of SOLID, DRY, YAGNI and KISS.
+It also has 100% of test coverage.
 
 To help me architect the project, I develop a 
 <a href="https://www.figma.com/file/W1WoZLRKxBFEK26KZ4NF8Q/Felipevm---Fit-Home?type=design&t=5zFCrxs0qhNAdS48-1">figma draft</a> (it's also not the final version).
