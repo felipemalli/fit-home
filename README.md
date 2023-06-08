@@ -28,6 +28,12 @@ To help me architect the project, I develop a
 
 With the application running, access: http://localhost:5050/api-docs/
 
+### Tests
+
+Run all tests: `npm t`
+
+Run all tests with coverage: `npm run test:ci`
+
 ## Technologies
 
 - Typescript
