@@ -13,7 +13,7 @@ services:
     image: node:20
     working_dir: /usr/src/fit-home-api
     restart: always
-    command: bash -c "npm install --only=prod && npm install nodemon -D && npm run debug"
+    command: bash -c "npm install --omit=dev && npm install nodemon -D && npm run debug"
     environment:
       - MONGO_URL=mongodb://mongo:27017/fit-home-api
     volumes:
