@@ -26,11 +26,11 @@ To help me architect the project, I develop a
 
 4. Wait for the running message.
 
-_You can close the project with `npm run down`_
-
 ## Documentation
 
 With the service running, access: http://localhost:5050/api-docs/
+
+You can close with `npm run down`
 
 ### Tests
 
