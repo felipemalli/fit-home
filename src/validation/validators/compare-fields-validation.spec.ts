@@ -1,6 +1,6 @@
 
 import { CompareFieldsValidation } from './compare-fields-validation'
-import { InvalidParamError } from '@/presentation/errors'
+import { InvalidParamError } from '#/presentation/errors'
 
 const field = 'any_field'
 const fieldToCompare = 'any_other_field'

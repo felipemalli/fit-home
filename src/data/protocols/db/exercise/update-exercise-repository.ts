@@ -1,5 +1,5 @@
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
-import { UpdateExercise } from '@/domain/usecases/exercise/update-exercise'
+import { ExerciseModel } from '#/domain/models/exercises/exercise'
+import { UpdateExercise } from '#/domain/usecases/exercise/update-exercise'
 
 export interface UpdateExerciseRepository {
   update: (id: string, data: UpdateExerciseRepository.Params) => Promise<UpdateExerciseRepository.Result>

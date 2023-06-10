@@ -1,7 +1,7 @@
 import { LoginController } from './login-controller'
 import { throwError, AuthenticationSpy, ValidationSpy } from './login-controller-protocols'
-import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
-import { MissingParamError } from '@/presentation/errors'
+import { badRequest, ok, serverError, unauthorized } from '#/presentation/helpers/http/http-helper'
+import { MissingParamError } from '#/presentation/errors'
 
 const mockRequest = (): LoginController.Request => ({
   email: 'any_email@mail.com',

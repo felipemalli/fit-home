@@ -1,4 +1,4 @@
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
+import { ExerciseModel } from '#/domain/models/exercises/exercise'
 
 export interface LoadExercisesRepository {
   loadAll: (accountId: string) => Promise<LoadExercisesRepository.Result>

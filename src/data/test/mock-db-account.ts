@@ -1,7 +1,7 @@
-import { AddAccountRepository } from '@/data/protocols/db/account/add-account-repository'
-import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
-import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
-import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
+import { AddAccountRepository } from '#/data/protocols/db/account/add-account-repository'
+import { LoadAccountByEmailRepository } from '#/data/protocols/db/account/load-account-by-email-repository'
+import { LoadAccountByTokenRepository } from '#/data/protocols/db/account/load-account-by-token-repository'
+import { UpdateAccessTokenRepository } from '#/data/protocols/db/account/update-access-token-repository'
 import { CheckAccountByEmailRepository } from '../protocols/db/account/check-account-by-email-repository'
 
 export class AddAccountRepositorySpy implements AddAccountRepository {

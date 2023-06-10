@@ -1,6 +1,6 @@
 
-import { InvalidParamError } from '@/presentation/errors'
-import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { InvalidParamError } from '#/presentation/errors'
+import { forbidden, ok, serverError } from '#/presentation/helpers/http/http-helper'
 import { Controller, HttpResponse, CheckExerciseById, UpdateExercise } from './update-exercise-controller-protocols'
 
 export class UpdateExerciseController implements Controller {

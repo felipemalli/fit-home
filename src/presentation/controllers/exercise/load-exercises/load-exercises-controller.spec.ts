@@ -1,6 +1,6 @@
 import { LoadExercisesController } from './load-exercises-controller'
 import { LoadExercisesSpy, throwError } from './load-exercises-controller-protocols'
-import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { noContent, ok, serverError } from '#/presentation/helpers/http/http-helper'
 
 const mockRequest = (): LoadExercisesController.Request => ({
   accountId: 'any_id'

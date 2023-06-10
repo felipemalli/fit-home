@@ -1,7 +1,7 @@
-import { Hasher } from '@/data/protocols/criptography/hasher'
-import { Decrypter } from '@/data/protocols/criptography/decrypter'
-import { Encrypter } from '@/data/protocols/criptography/encrypter'
-import { HashComparer } from '@/data/protocols/criptography/hash-comparer'
+import { Hasher } from '#/data/protocols/criptography/hasher'
+import { Decrypter } from '#/data/protocols/criptography/decrypter'
+import { Encrypter } from '#/data/protocols/criptography/encrypter'
+import { HashComparer } from '#/data/protocols/criptography/hash-comparer'
 
 export class HasherSpy implements Hasher {
   digest = 'hashed_password'

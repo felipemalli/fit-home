@@ -1,4 +1,4 @@
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
+import { ExerciseModel } from '#/domain/models/exercises/exercise'
 
 export interface UpdateExercise {
   update: (id: string, data: UpdateExercise.Params) => Promise<UpdateExercise.Result>

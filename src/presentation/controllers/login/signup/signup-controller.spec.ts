@@ -1,7 +1,7 @@
 import { SignUpController } from './signup-controller'
 import { throwError, AuthenticationSpy, AddAccountSpy, ValidationSpy } from './signup-controller-protocols'
-import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/errors'
-import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { EmailInUseError, MissingParamError, ServerError } from '#/presentation/errors'
+import { badRequest, forbidden, ok, serverError } from '#/presentation/helpers/http/http-helper'
 
 const mockRequest = (): SignUpController.Request => ({
   name: 'any_name',

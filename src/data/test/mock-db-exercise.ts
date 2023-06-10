@@ -1,10 +1,10 @@
-import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
-import { CheckExerciseByIdRepository } from '@/data/protocols/db/exercise/check-exercise-by-id-repository'
-import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
-import { UpdateExerciseRepository } from '@/data/protocols/db/exercise/update-exercise-repository'
-import { ExerciseModel } from '@/domain/models/exercises/exercise'
-import { UpdateExercise } from '@/domain/usecases/exercise/update-exercise'
-import { mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
+import { AddExerciseRepository } from '#/data/protocols/db/exercise/add-exercise-repository'
+import { CheckExerciseByIdRepository } from '#/data/protocols/db/exercise/check-exercise-by-id-repository'
+import { LoadExercisesRepository } from '#/data/protocols/db/exercise/load-exercises-repository'
+import { UpdateExerciseRepository } from '#/data/protocols/db/exercise/update-exercise-repository'
+import { ExerciseModel } from '#/domain/models/exercises/exercise'
+import { UpdateExercise } from '#/domain/usecases/exercise/update-exercise'
+import { mockExerciseModels, mockUpdateExerciseModel } from '#/domain/test'
 
 export class AddExerciseRepositorySpy implements AddExerciseRepository {
   params: AddExerciseRepository.Params

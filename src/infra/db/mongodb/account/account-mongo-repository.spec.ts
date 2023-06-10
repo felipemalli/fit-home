@@ -1,5 +1,5 @@
 import { AccountMongoRepository } from './account-mongo-repository'
-import { mockAddAccountParams } from '@/domain/test'
+import { mockAddAccountParams } from '#/domain/test'
 import { MongoHelper, Collection } from '../helpers/mongo-helper'
 
 const makeSut = (): AccountMongoRepository => {

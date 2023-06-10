@@ -1,4 +1,4 @@
-import { ExerciseModel, ExerciseConfiguration } from '@/domain/models/exercises/exercise'
+import { ExerciseModel, ExerciseConfiguration } from '#/domain/models/exercises/exercise'
 
 export interface AddExercise {
   add: (exercise: AddExercise.Params) => Promise<void>

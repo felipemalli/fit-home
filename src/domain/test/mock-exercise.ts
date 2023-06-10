@@ -1,5 +1,5 @@
-import { ExerciseConfiguration, ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
-import { UpdateExercise } from '@/domain/usecases/exercise/update-exercise'
+import { ExerciseConfiguration, ExerciseModel, ExerciseVariation } from '#/domain/models/exercises/exercise'
+import { UpdateExercise } from '#/domain/usecases/exercise/update-exercise'
 import { AddExercise } from '../usecases/exercise/add-exercise'
 
 const mockExerciseConfiguration = (): ExerciseConfiguration => ({

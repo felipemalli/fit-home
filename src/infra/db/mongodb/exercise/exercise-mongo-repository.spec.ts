@@ -1,7 +1,7 @@
 import { ExerciseMongoRepository } from './exercise-mongo-repository'
 import { MongoHelper, Collection, ObjectId } from '../helpers/mongo-helper'
-import { mockAddExerciseParams, mockExerciseParams, mockExerciseVariationParams } from '@/domain/test'
-import { ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
+import { mockAddExerciseParams, mockExerciseParams, mockExerciseVariationParams } from '#/domain/test'
+import { ExerciseModel, ExerciseVariation } from '#/domain/models/exercises/exercise'
 
 interface ExerciseVariationWithMongoId extends Omit<ExerciseVariation, 'id'> {
   _id: ObjectId

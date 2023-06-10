@@ -1,6 +1,6 @@
 import { AddExerciseController } from './add-exercise-controller'
 import { throwError, ValidationSpy, AddExerciseSpy } from './add-exercise-controller-protocols'
-import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
+import { badRequest, noContent, serverError } from '#/presentation/helpers/http/http-helper'
 
 const mockRequest = (): AddExerciseController.Request => ({
   name: 'any_name',

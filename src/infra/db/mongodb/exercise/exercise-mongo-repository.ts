@@ -1,8 +1,8 @@
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
-import { AddExerciseRepository } from '@/data/protocols/db/exercise/add-exercise-repository'
-import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
-import { UpdateExerciseRepository } from '@/data/usecases/exercise/update-exercise/db-update-exercise-protocols'
-import { CheckExerciseByIdRepository } from '@/data/usecases/exercise/check-exercise-by-id/db-check-exercise-by-id-protocols'
+import { MongoHelper } from '#/infra/db/mongodb/helpers/mongo-helper'
+import { AddExerciseRepository } from '#/data/protocols/db/exercise/add-exercise-repository'
+import { LoadExercisesRepository } from '#/data/protocols/db/exercise/load-exercises-repository'
+import { UpdateExerciseRepository } from '#/data/usecases/exercise/update-exercise/db-update-exercise-protocols'
+import { CheckExerciseByIdRepository } from '#/data/usecases/exercise/check-exercise-by-id/db-check-exercise-by-id-protocols'
 
 export class ExerciseMongoRepository implements AddExerciseRepository, LoadExercisesRepository, CheckExerciseByIdRepository, UpdateExerciseRepository {
   async add (exerciseData: AddExerciseRepository.Params): Promise<void> {

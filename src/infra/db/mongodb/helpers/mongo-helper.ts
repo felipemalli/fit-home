@@ -1,4 +1,4 @@
-import env from '@/main/config/env'
+import env from '#/main/config/env'
 import { Collection, MongoClient, ObjectId } from 'mongodb'
 
 export { ObjectId, Collection }

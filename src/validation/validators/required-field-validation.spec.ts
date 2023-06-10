@@ -1,6 +1,6 @@
 
 import { RequiredFieldValidation } from './required-field-validation'
-import { MissingParamError } from '@/presentation/errors'
+import { MissingParamError } from '#/presentation/errors'
 
 const field = 'any_field'
 const value = 'any_value'

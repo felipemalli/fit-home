@@ -1,8 +1,8 @@
-import { AddExercise } from '@/domain/usecases/exercise/add-exercise'
-import { CheckExerciseById } from '@/domain/usecases/exercise/check-exercise-by-id'
-import { LoadExercises } from '@/domain/usecases/exercise/load-exercises'
-import { UpdateExercise } from '@/domain/usecases/exercise/update-exercise'
-import { mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
+import { AddExercise } from '#/domain/usecases/exercise/add-exercise'
+import { CheckExerciseById } from '#/domain/usecases/exercise/check-exercise-by-id'
+import { LoadExercises } from '#/domain/usecases/exercise/load-exercises'
+import { UpdateExercise } from '#/domain/usecases/exercise/update-exercise'
+import { mockExerciseModels, mockUpdateExerciseModel } from '#/domain/test'
 
 export class AddExerciseSpy implements AddExercise {
   params: AddExercise.Params

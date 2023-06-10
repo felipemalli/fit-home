@@ -1,7 +1,7 @@
 import { LogControllerDecorator } from './log-controller-decorator'
-import { Controller, HttpResponse } from '@/presentation/protocols'
-import { ok, serverError } from '@/presentation/helpers/http/http-helper'
-import { LogErrorRepositorySpy } from '@/data/test'
+import { Controller, HttpResponse } from '#/presentation/protocols'
+import { ok, serverError } from '#/presentation/helpers/http/http-helper'
+import { LogErrorRepositorySpy } from '#/data/test'
 
 class ControllerSpy implements Controller {
   httpResponse = ok('any_id')

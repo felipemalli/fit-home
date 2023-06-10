@@ -1,7 +1,7 @@
 import { UpdateExerciseController } from './update-exercise-controller'
 import { CheckExerciseByIdSpy, throwError, UpdateExerciseSpy } from './update-exercise-controller-protocols'
-import { InvalidParamError } from '@/presentation/errors'
-import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { InvalidParamError } from '#/presentation/errors'
+import { forbidden, ok, serverError } from '#/presentation/helpers/http/http-helper'
 
 const mockRequest = (): UpdateExerciseController.Request => ({
   name: 'updated_name',

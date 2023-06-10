@@ -1,7 +1,7 @@
-import { AddAccount } from '@/domain/usecases/account/add-account'
-import { mockAuthenticationModel } from '@/domain/test/mock-account'
-import { Authentication } from '@/domain/usecases/account/authentication'
-import { LoadAccountByToken } from '@/domain/usecases/account/load-account-by-token'
+import { AddAccount } from '#/domain/usecases/account/add-account'
+import { mockAuthenticationModel } from '#/domain/test/mock-account'
+import { Authentication } from '#/domain/usecases/account/authentication'
+import { LoadAccountByToken } from '#/domain/usecases/account/load-account-by-token'
 
 export class AuthenticationSpy implements Authentication {
   params: Authentication.Params
