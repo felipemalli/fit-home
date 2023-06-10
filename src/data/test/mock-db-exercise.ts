@@ -3,7 +3,7 @@ import { CheckExerciseByIdRepository } from '@/data/protocols/db/exercise/check-
 import { LoadExercisesRepository } from '@/data/protocols/db/exercise/load-exercises-repository'
 import { UpdateExerciseRepository } from '@/data/protocols/db/exercise/update-exercise-repository'
 import { ExerciseModel } from '@/domain/models/exercises/exercise'
-import { UpdateExerciseParams } from '@/domain/usecases/exercise/update-exercise'
+import { UpdateExercise } from '@/domain/usecases/exercise/update-exercise'
 import { mockExerciseModels, mockUpdateExerciseModel } from '@/domain/test'
 
 export class AddExerciseRepositorySpy implements AddExerciseRepository {
@@ -36,10 +36,10 @@ export class LoadExercisesRepositorySpy implements LoadExercisesRepository {
 
 export class UpdateExerciseRepositorySpy implements UpdateExerciseRepository {
   id: string
-  updatedParams: UpdateExerciseParams
+  updatedParams: UpdateExercise.Params
   result = mockUpdateExerciseModel()
 
-  async update (id: string, updateData: UpdateExerciseParams): Promise<ExerciseModel> {
+  async update (id: string, updateData: UpdateExercise.Params): Promise<ExerciseModel> {
     this.id = id
     this.updatedParams = updateData
     return this.result

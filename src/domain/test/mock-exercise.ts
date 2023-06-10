@@ -1,5 +1,5 @@
 import { ExerciseConfiguration, ExerciseModel, ExerciseVariation } from '@/domain/models/exercises/exercise'
-import { UpdateExerciseParams } from '@/domain/usecases/exercise/update-exercise'
+import { UpdateExercise } from '@/domain/usecases/exercise/update-exercise'
 import { AddExercise } from '../usecases/exercise/add-exercise'
 
 const mockExerciseConfiguration = (): ExerciseConfiguration => ({
@@ -42,7 +42,7 @@ export const mockAddExerciseParams = (): AddExercise.Params => ({
   variationUrl: 'https://www.any_variation_url.com/'
 })
 
-export const mockUpdateExerciseParams = (): UpdateExerciseParams => ({
+export const mockUpdateExerciseParams = (): UpdateExercise.Params => ({
   name: 'updated_name',
   description: 'updated_description',
   isTemplate: true

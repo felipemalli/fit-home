@@ -1,4 +1,3 @@
-
 import { AddExercise, AddExerciseRepository } from './db-add-exercise-protocols'
 
 export class DbAddExercise implements AddExercise {
