@@ -15,6 +15,6 @@ module.exports = {
   watchPathIgnorePatterns: ['globalConfig'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   moduleNameMapper: {
-    '@/(.*)': '<rootDir>/src/$1'
+    '#/(.*)': '<rootDir>/src/$1'
   }
 }
