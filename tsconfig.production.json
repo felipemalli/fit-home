@@ -5,6 +5,7 @@
     "target": "es2021",
     "esModuleInterop": true,
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "rootDir": "src",
     "baseUrl": "src",
