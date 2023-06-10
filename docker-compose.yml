@@ -10,7 +10,7 @@ services:
       - "27017:27017"
   api:
     container_name: api-container
-    image: node:19
+    image: node:20
     working_dir: /usr/src/fit-home-api
     restart: always
     command: bash -c "npm install --only=prod && npm install nodemon -D && npm run debug"
