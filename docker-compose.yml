@@ -15,7 +15,7 @@ services:
     restart: always
     command: bash -c "npm install --omit=dev && npm install nodemon -D && npm run debug"
     environment:
-      - MONGO_URL=mongodb://mongo:27017/fit-home-api
+      - MONGO_URL
     volumes:
       - ./dist/:/usr/src/fit-home-api/dist/
       - ./package.json:/usr/src/fit-home-api/package.json/

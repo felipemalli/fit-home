@@ -15,7 +15,7 @@ services:
     restart: always
     command: bash -c "npm install && npm run dev"
     environment:
-      - MONGO_URL=mongodb://mongo:27017/fit-home-api
+      - MONGO_URL
     volumes:
       - ./:/usr/src/fit-home-api/
     ports:
