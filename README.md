@@ -19,7 +19,7 @@ To help me architect the project, I develop a
 
 This is a project to demonstrate my skills, so I'm not concerned about security in this case when disclosing the real API address.
 
-Connects to AWS EC2, which is targeting MongoDB Atlas.
+I deployed the backend on Amazon EC2, which is connected to MongoDB Atlas.
 
 Deploy: http://54.233.146.212:5050/api-docs/
 
